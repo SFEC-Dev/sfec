@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['current_5fkey_0',['current_key',['../structtui_1_1io.html#afcc42be884e292f8a78f5f72ecb206b9',1,'tui::io']]]
+  ['current_5fkey_0',['current_key',['../structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c',1,'tui::io']]]
 ];

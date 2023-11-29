@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getch_0',['getch',['../main_8cpp.html#a160f6d2893bb6b89ab3ad5d863c20e3d',1,'main.cpp']]]
+  ['handle_5fkeys_0',['handle_keys',['../namespacetui.html#abaa302a7484a9c41e329bd4289e103ec',1,'tui']]]
 ];

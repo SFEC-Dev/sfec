@@ -111,13 +111,17 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    };</div>
 </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">extern</span> <span class="keyword">const</span> std::unique_ptr&lt;io&gt; <a class="code hl_variable" href="namespacetui.html#a2519929f1723c9eb5d8fea6d3c9d52da">g_io</a>;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespacetui.html#abaa302a7484a9c41e329bd4289e103ec">handle_keys</a>();</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
+<div class="foldopen" id="foldopen00026" data-start="{" data-end="}">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespacetui.html#ad5e45d89e613c724b511179ef42ab214">   26</a></span>    <a class="code hl_struct" href="structtui_1_1io.html">io</a>&amp; <a class="code hl_function" href="namespacetui.html#ad5e45d89e613c724b511179ef42ab214">get_io</a>() {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">static</span> <a class="code hl_struct" href="structtui_1_1io.html">io</a> g_io{};</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">return</span> g_io;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    }</div>
+</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespacetui.html#abaa302a7484a9c41e329bd4289e103ec">handle_keys</a>();</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
 </div>
 <div class="ttc" id="anamespacetui_html"><div class="ttname"><a href="namespacetui.html">tui</a></div><div class="ttdef"><b>Definition</b> tui.h:3</div></div>
-<div class="ttc" id="anamespacetui_html_a2519929f1723c9eb5d8fea6d3c9d52da"><div class="ttname"><a href="namespacetui.html#a2519929f1723c9eb5d8fea6d3c9d52da">tui::g_io</a></div><div class="ttdeci">const std::unique_ptr&lt; io &gt; g_io</div><div class="ttdef"><b>Definition</b> tui.cpp:17</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267d"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267d">tui::keys</a></div><div class="ttdeci">keys</div><div class="ttdef"><b>Definition</b> tui.h:4</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267da017eeed802fd9eedd7d31deedcd8e4ba"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267da017eeed802fd9eedd7d31deedcd8e4ba">tui::keys::NUMBER_SIGN</a></div><div class="ttdeci">@ NUMBER_SIGN</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267da072bfacf555fde9accd162a180ff0ac4"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267da072bfacf555fde9accd162a180ff0ac4">tui::keys::VT</a></div><div class="ttdeci">@ VT</div></div>
@@ -248,6 +252,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267daff0a071d6a6aa003e103780e3d158c98"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267daff0a071d6a6aa003e103780e3d158c98">tui::keys::UPPERCASE_S</a></div><div class="ttdeci">@ UPPERCASE_S</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267daffc0d9b54a1fe677c4c9e6b050e67c81"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267daffc0d9b54a1fe677c4c9e6b050e67c81">tui::keys::MINUS</a></div><div class="ttdeci">@ MINUS</div></div>
 <div class="ttc" id="anamespacetui_html_abaa302a7484a9c41e329bd4289e103ec"><div class="ttname"><a href="namespacetui.html#abaa302a7484a9c41e329bd4289e103ec">tui::handle_keys</a></div><div class="ttdeci">void handle_keys()</div><div class="ttdef"><b>Definition</b> tui.cpp:5</div></div>
+<div class="ttc" id="anamespacetui_html_ad5e45d89e613c724b511179ef42ab214"><div class="ttname"><a href="namespacetui.html#ad5e45d89e613c724b511179ef42ab214">tui::get_io</a></div><div class="ttdeci">io &amp; get_io()</div><div class="ttdef"><b>Definition</b> tui.h:26</div></div>
 <div class="ttc" id="astructtui_1_1io_html"><div class="ttname"><a href="structtui_1_1io.html">tui::io</a></div><div class="ttdef"><b>Definition</b> tui.h:22</div></div>
 <div class="ttc" id="astructtui_1_1io_html_afcc42be884e292f8a78f5f72ecb206b9"><div class="ttname"><a href="structtui_1_1io.html#afcc42be884e292f8a78f5f72ecb206b9">tui::io::current_key</a></div><div class="ttdeci">char current_key</div><div class="ttdef"><b>Definition</b> tui.h:23</div></div>
 </div><!-- fragment --></div><!-- contents -->

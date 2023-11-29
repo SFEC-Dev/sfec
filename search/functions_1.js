@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['handle_5fkeys_0',['handle_keys',['../namespacetui.html#abaa302a7484a9c41e329bd4289e103ec',1,'tui']]]
+  ['get_5fio_0',['get_io',['../namespacetui.html#ad5e45d89e613c724b511179ef42ab214',1,'tui']]]
 ];

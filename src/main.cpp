@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
-#include <thread>
 #include <chrono>
-#include <memory>
 
 #include "tui/tui.h"
 

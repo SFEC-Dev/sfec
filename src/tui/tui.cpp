@@ -25,14 +25,18 @@ void tui::key_handler::handle() {
 
     if (select(STDIN_FILENO + 1, &read_set, NULL, NULL, &timeout) > 0)
     {
-        is_key_pressed = true;
+        is_any_pressed = true;
 
         char input;
         read(STDIN_FILENO, &input, 1);
 
         get_io().current_key = static_cast<keys>(input);
     } else
-        is_key_pressed = false;
+        is_any_pressed = false;
+}
+
+bool tui::key_handler::is_key_pressed(keys key) {
+    return (is_any_pressed && get_io().current_key == key);
 }
 
 tui::io& tui::get_io() {

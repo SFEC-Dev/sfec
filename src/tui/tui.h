@@ -1,10 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
+
 namespace tui {
     enum keys {
         KEY_NUL = 0, KEY_SOH, KEY_STX, KEY_ETX, KEY_EOT, KEY_ENQ, KEY_ACK, KEY_BEL, KEY_BS, KEY_HT, KEY_LF, KEY_VT, KEY_FF, KEY_CR, KEY_SO, KEY_SI,
@@ -37,7 +36,9 @@ namespace tui {
 
         void handle();
 
-        bool is_key_pressed;
+        bool is_key_pressed(keys key);
+
+        bool is_any_pressed;
     private:
         struct termios orig_termios;
     };

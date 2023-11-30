@@ -1,0 +1,8 @@
+PROJECT_NAME           = "SFEC"
+PROJECT_NUMBER         = 1.0
+OUTPUT_LANGUAGE        = English
+GENERATE_LATEX         = NO
+INPUT                  = ../src/
+RECURSIVE              = YES
+HAVE_DOT               = YES
+EXTRACT_ALL            = YES

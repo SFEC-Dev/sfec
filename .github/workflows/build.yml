@@ -1,0 +1,85 @@
+name: 'build'
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]  
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          
+      - name: Create Build Environment
+        run: |
+          cmake -E make_directory build
+
+      - name: Install Compilier
+        run: |
+          sudo apt update && sudo apt install gcc-13 g++-13
+
+      - name: Configure CMake
+        working-directory: build
+        run: cmake $GITHUB_WORKSPACE -DPATCH_VERSION=${{ github.run_number }} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_COMPILER=g++-13
+
+      - name: Build
+        working-directory: build
+        run: cmake --build .
+        env:
+          CMAKE_BUILD_PARALLEL_LEVEL: 4
+
+      - name: Test
+        working-directory: build/tests
+        run: |
+          ctest --output-on-failure
+
+      - name: Made package
+        working-directory: build
+        run: cmake --build . --target package
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 0.0.${{ github.run_number }}
+          release_name: Release 0.0.${{ github.run_number }}
+          draft: false
+          prerelease: false
+
+      - name: Upload package
+        id: upload-release-asset_linux
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/sfec-0.0.${{ github.run_number }}-Linux.tar.gz
+          asset_name: sfec-0.0.${{ github.run_number }}-Linux.tar.gz
+          asset_content_type: application/vnd.debian.binary-package
+
+  docs:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.1
+      - name: Doxygen Action
+        uses: mattnotmitt/doxygen-action@v1.1.0
+        with:
+          working-directory: 'docs/'
+      - name: Deploy Docs
+        uses: peaceiris/actions-gh-pages@v3.6.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./docs/html

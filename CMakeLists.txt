@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.2)
+
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+
+project(sfec
+        VERSION ${PROJECT_VESRION}
+        LANGUAGES CXX
+        DESCRIPTION "Super File Explorer on C++."
+)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_link_options("-static" "-static-libgcc" "-static-libstdc++")
+
+add_subdirectory(src)
+
+add_subdirectory(tests)
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+set(CPACK_PACKAGE_NAME "sfec")
+set(CPACK_PACKAGE_CONTACT https://github.com/SFEC-Dev/sfec)
+
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+
+SET(CPACK_GENERATOR "TGZ")
+SET(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 1)
+
+include(CPack)

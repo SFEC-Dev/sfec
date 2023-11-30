@@ -1,0 +1,7 @@
+build*/
+.clangd/
+.cache/
+*.vim
+*.json
+*.tidy
+notes.txt

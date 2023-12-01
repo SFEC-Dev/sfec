@@ -6,7 +6,6 @@
 #include "tui/tui.h"
 
 void clear_screen() {
-    system("clear");
     std::cout << "\033[2J\033[1;1H";
 }
 

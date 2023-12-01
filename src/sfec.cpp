@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include <thread>
 
 #include "tui/tui.h"
 
@@ -10,7 +9,6 @@ void clear_screen() {
 }
 
 int main() {
-    using namespace std::chrono_literals;
 
     tui::key_handler handler{};
     bool active = true;

@@ -81,13 +81,13 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">tui.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="tui_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;sys/ioctl.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;termios.h&gt;</span></div>
+<a href="tui_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;sys/types.h&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;sys/ioctl.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;termios.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="foldopen" id="foldopen00008" data-start="{" data-end="}">
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="namespacetui.html">    8</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetui.html">tui</a> {</div>
 <div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
@@ -112,33 +112,36 @@ $(document).ready(function() { init_codefold(0); });
 </div>
 <div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structtui_1_1io.html">   27</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtui_1_1io.html">io</a> {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c">   28</a></span>        <a class="code hl_enumeration" href="namespacetui.html#a74aa53265d54835464fdbbd6e243267d">keys</a> <a class="code hl_variable" href="structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c">current_key</a>;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    };</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c">   30</a></span>        <a class="code hl_enumeration" href="namespacetui.html#a74aa53265d54835464fdbbd6e243267d">keys</a> <a class="code hl_variable" href="structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c">current_key</a>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
 </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_struct" href="structtui_1_1io.html">io</a>&amp; <a class="code hl_function" href="namespacetui.html#a846e57585c414fa5f4a7d2a06c17b787">get_io</a>();</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="foldopen" id="foldopen00033" data-start="{" data-end="};">
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classtui_1_1key__handler.html">   33</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtui_1_1key__handler.html">key_handler</a> {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <a class="code hl_function" href="classtui_1_1key__handler.html#abfb3fd302e45639d67158a2ed832c522">key_handler</a>();</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_function" href="classtui_1_1key__handler.html#adf4ad5673665698a1226db4944ef2af7">~key_handler</a>();</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtui_1_1key__handler.html#a8de7fc2ceeed568336f6d09a0c728008">handle</a>();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_struct" href="structtui_1_1io.html">io</a>&amp; <a class="code hl_function" href="namespacetui.html#a846e57585c414fa5f4a7d2a06c17b787">get_io</a>();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="};">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classtui_1_1key__handler.html">   35</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtui_1_1key__handler.html">key_handler</a> {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_function" href="classtui_1_1key__handler.html#abfb3fd302e45639d67158a2ed832c522">key_handler</a>();</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <a class="code hl_function" href="classtui_1_1key__handler.html#adf4ad5673665698a1226db4944ef2af7">~key_handler</a>();</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classtui_1_1key__handler.html#a17564e27c9bb50c4e9dd8a3a6c36fde8">   40</a></span>        <span class="keywordtype">bool</span> <a class="code hl_variable" href="classtui_1_1key__handler.html#a17564e27c9bb50c4e9dd8a3a6c36fde8">is_key_pressed</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtui_1_1key__handler.html#a8de7fc2ceeed568336f6d09a0c728008">handle</a>();</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">struct </span>termios orig_termios;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    };</div>
 </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="namespacetui.html#af56ceb62ca241183f5f0331f03c4cf40">is_key_pressed</a>(<a class="code hl_enumeration" href="namespacetui.html#a74aa53265d54835464fdbbd6e243267d">keys</a> key);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="namespacetui.html#a14e68e1ebc67b7d4b02a99182c5a9cd7">is_any_pressed</a>();</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
 </div>
-<div class="ttc" id="aclasstui_1_1key__handler_html"><div class="ttname"><a href="classtui_1_1key__handler.html">tui::key_handler</a></div><div class="ttdef"><b>Definition</b> tui.h:33</div></div>
-<div class="ttc" id="aclasstui_1_1key__handler_html_a17564e27c9bb50c4e9dd8a3a6c36fde8"><div class="ttname"><a href="classtui_1_1key__handler.html#a17564e27c9bb50c4e9dd8a3a6c36fde8">tui::key_handler::is_key_pressed</a></div><div class="ttdeci">bool is_key_pressed</div><div class="ttdef"><b>Definition</b> tui.h:40</div></div>
+<div class="ttc" id="aclasstui_1_1key__handler_html"><div class="ttname"><a href="classtui_1_1key__handler.html">tui::key_handler</a></div><div class="ttdef"><b>Definition</b> tui.h:35</div></div>
 <div class="ttc" id="aclasstui_1_1key__handler_html_a8de7fc2ceeed568336f6d09a0c728008"><div class="ttname"><a href="classtui_1_1key__handler.html#a8de7fc2ceeed568336f6d09a0c728008">tui::key_handler::handle</a></div><div class="ttdeci">void handle()</div><div class="ttdef"><b>Definition</b> tui.cpp:18</div></div>
 <div class="ttc" id="aclasstui_1_1key__handler_html_abfb3fd302e45639d67158a2ed832c522"><div class="ttname"><a href="classtui_1_1key__handler.html#abfb3fd302e45639d67158a2ed832c522">tui::key_handler::key_handler</a></div><div class="ttdeci">key_handler()</div><div class="ttdef"><b>Definition</b> tui.cpp:3</div></div>
 <div class="ttc" id="aclasstui_1_1key__handler_html_adf4ad5673665698a1226db4944ef2af7"><div class="ttname"><a href="classtui_1_1key__handler.html#adf4ad5673665698a1226db4944ef2af7">tui::key_handler::~key_handler</a></div><div class="ttdeci">~key_handler()</div><div class="ttdef"><b>Definition</b> tui.cpp:14</div></div>
 <div class="ttc" id="anamespacetui_html"><div class="ttname"><a href="namespacetui.html">tui</a></div><div class="ttdef"><b>Definition</b> tui.h:8</div></div>
+<div class="ttc" id="anamespacetui_html_a14e68e1ebc67b7d4b02a99182c5a9cd7"><div class="ttname"><a href="namespacetui.html#a14e68e1ebc67b7d4b02a99182c5a9cd7">tui::is_any_pressed</a></div><div class="ttdeci">bool is_any_pressed()</div><div class="ttdef"><b>Definition</b> tui.cpp:37</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267d"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267d">tui::keys</a></div><div class="ttdeci">keys</div><div class="ttdef"><b>Definition</b> tui.h:9</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267da008f81a4c5376af7c431770659dc0f1d"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267da008f81a4c5376af7c431770659dc0f1d">tui::KEY_BS</a></div><div class="ttdeci">@ KEY_BS</div><div class="ttdef"><b>Definition</b> tui.h:10</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267da09d883ce4f5f08f5a5461ad34a378558"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267da09d883ce4f5f08f5a5461ad34a378558">tui::KEY_LOWERCASE_N</a></div><div class="ttdeci">@ KEY_LOWERCASE_N</div><div class="ttdef"><b>Definition</b> tui.h:22</div></div>
@@ -268,9 +271,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267dafc420c796137220f9c694b33425e4bba"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267dafc420c796137220f9c694b33425e4bba">tui::KEY_NAK</a></div><div class="ttdeci">@ KEY_NAK</div><div class="ttdef"><b>Definition</b> tui.h:11</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267dafcfd32f625081ef7cfc9a019762c90d0"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267dafcfd32f625081ef7cfc9a019762c90d0">tui::KEY_UPPERCASE_C</a></div><div class="ttdeci">@ KEY_UPPERCASE_C</div><div class="ttdef"><b>Definition</b> tui.h:16</div></div>
 <div class="ttc" id="anamespacetui_html_a74aa53265d54835464fdbbd6e243267daffffe674b415bc640f154a7c2389f343"><div class="ttname"><a href="namespacetui.html#a74aa53265d54835464fdbbd6e243267daffffe674b415bc640f154a7c2389f343">tui::KEY_LOWERCASE_B</a></div><div class="ttdeci">@ KEY_LOWERCASE_B</div><div class="ttdef"><b>Definition</b> tui.h:21</div></div>
-<div class="ttc" id="anamespacetui_html_a846e57585c414fa5f4a7d2a06c17b787"><div class="ttname"><a href="namespacetui.html#a846e57585c414fa5f4a7d2a06c17b787">tui::get_io</a></div><div class="ttdeci">io &amp; get_io()</div><div class="ttdef"><b>Definition</b> tui.cpp:38</div></div>
+<div class="ttc" id="anamespacetui_html_a846e57585c414fa5f4a7d2a06c17b787"><div class="ttname"><a href="namespacetui.html#a846e57585c414fa5f4a7d2a06c17b787">tui::get_io</a></div><div class="ttdeci">io &amp; get_io()</div><div class="ttdef"><b>Definition</b> tui.cpp:45</div></div>
+<div class="ttc" id="anamespacetui_html_af56ceb62ca241183f5f0331f03c4cf40"><div class="ttname"><a href="namespacetui.html#af56ceb62ca241183f5f0331f03c4cf40">tui::is_key_pressed</a></div><div class="ttdeci">bool is_key_pressed(keys key)</div><div class="ttdef"><b>Definition</b> tui.cpp:41</div></div>
 <div class="ttc" id="astructtui_1_1io_html"><div class="ttname"><a href="structtui_1_1io.html">tui::io</a></div><div class="ttdef"><b>Definition</b> tui.h:27</div></div>
-<div class="ttc" id="astructtui_1_1io_html_a708ac375cb9e95f8c7a00a8f2f95c97c"><div class="ttname"><a href="structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c">tui::io::current_key</a></div><div class="ttdeci">keys current_key</div><div class="ttdef"><b>Definition</b> tui.h:28</div></div>
+<div class="ttc" id="astructtui_1_1io_html_a708ac375cb9e95f8c7a00a8f2f95c97c"><div class="ttname"><a href="structtui_1_1io.html#a708ac375cb9e95f8c7a00a8f2f95c97c">tui::io::current_key</a></div><div class="ttdeci">keys current_key</div><div class="ttdef"><b>Definition</b> tui.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

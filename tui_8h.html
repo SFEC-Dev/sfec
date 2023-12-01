@@ -81,33 +81,30 @@ $(function() {
   <div class="headertitle"><div class="title">tui.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;stdlib.h&gt;</code><br />
-<code>#include &lt;sys/types.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;sys/types.h&gt;</code><br />
 <code>#include &lt;sys/ioctl.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;fcntl.h&gt;</code><br />
 <code>#include &lt;termios.h&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for tui.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="tui_8h__incl.png" border="0" usemap="#a_2github_2workspace_2src_2tui_2tui_8h" alt=""/></div>
 <map name="a_2github_2workspace_2src_2tui_2tui_8h" id="a_2github_2workspace_2src_2tui_2tui_8h">
-<area shape="rect" title=" " alt="" coords="251,5,400,46"/>
-<area shape="rect" title=" " alt="" coords="5,94,65,120"/>
-<area shape="poly" title=" " alt="" coords="254,49,81,96,79,91,252,44"/>
-<area shape="rect" title=" " alt="" coords="89,94,152,120"/>
-<area shape="poly" title=" " alt="" coords="275,49,167,91,165,86,273,44"/>
-<area shape="rect" title=" " alt="" coords="176,94,262,120"/>
-<area shape="poly" title=" " alt="" coords="301,49,249,87,246,82,298,44"/>
-<area shape="rect" title=" " alt="" coords="286,94,365,120"/>
-<area shape="poly" title=" " alt="" coords="328,46,328,78,323,78,323,46"/>
-<area shape="rect" title=" " alt="" coords="390,94,456,120"/>
-<area shape="poly" title=" " alt="" coords="351,44,398,82,395,86,348,48"/>
-<area shape="rect" title=" " alt="" coords="480,94,537,120"/>
-<area shape="poly" title=" " alt="" coords="372,44,467,85,465,90,370,49"/>
-<area shape="rect" title=" " alt="" coords="561,94,635,120"/>
-<area shape="poly" title=" " alt="" coords="394,44,546,88,545,93,393,49"/>
+<area shape="rect" title=" " alt="" coords="221,5,370,46"/>
+<area shape="rect" title=" " alt="" coords="5,94,92,120"/>
+<area shape="poly" title=" " alt="" coords="234,49,102,91,100,86,233,44"/>
+<area shape="rect" title=" " alt="" coords="116,94,195,120"/>
+<area shape="poly" title=" " alt="" coords="262,49,191,88,188,84,259,44"/>
+<area shape="rect" title=" " alt="" coords="219,94,286,120"/>
+<area shape="poly" title=" " alt="" coords="287,48,269,81,264,79,282,45"/>
+<area shape="rect" title=" " alt="" coords="310,94,366,120"/>
+<area shape="poly" title=" " alt="" coords="308,45,326,79,322,81,303,48"/>
+<area shape="rect" title=" " alt="" coords="390,94,464,120"/>
+<area shape="poly" title=" " alt="" coords="329,44,395,83,393,88,327,49"/>
+<area shape="rect" title=" " alt="" coords="488,94,556,120"/>
+<area shape="poly" title=" " alt="" coords="353,44,474,86,472,91,351,49"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -116,7 +113,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="tui_8h__dep__incl.png" border="0" usemap="#a_2github_2workspace_2src_2tui_2tui_8hdep" alt=""/></div>
 <map name="a_2github_2workspace_2src_2tui_2tui_8hdep" id="a_2github_2workspace_2src_2tui_2tui_8hdep">
 <area shape="rect" title=" " alt="" coords="92,5,241,46"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="5,94,155,135"/>
+<area shape="rect" href="sfec_8cpp.html" title=" " alt="" coords="5,94,155,135"/>
 <area shape="poly" title=" " alt="" coords="138,59,101,95,98,92,134,55"/>
 <area shape="rect" href="tui_8cpp.html" title=" " alt="" coords="179,94,328,135"/>
 <area shape="poly" title=" " alt="" coords="199,55,236,92,232,95,195,59"/>
@@ -307,6 +304,10 @@ Enumerations</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a846e57585c414fa5f4a7d2a06c17b787" id="r_a846e57585c414fa5f4a7d2a06c17b787"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structtui_1_1io.html">io</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetui.html#a846e57585c414fa5f4a7d2a06c17b787">tui::get_io</a> ()</td></tr>
 <tr class="separator:a846e57585c414fa5f4a7d2a06c17b787"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56ceb62ca241183f5f0331f03c4cf40" id="r_af56ceb62ca241183f5f0331f03c4cf40"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetui.html#af56ceb62ca241183f5f0331f03c4cf40">tui::is_key_pressed</a> (<a class="el" href="namespacetui.html#a74aa53265d54835464fdbbd6e243267d">keys</a> key)</td></tr>
+<tr class="separator:af56ceb62ca241183f5f0331f03c4cf40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e68e1ebc67b7d4b02a99182c5a9cd7" id="r_a14e68e1ebc67b7d4b02a99182c5a9cd7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetui.html#a14e68e1ebc67b7d4b02a99182c5a9cd7">tui::is_any_pressed</a> ()</td></tr>
+<tr class="separator:a14e68e1ebc67b7d4b02a99182c5a9cd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

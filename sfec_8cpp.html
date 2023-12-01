@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SFEC: /github/workspace/src/main.cpp File Reference</title>
+<title>SFEC: /github/workspace/src/sfec.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -75,55 +75,50 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">main.cpp File Reference</div></div>
+  <div class="headertitle"><div class="title">sfec.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
-<code>#include &lt;thread&gt;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
-<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
 <code>#include &quot;<a class="el" href="tui_8h_source.html">tui/tui.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for main.cpp:</div>
+Include dependency graph for sfec.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#a_2github_2workspace_2src_2main_8cpp" alt=""/></div>
-<map name="a_2github_2workspace_2src_2main_8cpp" id="a_2github_2workspace_2src_2main_8cpp">
-<area shape="rect" title=" " alt="" coords="174,5,324,46"/>
+<div class="center"><img src="sfec_8cpp__incl.png" border="0" usemap="#a_2github_2workspace_2src_2sfec_8cpp" alt=""/></div>
+<map name="a_2github_2workspace_2src_2sfec_8cpp" id="a_2github_2workspace_2src_2sfec_8cpp">
+<area shape="rect" title=" " alt="" coords="134,5,284,46"/>
 <area shape="rect" title=" " alt="" coords="5,94,77,120"/>
-<area shape="poly" title=" " alt="" coords="198,49,88,91,86,86,196,44"/>
+<area shape="poly" title=" " alt="" coords="168,49,82,89,80,85,166,44"/>
 <area shape="rect" title=" " alt="" coords="101,94,154,120"/>
-<area shape="poly" title=" " alt="" coords="220,49,160,88,157,83,218,44"/>
-<area shape="rect" title=" " alt="" coords="179,94,236,120"/>
-<area shape="poly" title=" " alt="" coords="241,48,223,81,219,79,236,45"/>
-<area shape="rect" title=" " alt="" coords="260,94,321,120"/>
-<area shape="poly" title=" " alt="" coords="262,45,279,79,275,81,257,48"/>
-<area shape="rect" title=" " alt="" coords="345,94,412,120"/>
-<area shape="poly" title=" " alt="" coords="282,44,347,83,344,88,280,49"/>
-<area shape="rect" href="tui_8h.html" title=" " alt="" coords="436,94,499,120"/>
-<area shape="poly" title=" " alt="" coords="305,44,422,86,420,91,303,49"/>
-<area shape="rect" title=" " alt="" coords="147,168,207,193"/>
-<area shape="poly" title=" " alt="" coords="436,119,424,122,222,170,221,165,423,117,435,114"/>
-<area shape="rect" title=" " alt="" coords="231,168,294,193"/>
-<area shape="poly" title=" " alt="" coords="436,122,309,166,307,161,435,117"/>
-<area shape="rect" title=" " alt="" coords="318,168,404,193"/>
-<area shape="poly" title=" " alt="" coords="451,122,393,161,390,156,448,118"/>
-<area shape="rect" title=" " alt="" coords="428,168,507,193"/>
-<area shape="poly" title=" " alt="" coords="470,120,470,152,465,152,465,120"/>
-<area shape="rect" title=" " alt="" coords="532,168,598,193"/>
-<area shape="poly" title=" " alt="" coords="486,118,538,156,535,161,483,122"/>
-<area shape="rect" title=" " alt="" coords="622,168,679,193"/>
-<area shape="poly" title=" " alt="" coords="500,118,609,160,607,165,498,123"/>
-<area shape="rect" title=" " alt="" coords="703,168,777,193"/>
-<area shape="poly" title=" " alt="" coords="501,114,688,163,687,168,499,119"/>
+<area shape="poly" title=" " alt="" coords="191,48,153,85,149,81,187,44"/>
+<area shape="rect" title=" " alt="" coords="179,94,239,120"/>
+<area shape="poly" title=" " alt="" coords="212,46,212,78,206,78,206,46"/>
+<area shape="rect" title=" " alt="" coords="263,94,320,120"/>
+<area shape="poly" title=" " alt="" coords="231,44,270,81,266,85,228,48"/>
+<area shape="rect" href="tui_8h.html" title=" " alt="" coords="344,94,407,120"/>
+<area shape="poly" title=" " alt="" coords="252,44,337,85,335,89,249,49"/>
+<area shape="rect" title=" " alt="" coords="86,168,172,193"/>
+<area shape="poly" title=" " alt="" coords="344,120,186,165,185,160,343,115"/>
+<area shape="rect" title=" " alt="" coords="196,168,275,193"/>
+<area shape="poly" title=" " alt="" coords="353,123,274,163,272,158,351,118"/>
+<area shape="rect" title=" " alt="" coords="300,168,366,193"/>
+<area shape="poly" title=" " alt="" coords="371,121,350,156,346,153,366,119"/>
+<area shape="rect" title=" " alt="" coords="390,168,447,193"/>
+<area shape="poly" title=" " alt="" coords="385,119,406,153,401,156,380,121"/>
+<area shape="rect" title=" " alt="" coords="471,168,545,193"/>
+<area shape="poly" title=" " alt="" coords="399,118,473,158,471,162,397,123"/>
+<area shape="rect" title=" " alt="" coords="569,168,636,193"/>
+<area shape="poly" title=" " alt="" coords="408,116,555,162,553,167,407,121"/>
 </map>
 </div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a4953d1edcbbfc7e420c423ded1d5621a" id="r_a4953d1edcbbfc7e420c423ded1d5621a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4953d1edcbbfc7e420c423ded1d5621a">clear_screen</a> ()</td></tr>
+<tr class="memitem:a4953d1edcbbfc7e420c423ded1d5621a" id="r_a4953d1edcbbfc7e420c423ded1d5621a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sfec_8cpp.html#a4953d1edcbbfc7e420c423ded1d5621a">clear_screen</a> ()</td></tr>
 <tr class="separator:a4953d1edcbbfc7e420c423ded1d5621a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="sfec_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
 <tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['key_5fhandler_0',['key_handler',['../classtui_1_1key__handler.html#abfb3fd302e45639d67158a2ed832c522',1,'tui::key_handler']]]
+  ['is_5fany_5fpressed_0',['is_any_pressed',['../namespacetui.html#a14e68e1ebc67b7d4b02a99182c5a9cd7',1,'tui']]],
+  ['is_5fkey_5fpressed_1',['is_key_pressed',['../namespacetui.html#af56ceb62ca241183f5f0331f03c4cf40',1,'tui']]]
 ];

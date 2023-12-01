@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <termios.h>
-#include <memory>
 
 namespace tui {
     enum keys {
@@ -42,6 +41,6 @@ namespace tui {
         struct termios orig_termios;
     };
 
-    bool is_key_pressed(keys key);
+    bool is_key_pressed(const keys key);
     bool is_any_pressed();
 }

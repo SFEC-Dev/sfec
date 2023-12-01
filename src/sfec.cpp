@@ -18,12 +18,12 @@ int main() {
     auto start_time = std::chrono::steady_clock::now();
     while (active) {
         handler.handle();
-        if (tui::get_io().current_key == tui::KEY_ESC || tui::get_io().current_key == tui::KEY_LOWERCASE_Q)
+        if (handler.is_key_pressed(tui::KEY_ESC) || handler.is_key_pressed(tui::KEY_LOWERCASE_Q))
             active = false;
 
         auto current_time = std::chrono::steady_clock::now();
 
-        if (handler.is_key_pressed)
+        if (handler.is_any_pressed)
             buf += tui::get_io().current_key;
 
         std::cout << "Write your buffer: ";

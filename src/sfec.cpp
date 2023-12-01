@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <chrono>
+#include <thread>
 
 #include "tui/tui.h"
 
@@ -9,7 +10,8 @@ void clear_screen() {
 }
 
 int main() {
-    
+    using namespace std::chrono_literals;
+
     tui::key_handler handler{};
     bool active = true;
     std::string buf{};
@@ -18,12 +20,15 @@ int main() {
     auto start_time = std::chrono::steady_clock::now();
     while (active) {
         handler.handle();
-        if (handler.is_key_pressed(tui::KEY_ESC) || handler.is_key_pressed(tui::KEY_LOWERCASE_Q))
+        if (tui::is_key_pressed(tui::KEY_ESC) || tui::is_key_pressed(tui::KEY_LOWERCASE_Q))
             active = false;
+
+        if (!tui::is_any_pressed())
+            std::this_thread::sleep_for(50ms);
 
         auto current_time = std::chrono::steady_clock::now();
 
-        if (handler.is_any_pressed)
+        if (tui::is_any_pressed())
             buf += tui::get_io().current_key;
 
         std::cout << "Write your buffer: ";

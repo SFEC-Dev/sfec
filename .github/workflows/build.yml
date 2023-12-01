@@ -65,7 +65,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: build/sfec-0.0.${{ github.run_number }}-Linux.tar.gz
-          asset_name: sfec-0.0.${{ github.run_number }}-Linux.tar.gz
+          asset_name: sfec-Linux.tar.gz
           asset_content_type: application/vnd.debian.binary-package
 
   docs:

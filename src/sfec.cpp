@@ -22,10 +22,7 @@ int main() {
         handler.handle();
         if (tui::is_key_pressed(tui::KEY_ESC) || tui::is_key_pressed(tui::KEY_LOWERCASE_Q))
             active = false;
-
-        if (!tui::is_any_pressed())
-            std::this_thread::sleep_for(50ms);
-
+        
         auto current_time = std::chrono::steady_clock::now();
 
         if (tui::is_any_pressed())

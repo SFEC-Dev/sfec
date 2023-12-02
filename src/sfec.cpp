@@ -3,12 +3,15 @@
 #include <chrono>
 
 #include "tui/tui.h"
+#include "config/interpreter.h"
 
 void clear_screen() {
     std::cout << "\033[2J\033[1;1H";
 }
 
 int main() {
+    read_config();
+    return 0;
 
     tui::key_handler handler{};
     bool active = true;

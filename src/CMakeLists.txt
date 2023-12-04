@@ -5,6 +5,8 @@ add_executable(
   tui/helpers/style.cpp
   tui/tui.h
   tui/tui.cpp
+  tui/event/key_handler.h
+  tui/event/key_handler.cpp
   config/options.h
   config/options.cpp
   config/interpreter.h

@@ -1,3 +1,4 @@
+#include <ios>
 #include <iostream>
 #include <string>
 #include <chrono>
@@ -10,7 +11,18 @@ void clear_screen() {
 }
 
 int main() {
-    read_config();
+
+    // Example of using tui/helpers/style
+    // std::string str = "Hello world!";
+    // std::cout << tui::stylize(str, tui::FLAG_BOLD) << std::endl;
+    // std::cout <<  tui::stylize(str, tui::FLAG_BLINK) << std::endl;
+    // std::cout << tui::stylize(str, tui::FLAG_HIDDEN) << std::endl;
+    // std::cout << tui::colorize(tui::stylize(str, tui::FLAG_ITALIC | tui::FLAG_BLINK), tui::Color(255, 55, 55)) << std::endl;
+    // std::cout << tui::colorize(str, tui::Color(255, 12, 12)) << std::endl;
+    // std::cout << tui::colorize(str, tui::Color(), tui::Color(255, 55, 55)) << std::endl;
+
+
+    //read_config();
     return 0;
 
     tui::key_handler handler{};

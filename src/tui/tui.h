@@ -5,6 +5,8 @@
 #include <termios.h>
 #include <string>
 
+#include "helpers/style.h"
+
 namespace tui {
     enum keys {
         KEY_NUL = 0, KEY_SOH, KEY_STX, KEY_ETX, KEY_EOT, KEY_ENQ, KEY_ACK, KEY_BEL, KEY_BS, KEY_HT, KEY_LF, KEY_VT, KEY_FF, KEY_CR, KEY_SO, KEY_SI,

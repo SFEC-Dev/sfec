@@ -3,6 +3,8 @@
 #include <string>
 #include <chrono>
 
+#include "config/options.h"
+#include "tui/helpers/style.h"
 #include "tui/tui.h"
 #include "config/interpreter.h"
 
@@ -21,8 +23,6 @@ int main() {
     // std::cout << tui::colorize(str, tui::Color(255, 12, 12)) << std::endl;
     // std::cout << tui::colorize(str, tui::Color(), tui::Color(255, 55, 55)) << std::endl;
 
-
-    //read_config();
     return 0;
 
     tui::key_handler handler{};

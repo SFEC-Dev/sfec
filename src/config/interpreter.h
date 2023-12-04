@@ -1,3 +1,5 @@
 #pragma once
 
-void read_config();
+namespace config {
+    void read_config();
+}

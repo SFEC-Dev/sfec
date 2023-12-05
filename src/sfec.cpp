@@ -3,11 +3,9 @@
 #include <string>
 #include <chrono>
 
-#include "config/options.h"
 #include "tui/helpers/style.h"
 #include "tui/tui.h"
 #include "tui/event/key_handler.h"
-#include "config/interpreter.h"
 
 void clear_screen() {
     std::cout << "\033[2J\033[1;1H";

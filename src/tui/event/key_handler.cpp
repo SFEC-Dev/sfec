@@ -1,5 +1,6 @@
 #include "key_handler.h"
 
+#include <iostream>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -21,6 +22,10 @@ tui::key_handler::~key_handler() {
     tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 }
 
+tui::keys tui::key_handler::get_pressed() {
+    return current_key;
+}
+
 void tui::key_handler::handle() {
     fd_set read_set;
     FD_ZERO(&read_set);
@@ -34,16 +39,9 @@ void tui::key_handler::handle() {
         char input;
         read(STDIN_FILENO, &input, 1);
 
-        get_io().current_key = static_cast<keys>(input);
+        current_key = static_cast<keys>(input);
     } else {
-        get_io().current_key = KEY_NUL;
+        current_key = KEY_NUL;
     }
 }
 
-bool tui::is_any_pressed() {
-    return !(get_io().current_key == KEY_NUL);
-}
-
-bool tui::is_key_pressed(keys key) {
-    return (is_any_pressed() && get_io().current_key == key);
-}

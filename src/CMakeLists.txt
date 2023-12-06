@@ -5,6 +5,7 @@ add_executable(
   tui/helpers/style.cpp
   tui/tui.h
   tui/tui.cpp
+  tui/tui_widgets.cpp
   tui/event/key_handler.h
   tui/event/key_handler.cpp
   tui/render/matrix.cpp

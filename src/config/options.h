@@ -2,9 +2,10 @@
 
 #include <string>
 #include <map>
-#include <variant>
 #include <vector>
-#include "../tui/tui.h"
+#include <variant>
+
+#include "../tui/helpers/style.h"
 
 namespace config {
     enum class OPTIONS_TYPE{

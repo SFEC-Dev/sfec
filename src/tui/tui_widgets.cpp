@@ -1,16 +1,5 @@
 #include "tui.h"
 
-namespace selector {
-std::string left() {
-    return "[%dD";
+void tui::render_text(pos start, std::string text) {
+    tui::render::write(main->get_matrix(), start, text);
 }
-std::string right() {
-    return "[%dC";
-}
-std::string up() {
-    return "[%dA";
-}
-std::string down() {
-    return "[%dB";
-}
-} // namespace selector

@@ -3,7 +3,6 @@
 #include <algorithm>
 
 namespace tui {
-namespace render {
     struct pos {
         pos(int x_, int y_) : x{x_}, y{y_}{};
         int x;
@@ -13,13 +12,21 @@ namespace render {
     pos operator+(pos lhs, int rhs);
     bool operator<(pos lhs, pos rhs);
 
+    struct rect {
+        rect(pos start_, pos end_) : start{start_}, end{end_}{};
+        pos start;
+        pos end;
+    };
+namespace render {
     class TerminalMatrix {
         std::map<pos, char> matrix_;
 
         int width_;
         int height_;
+
+        char filler_;
     public:
-        TerminalMatrix(int width, int height);
+        TerminalMatrix(int width, int height, char filler = ' ');
 
         char& operator[](pos where) {
             while (where.x >= width_) {
@@ -41,6 +48,10 @@ namespace render {
             return height_;
         }
 
+        int filler() const {
+            return filler_;
+        }
+
         int size() const {
             return width_ * height_;
         }
@@ -56,8 +67,11 @@ namespace render {
 
     };
 
-    void write(TerminalMatrix& matrix, pos start_pos, std::string text);
-    void write(TerminalMatrix& matrix, pos start_pos, char letter);
+    void write(TerminalMatrix& matrix, pos start, std::string text);
+    void write(TerminalMatrix& matrix, pos start, char letter);
+
+    void wipe(TerminalMatrix& matrix, pos start, pos end);
+
     std::string interpret(TerminalMatrix& matrix);
 }
 }

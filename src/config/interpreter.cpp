@@ -7,7 +7,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include <filesystem>
 
 constexpr char set_symbol = '!';
 

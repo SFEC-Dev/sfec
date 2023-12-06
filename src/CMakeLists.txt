@@ -1,8 +1,8 @@
 add_executable(
   ${PROJECT_NAME}
   sfec.cpp
-  tui/helpers/style.h
-  tui/helpers/style.cpp
+  tui/utils/style.h
+  tui/utils/style.cpp
   tui/tui.h
   tui/tui.cpp
   tui/event/key_handler.h

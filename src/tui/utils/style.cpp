@@ -1,5 +1,4 @@
 #include "style.h"
-#include <iostream>
 
 std::string tui::stylize(std::string_view str, text_flags flags) {
     std::string result{};

@@ -1,3 +1,8 @@
+# Todo
+do custom_settings in config for icons.
+
+
+
 # Installation 📦
 
 with `curl`

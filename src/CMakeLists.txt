@@ -7,6 +7,8 @@ add_executable(
   tui/tui.cpp
   tui/event/key_handler.h
   tui/event/key_handler.cpp
+  tui/render/matrix.cpp
+  tui/render/matrix.h
   config/options.h
   config/options.cpp
   config/interpreter.h

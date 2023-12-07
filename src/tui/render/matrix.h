@@ -1,15 +1,15 @@
 #include <map>
 #include <string>
-#include <algorithm>
 
 namespace tui {
     struct pos {
+        pos() = default;
         pos(int x_, int y_) : x{x_}, y{y_}{};
         int x;
         int y;
     };
 
-    pos operator+(pos lhs, int rhs);
+    pos operator+(pos lhs, pos rhs);
     bool operator<(pos lhs, pos rhs);
 
     struct rect {
@@ -18,6 +18,8 @@ namespace tui {
         pos end;
     };
 namespace render {
+    void clear();
+
     class TerminalMatrix {
         std::map<pos, char> matrix_;
 
@@ -27,17 +29,10 @@ namespace render {
         char filler_;
     public:
         TerminalMatrix(int width, int height, char filler = ' ');
+        ~TerminalMatrix() { clear(); };
 
         char& operator[](pos where) {
-            while (where.x >= width_) {
-                where.x -= width_;
-                where.y++;
-            }
-            return matrix_[pos(where.x, where.y % height_)];
-            // if ((where.x < width_) && (where.y < height_)) 
-            //     return matrix_[where];
-
-           // return matrix_[pos(where.x - static_cast<int>(where.x / width_) * width_, where.y - static_cast<int>(where.y / height_) * height_)];
+            return matrix_[pos(where.x % width_, (where.y + static_cast<int>(where.x / width_)) % height_)];
         }
 
         int width() const {
@@ -66,9 +61,11 @@ namespace render {
         const_iterator cend() const { return matrix_.cend(); }
 
     };
+    bool busy(TerminalMatrix& matrix, pos where);
+    bool busy(TerminalMatrix& matrix, pos start, pos end);
 
+    void write(TerminalMatrix& matrix, pos where, char letter);
     void write(TerminalMatrix& matrix, pos start, std::string text);
-    void write(TerminalMatrix& matrix, pos start, char letter);
 
     void wipe(TerminalMatrix& matrix, pos start, pos end);
 

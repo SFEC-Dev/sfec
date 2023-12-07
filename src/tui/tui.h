@@ -6,21 +6,28 @@
 #include "render/matrix.h"
 
 namespace tui {
-    class terminal {
-        key_handler* handler_;
-        render::TerminalMatrix matrix_;
-
-    public:
-        terminal(key_handler* handler, int width, int height, char letter = ' ');
-
-        keys get_pressed_key() const;
-        render::TerminalMatrix& get_matrix();
-
+    struct style {
+        int item_spacing = 4;
     };
 
-    extern terminal* main;
+    struct context {
+        context(key_handler* handler, render::TerminalMatrix* matrix) :
+                                    g_handler{std::move(handler)}, g_matrix{std::move(matrix)} {};
 
-    void set_context(terminal* context);
+        pos last_item_pos;
+        
+        style g_style;
+        key_handler* g_handler;
+        render::TerminalMatrix* g_matrix;
+    };
+
+    extern context* g_tui;
+
+    void set_context(context* new_context);
+
+    keys get_pressed_key();
+    render::TerminalMatrix& current_matrix();
+    style& current_style();
 
     void draw();
 
@@ -28,5 +35,7 @@ namespace tui {
     bool is_any_pressed();
 
     void render_text(pos start, std::string text);
+    
+    void text_widget(std::string text);
 }
 

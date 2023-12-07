@@ -1,5 +1,6 @@
 # Todo
-do custom_settings in config for icons.
+- do custom_settings in config for icons.
+- do custom keybindings config.
 
 
 

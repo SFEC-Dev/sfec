@@ -1,10 +1,9 @@
-
 #include "matrix.h"
 
-tui::pos tui::operator+(tui::pos lhs, int rhs) {
-    lhs.x += rhs;
-    lhs.y += rhs;
-    return lhs;
+#include <iostream>
+
+tui::pos tui::operator+(pos lhs, pos rhs) {
+    return pos(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
 bool tui::operator<(pos lhs, pos rhs) {
@@ -19,14 +18,28 @@ tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) 
     }
 }
 
-void tui::render::write(TerminalMatrix& matrix, pos start, std::string text) {
-    for (size_t i = 0; i < text.size(); i++) {
-        matrix[pos(start.x + i, start.y)] = text[i];
-    }
+bool tui::render::busy(TerminalMatrix& matrix, pos where) {
+    return (matrix[where] == matrix.filler());
 }
 
-void tui::render::write(TerminalMatrix& matrix, pos start, char letter) {
-    matrix[start] = letter;
+bool tui::render::busy(TerminalMatrix& matrix, pos start, pos end) {
+    for (std::size_t row = start.y; row < end.y; row++) {
+        for (std::size_t col = start.x; col < end.x; col++) {
+            if (busy(matrix, pos(col, row)))
+                return true;
+        }
+    }
+    return false;
+}
+
+void tui::render::write(TerminalMatrix& matrix, pos where, char letter) {
+    matrix[where] = letter;
+}
+
+void tui::render::write(TerminalMatrix& matrix, pos start, std::string text) {
+    for (size_t i = 0; i < text.size(); i++) {
+        write(matrix, pos(start.x + i, start.y), text[i]);
+    }
 }
 
 void tui::render::wipe(TerminalMatrix& matrix, pos start, pos end) {
@@ -47,4 +60,8 @@ std::string tui::render::interpret(TerminalMatrix& matrix) {
         result.push_back('\n');
     }
     return result;
+}
+
+void tui::render::clear() {
+     std::cout << "\033[2J\033[1;1H";
 }

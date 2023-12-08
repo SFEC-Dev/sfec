@@ -22,16 +22,18 @@ int main() {
     set_context(&new_context);
 
     std::cout << "\033[?25l";
+    system("clear");
     while (!exit) {
-        render::clear();
-        while (true){
-            handler.handle();
+        handler.handle();
 
-            if (is_any_pressed())
-                break;
+        // while (true){    
+        //     handler.handle();
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        };
+        //     if (is_any_pressed())
+        //         break;
+
+        //     std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        // };
 
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
             exit = true;
@@ -45,8 +47,11 @@ int main() {
         render_text({0,0}, is_any_pressed() ? "true" : "false");
         render_text({0, current_matrix().height()-1}, "press q to quit");
 
+        std::cout << "\033[H";
+        std::cout.flush();
+
         draw();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     std::cout << "\033[?25h";

@@ -64,5 +64,4 @@ std::string tui::render::interpret(TerminalMatrix& matrix) {
 
 void tui::render::clear() {
     system("clear");
-    std::cout.flush();
 }

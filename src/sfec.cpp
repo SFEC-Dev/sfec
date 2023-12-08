@@ -37,7 +37,7 @@ int main() {
         render_text({0, current_matrix().height()-1}, "press q to quit");
 
         draw();
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
     std::cout << "\033[?25h";

@@ -20,7 +20,6 @@ tui::style& tui::current_style() {
 }
 
 void tui::draw() {
-    render::clear();
     std::cerr << render::interpret(current_matrix());
 }
 

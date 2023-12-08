@@ -23,6 +23,7 @@ int main() {
 
     std::cout << "\033[?25l";
     while (!exit) {
+        render::clear();
         while (true){
             handler.handle();
 
@@ -45,7 +46,7 @@ int main() {
         render_text({0, current_matrix().height()-1}, "press q to quit");
 
         draw();
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 
     std::cout << "\033[?25h";

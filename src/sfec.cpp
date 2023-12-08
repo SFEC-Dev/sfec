@@ -28,6 +28,12 @@ int main() {
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
             exit = true;
 
+        //static int select_id
+        //widgets::start_column(select_id);
+        //widgets::selectable("text", select_id == 1)
+        //widgets;:end_column();
+
+
         render_text({0, current_matrix().height()-1}, "press q to quit");
 
         draw();

@@ -36,6 +36,8 @@ namespace tui {
 
     void render_text(pos start, std::string text);
     
-    void text_widget(std::string text);
+    namespace widgets {
+        void text(std::string text);
+    }
 }
 

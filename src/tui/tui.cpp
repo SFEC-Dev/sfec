@@ -22,7 +22,7 @@ tui::style& tui::current_style() {
 void tui::draw() {
     render::clear();
     std::cout << render::interpret(current_matrix());
-    //std::cout.flush();
+    std::cout.flush();
 }
 
 bool tui::is_any_pressed() {

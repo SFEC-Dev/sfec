@@ -1,3 +1,11 @@
+
+<div align="center">
+  
+### *`file explorer` written by `crosses` for true gigachads* 💪
+
+<br>
+</div>
+
 # Todo
 do custom_settings in config for icons.
 

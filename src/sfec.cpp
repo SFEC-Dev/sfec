@@ -21,8 +21,9 @@ int main() {
 
     set_context(&new_context);
 
+    std::cout << "\033[?25l";
     while (!exit) {
-        handler.handle();
+        handler.handle();   
 
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
             exit = true;
@@ -30,8 +31,10 @@ int main() {
         render_text({0, current_matrix().height()-1}, "press q to quit");
 
         draw();
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
+
+    std::cout << "\033[?25h";
 
     return 0;
 }

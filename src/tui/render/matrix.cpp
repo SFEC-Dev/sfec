@@ -63,5 +63,6 @@ std::string tui::render::interpret(TerminalMatrix& matrix) {
 }
 
 void tui::render::clear() {
-     std::cout << "\033[2J\033[1;1H";
+    system("clear");
+    std::cout.flush();
 }

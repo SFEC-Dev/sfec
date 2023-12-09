@@ -6,9 +6,6 @@
 <br>
 </div>
 
-# Todo
-do custom_settings in config for icons.
-
 
 <br>
 </div>

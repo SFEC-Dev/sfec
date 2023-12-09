@@ -5,6 +5,7 @@
 #include "event/event_handler.h"
 #include "event/key_handler.h"
 #include "render/matrix.h"
+#include "render/color.h"
 
 namespace tui {
     struct style {
@@ -36,6 +37,7 @@ namespace tui {
     bool is_any_pressed();
 
     void render_text(pos start, std::string text);
+    void render_text_styled(pos start, std::string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
     
     namespace widgets {
         void text(std::string text);

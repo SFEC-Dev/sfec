@@ -1,6 +1,7 @@
 #pragma once
+#include "matrix.h"
+
 #include <algorithm>
-#include <string>
 
 namespace tui {
     struct Color {
@@ -17,6 +18,7 @@ namespace tui {
     };
 
     enum FLAGS {
+        FLAG_NONE        = 0,
         FLAG_BOLD        = 1 << 0,
         FLAG_ITALIC      = 1 << 1,
         FLAG_DIM         = 1 << 2,
@@ -26,11 +28,17 @@ namespace tui {
         FLAG_HIDDEN      = 1 << 6         
     };
 
-    const std::string start_seq{"\033["};
-    const std::string end_seq{"\033[0m"};
-
     typedef int text_flags;
-    [[nodiscard]] std::string stylize(std::string_view str, text_flags flags);
-    [[nodiscard]] std::string colorize(std::string_view str, Color text_col = Color(), Color bg_col = Color());
 
+    namespace render {
+        void write_styled(TerminalMatrix& matrix, pos where, char letter, 
+                          Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+                          
+        void write_styled(TerminalMatrix& matrix, pos start, std::string text, 
+                          Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+
+        namespace color {
+            std::string get_style(Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+        }
+    }
 }

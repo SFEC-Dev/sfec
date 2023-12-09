@@ -8,8 +8,10 @@ add_executable(
   tui/event/event_handler.cpp
   tui/event/key_handler.h
   tui/event/key_handler.cpp
-  tui/render/matrix.cpp
+  tui/render/color.h
+  tui/render/color.cpp
   tui/render/matrix.h
+  tui/render/matrix.cpp
   tui/utils/icon.h
   tui/utils/icon.cpp
   config/options.h

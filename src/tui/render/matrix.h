@@ -11,8 +11,11 @@ namespace tui {
         int y;
     };
 
-    pos operator+(pos lhs, pos rhs);
-    bool operator<(pos lhs, pos rhs);
+    pos operator+(const pos& lhs, const pos& rhs);
+    bool operator<(const pos& lhs, const pos& rhs);
+    bool operator==(const pos& lhs, const pos& rhs);
+
+    pos calculate_pos(pos what, int width, int height);
 
     struct rect {
         rect(pos start_, pos end_) : start{start_}, end{end_}{};
@@ -24,17 +27,20 @@ namespace render {
 
     class TerminalMatrix {
         std::map<pos, char> matrix_;
+        std::map<pos, std::pair<pos, std::string>> style_;
 
         int width_;
         int height_;
 
         char filler_;
+
+        pos last_style_pos_;
     public:
         TerminalMatrix(int width, int height, char filler = ' ');
         ~TerminalMatrix();
 
         char& operator[](pos where) {
-            return matrix_[pos(where.x % width_, (where.y + static_cast<int>(where.x / width_)) % height_)];
+            return matrix_[calculate_pos(where, width_, height_)];
         }
 
         int width() const {
@@ -51,6 +57,14 @@ namespace render {
 
         int size() const {
             return width_ * height_;
+        }
+
+        std::map<pos, std::pair<pos, std::string>>& style() {
+            return style_;
+        }
+
+        pos& last_style_pos() {
+            return last_style_pos_;
         }
         
         using iterator = std::map<pos, char>::iterator;

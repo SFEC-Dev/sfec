@@ -28,8 +28,10 @@ int main() {
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
             exit = true;
 
-        render_text({0,0}, is_any_pressed() ? "true" : "false");
-        render_text({0, current_matrix().height()-1}, "press q to quit");
+        std::string label = "I am text with ";
+        render_text({0,0}, label);
+        render_text_styled(pos(label.size(), 0), "no style", Color(55, 225, 55), Color(225, 55, 55), FLAG_ITALIC | FLAG_BOLD | FLAG_UNDERLINED | FLAG_BLINK);
+        render_text_styled({0, current_matrix().height()-1}, "press q to quit", Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
         render_text({0,2}, icon::get_icon("some.cpp"));
 
         render::draw();

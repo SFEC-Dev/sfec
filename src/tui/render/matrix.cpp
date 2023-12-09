@@ -3,12 +3,20 @@
 
 #include <iostream>
 
-tui::pos tui::operator+(pos lhs, pos rhs) {
+tui::pos tui::operator+(const pos& lhs, const pos& rhs) {
     return pos(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
-bool tui::operator<(pos lhs, pos rhs) {
+bool tui::operator<(const pos& lhs, const pos& rhs) {
     return std::tie(lhs.x, lhs.y) < std::tie(rhs.x, rhs.y);
+}
+
+bool tui::operator==(const pos& lhs, const pos& rhs) {
+    return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
+}
+
+tui::pos tui::calculate_pos(pos what, int width, int height) {
+    return pos(what.x % width, (what.y + static_cast<int>(what.x / width)) % height);
 }
 
 tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler} {
@@ -61,12 +69,24 @@ void tui::render::wipe(TerminalMatrix& matrix, pos start, pos end) {
     }
 }
 
+const std::string end_seq{"\033[0m"};
+
 std::string tui::render::interpret(TerminalMatrix& matrix) {
     std::string result{};
     result.reserve(matrix.size());
     for (std::size_t row = 0; row < matrix.height(); row++) {
         for (std::size_t col = 0; col < matrix.width(); col++) {
+            auto is_style = matrix.style().find(pos(col, row));
+            if (is_style != matrix.style().cend()) {
+                result.append(is_style->second.second);
+                matrix.last_style_pos() = calculate_pos(is_style->second.first, matrix.width(), matrix.height());
+            }
+
+            if (pos(col, row) == matrix.last_style_pos())
+                 result.append(end_seq);
+
             result.push_back(matrix[pos(col, row)]);
+            
         }
         result.push_back('\n');
     }

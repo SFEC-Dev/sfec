@@ -5,8 +5,7 @@
 #include <vector>
 #include <variant>
 
-#include "../tui/utils/style.h"
-
+#include "../tui/render/color.h"
 namespace config {
     enum class OPTIONS_TYPE{
         INT,

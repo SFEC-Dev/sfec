@@ -1,6 +1,5 @@
 #include "key_handler.h"
 
-#include <iostream>
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <unistd.h>

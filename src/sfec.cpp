@@ -1,9 +1,9 @@
 #include "tui/tui.h"
 
-#include <string>
-#include <thread>
 #include <chrono>
+#include <string>
 #include <sys/ioctl.h>
+#include <thread>
 #include <unistd.h>
 
 int main() {

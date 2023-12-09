@@ -101,4 +101,5 @@ void tui::render::draw() {
     std::cout << "\033[H";
     std::cout.flush();
     std::cout << render::interpret(current_matrix());
+    current_matrix().style().clear();
 }

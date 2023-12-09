@@ -1,7 +1,5 @@
 #pragma once
-#include <memory>
-#include <iostream>
-
+#include "event/keybinds/keybinds.h"
 #include "event/event_handler.h"
 #include "event/key_handler.h"
 #include "render/matrix.h"
@@ -41,6 +39,9 @@ namespace tui {
     
     namespace widgets {
         void text(std::string text);
+        void listbox(int& value, std::vector<std::string> items);
     }
+
+    void reset();
 }
 

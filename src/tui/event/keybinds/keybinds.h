@@ -57,14 +57,7 @@ struct key_proxy
     }
 };
 
-std::map<event, key_proxy> current_bindings{
-    {DELETE, key_proxy({key_combine({KEY_LOWERCASE_D, KEY_UPPERCASE_D})})},
-    {UP, key_proxy({KEY_LOWERCASE_K})},
-    {DOWN, key_proxy({KEY_LOWERCASE_J})},
-    {LEFT, key_proxy({KEY_LOWERCASE_H})},
-    {RIGHT, key_proxy({KEY_LOWERCASE_L})},
-    {ADD, key_proxy({KEY_LOWERCASE_A})}};
-
+extern std::map<event, key_proxy> current_bindings;
 bool get_event(event action);
 
 }

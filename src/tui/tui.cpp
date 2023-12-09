@@ -30,3 +30,7 @@ bool tui::is_any_pressed() {
 bool tui::is_key_pressed(keys key) {
     return (is_any_pressed() && get_pressed_key() == key);
 }
+
+void tui::reset() {
+    g_tui->last_item_pos = pos(0,0);
+}

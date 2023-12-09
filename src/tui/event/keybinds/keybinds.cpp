@@ -1,4 +1,6 @@
-#include "keybinds.h"
+#include "../../tui.h"
+#include <chrono>
+#include <vector>
 
 std::map<tui::binds::event, tui::binds::key_proxy> tui::binds::current_bindings{
     {DELETE, key_proxy({key_combine({KEY_LOWERCASE_D, KEY_UPPERCASE_D})})},
@@ -8,6 +10,46 @@ std::map<tui::binds::event, tui::binds::key_proxy> tui::binds::current_bindings{
     {RIGHT, key_proxy({KEY_LOWERCASE_L})},
     {ADD, key_proxy({KEY_LOWERCASE_A})}};
 
+bool check_binds(tui::binds::key_combine combine) {
+    auto& buffer = tui::g_tui->key_buffer;
+    auto& future = tui::g_tui->buffer_time;
+
+    if (std::chrono::steady_clock::now() <= future) {
+        tui::current_event().add_frame();
+    }
+
+    if (std::chrono::steady_clock::now() >= future && !buffer.empty()) {
+        buffer.clear();
+        return false;
+    }
+
+    if (!tui::is_any_pressed()) {
+        return false;
+    }
+
+    if (buffer.empty()) {
+        if (is_key_pressed(combine[0])) {
+            buffer.push_back(combine[0]);
+            future = std::chrono::steady_clock::now() + std::chrono::seconds(3);
+        }
+    } else {
+        if ((buffer[buffer.size() - 1] == combine[buffer.size() - 1]) &&
+            is_key_pressed(combine[buffer.size()])) {
+            future = std::chrono::steady_clock::now() + std::chrono::seconds(3);
+            buffer.push_back(combine[buffer.size()]);
+        } else {
+            buffer.clear();
+            return false;
+        }
+
+        if (buffer == combine.key_sequence) {
+            buffer.clear();
+            return true;
+        }
+    }
+
+    return false;
+}
 
 bool tui::binds::get_event(event action) {
     auto bind = current_bindings.find(action);
@@ -20,9 +62,11 @@ bool tui::binds::get_event(event action) {
                 return true;
         } else if (const key_combine* key =
                        std::get_if<key_combine>(&keys_variant)) {
-            return false;
+            if (check_binds(*key)) {
+                return true;
+                ;
+            }
         }
     }
     return false;
 }
-

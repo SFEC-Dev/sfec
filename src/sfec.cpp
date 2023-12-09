@@ -29,11 +29,13 @@ int main() {
             exit = true;
      
         static int some_value;
-        widgets::listbox(some_value, {"pivo", "grechka"});
+        widgets::listbox(some_value, {"pivo", "grechka", "plov", "pelmeni", "borsh", "polba"});
         render_text({0, 35}, std::to_string(some_value));
+        render_text({0, 30}, std::to_string(g_tui->key_buffer.size()));
      
      
         render_text_styled({0, current_matrix().height()-1}, "press q to quit", Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
+
         
         render::draw();
         reset();

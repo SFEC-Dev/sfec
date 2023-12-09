@@ -4,6 +4,7 @@
 #include "event/key_handler.h"
 #include "render/matrix.h"
 #include "render/color.h"
+#include <chrono>
 
 namespace tui {
     struct style {
@@ -15,7 +16,10 @@ namespace tui {
                 g_event{std::move(handler)}, g_matrix{std::move(matrix)} {};
 
         vec2d last_item_pos;
-        
+
+        std::vector<tui::keys>key_buffer;
+
+        std::chrono::steady_clock::time_point buffer_time;
 
         event_handler* g_event;
         render::TerminalMatrix* g_matrix;

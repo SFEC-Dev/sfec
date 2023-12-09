@@ -8,20 +8,19 @@ void tui::set_context(tui::context* new_context) {
 }
 
 tui::keys tui::get_pressed_key() {
-    return g_tui->g_handler->get_pressed();
+    return g_tui->g_event->get_key_handler().get_pressed();
 }
 
 tui::render::TerminalMatrix& tui::current_matrix() {
     return *g_tui->g_matrix;
 }
 
-tui::style& tui::current_style() {
-    return g_tui->g_style;
+tui::event_handler& tui::current_event() {
+    return *g_tui->g_event;
 }
 
-void tui::draw() {
-    //std::cout.flush();
-    std::cout << render::interpret(current_matrix());
+tui::style& tui::current_style() {
+    return g_tui->g_style;
 }
 
 bool tui::is_any_pressed() {

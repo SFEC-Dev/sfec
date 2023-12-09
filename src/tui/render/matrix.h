@@ -1,3 +1,5 @@
+#pragma once
+
 #include <map>
 #include <string>
 
@@ -29,7 +31,7 @@ namespace render {
         char filler_;
     public:
         TerminalMatrix(int width, int height, char filler = ' ');
-        ~TerminalMatrix() { clear(); };
+        ~TerminalMatrix();
 
         char& operator[](pos where) {
             return matrix_[pos(where.x % width_, (where.y + static_cast<int>(where.x / width_)) % height_)];
@@ -50,7 +52,7 @@ namespace render {
         int size() const {
             return width_ * height_;
         }
-
+        
         using iterator = std::map<pos, char>::iterator;
         using const_iterator = std::map<pos, char>::const_iterator;
 
@@ -70,5 +72,7 @@ namespace render {
     void wipe(TerminalMatrix& matrix, pos start, pos end);
 
     std::string interpret(TerminalMatrix& matrix);
+
+    void draw();
 }
 }

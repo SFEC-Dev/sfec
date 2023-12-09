@@ -2,6 +2,7 @@
 #include <memory>
 #include <iostream>
 
+#include "event/event_handler.h"
 #include "event/key_handler.h"
 #include "render/matrix.h"
 
@@ -11,26 +12,26 @@ namespace tui {
     };
 
     struct context {
-        context(key_handler* handler, render::TerminalMatrix* matrix) :
-                                    g_handler{std::move(handler)}, g_matrix{std::move(matrix)} {};
+        context(event_handler* handler, render::TerminalMatrix* matrix) :
+                g_event{std::move(handler)}, g_matrix{std::move(matrix)} {};
 
         pos last_item_pos;
         
-        style g_style;
-        key_handler* g_handler;
+
+        event_handler* g_event;
         render::TerminalMatrix* g_matrix;
+        style g_style;
     };
 
     extern context* g_tui;
 
     void set_context(context* new_context);
 
-    keys get_pressed_key();
     render::TerminalMatrix& current_matrix();
+    event_handler& current_event();
     style& current_style();
 
-    void draw();
-
+    keys get_pressed_key();
     bool is_key_pressed(const keys key);
     bool is_any_pressed();
 

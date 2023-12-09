@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include "../tui.h"
 
 #include <iostream>
 
@@ -11,11 +12,21 @@ bool tui::operator<(pos lhs, pos rhs) {
 }
 
 tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler} {
+    // For hidden cursor
+    std::cout << "\033[?25l";
+
     for (std::size_t row = 0; row < height; row++) {
         for (std::size_t col = 0; col < width; col++) {
             matrix_.emplace(pos(col, row), filler);
         }
     }
+}
+
+tui::render::TerminalMatrix::~TerminalMatrix() {
+    // For show cursor
+    std::cout << "\033[?25h";
+
+    clear();
 }
 
 bool tui::render::busy(TerminalMatrix& matrix, pos where) {
@@ -64,4 +75,10 @@ std::string tui::render::interpret(TerminalMatrix& matrix) {
 
 void tui::render::clear() {
     system("clear");
+}
+
+void tui::render::draw() {
+    std::cout << "\033[H";
+    std::cout.flush();
+    std::cout << render::interpret(current_matrix());
 }

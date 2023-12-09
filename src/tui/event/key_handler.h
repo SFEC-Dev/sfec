@@ -1,4 +1,4 @@
-
+#pragma once
 #include <termios.h>
 
 namespace tui {

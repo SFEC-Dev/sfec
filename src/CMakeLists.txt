@@ -1,11 +1,11 @@
 add_executable(
   ${PROJECT_NAME}
   sfec.cpp
-  tui/utils/style.h
-  tui/utils/style.cpp
   tui/tui.h
   tui/tui.cpp
   tui/tui_widgets.cpp
+  tui/event/event_handler.h
+  tui/event/event_handler.cpp
   tui/event/key_handler.h
   tui/event/key_handler.cpp
   tui/render/matrix.cpp

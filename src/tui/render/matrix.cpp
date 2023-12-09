@@ -1,7 +1,5 @@
 #include "matrix.h"
 
-#include <iostream>
-
 tui::pos tui::operator+(pos lhs, pos rhs) {
     return pos(lhs.x + rhs.x, lhs.y + rhs.y);
 }

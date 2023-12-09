@@ -1,10 +1,9 @@
 #include "tui/tui.h"
 
-#include <chrono>
 #include <string>
 #include <sys/ioctl.h>
-#include <thread>
 #include <unistd.h>
+#include "tui/utils/icon.h"
 
 int main() {
     using namespace tui;
@@ -31,6 +30,7 @@ int main() {
 
         render_text({0,0}, is_any_pressed() ? "true" : "false");
         render_text({0, current_matrix().height()-1}, "press q to quit");
+        render_text({0,2}, icon::get_icon("some.cpp"));
 
         render::draw();
     }

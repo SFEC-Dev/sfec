@@ -1,37 +1,39 @@
 #pragma once
 
+#include <string>
+
 namespace icon {
-    constexpr const char16_t* default_file = u"\ue64e";
-    constexpr const char16_t* dir = u"\uf4d3";
-    constexpr const char16_t* empty_dir = u"\uf413";
-    constexpr const char16_t* download_dir = u"\uf498";
-    constexpr const char16_t* document = u"\uf02d";
-    constexpr const char16_t* image = u"\ue60d";
-    constexpr const char16_t* archive = u"\uf187";
-    constexpr const char16_t* bin = u"\ueae8";
-    constexpr const char16_t* git = u"\ue702";
-    constexpr const char16_t* c = u"\ue61e";
-    constexpr const char16_t* cmake = u"\ue673";
-    constexpr const char16_t* cpp = u"\ue61d";
-    constexpr const char16_t* h = u"\uf0fd";
-    constexpr const char16_t* python = u"\ue73c";
-    constexpr const char16_t* javascript = u"\ue781";
-    constexpr const char16_t* typescript = u"\ue628";
-    constexpr const char16_t* java = u"\ue738";
-    constexpr const char16_t* php = u"\ue73d";
-    constexpr const char16_t* ruby = u"\ue791";
-    constexpr const char16_t* c_sharp = u"\ue648";
-    constexpr const char16_t* f_sharp = u"\ue65a";
-    constexpr const char16_t* html = u"\ue736";
-    constexpr const char16_t* css = u"\uf13c";
-    constexpr const char16_t* react = u"\ue7ba";
-    constexpr const char16_t* markdow = u"\ue609";
-    constexpr const char16_t* golang = u"\ue627";
-    constexpr const char16_t* haskell = u"\ue777";
-    constexpr const char16_t* scala = u"\ue737";
-    constexpr const char16_t* kotlin = u"\ue634";
-    constexpr const char16_t* vim = u"\ue62b";
-    constexpr const char16_t* rust = u"\ue7a8";
-}
+   static const std::string default_file = "\ue64e";
+   static const std::string dir = "\uf4d3";
+   static const std::string empty_dir = "\uf413";
+   static const std::string download_dir = "\uf498";
+   static const std::string document = "\uf02d";
+   static const std::string image = "\ue60d";
+   static const std::string archive = "\uf187";
+   static const std::string bin = "\ueae8";
+   static const std::string git = "\ue702";
+   static const std::string c = "\ue61e";
+   static const std::string cmake = "\ue673";
+   static const std::string cpp = "\ue61d";
+   static const std::string h = "\uf0fd";
+   static const std::string python = "\ue73c";
+   static const std::string javascript = "\ue781";
+   static const std::string typescript = "\ue628";
+   static const std::string java = "\ue738";
+   static const std::string php = "\ue73d";
+   static const std::string ruby = "\ue791";
+   static const std::string c_sharp = "\ue648";
+   static const std::string f_sharp = "\ue65a";
+   static const std::string html = "\ue736";
+   static const std::string css = "\uf13c";
+   static const std::string react = "\ue7ba";
+   static const std::string markdow = "\ue609";
+   static const std::string golang = "\ue627";
+   static const std::string haskell = "\ue777";
+   static const std::string scala = "\ue737";
+   static const std::string kotlin = "\ue634";
+   static const std::string vim = "\ue62b";
+   static const std::string rust = "\ue7a8";
 
-
+ std::string get_icon(std::string name);
+} // namespace icon

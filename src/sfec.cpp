@@ -26,14 +26,14 @@ int main() {
     while (!exit) {
         handler.handle();
 
-        // while (true){    
-        //     handler.handle();
+        while (true){    
+            handler.handle();
 
-        //     if (is_any_pressed())
-        //         break;
+            if (is_any_pressed())
+                break;
 
-        //     std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        // };
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        };
 
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
             exit = true;

@@ -3,7 +3,7 @@
 
 #include "icon.h"
 
-std::map<std::string, const char16_t*> ext_icons{
+std::map<std::string, std::string> ext_icons{
     {"c", icon::c},           {"cpp", icon::cpp},   {"py", icon::python},
     {"html", icon::html},     {"css", icon::css},   {"js", icon::javascript},
     {"ts", icon::typescript}, {"go", icon::golang}, {"cs", icon::c_sharp},
@@ -11,12 +11,12 @@ std::map<std::string, const char16_t*> ext_icons{
 
 };
 
-std::map<std::string, const char16_t*> filename_icons{
+std::map<std::string, std::string> filename_icons{
     {"CMakeLists.txt", icon::cmake}, {"gitignor", icon::git}, {"git", icon::git}
 
 };
 
-const char16_t* get_icon(std::string name) {
+std::string icon::get_icon(std::string name) {
     if (filename_icons.find(name) != filename_icons.cend()) {
         return filename_icons[name];
     }

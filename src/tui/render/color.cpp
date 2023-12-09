@@ -46,18 +46,18 @@ std::string tui::render::color::get_style(Color text_col, Color bg_col, text_fla
     return result;
 }
 
-void tui::render::write_styled(TerminalMatrix& matrix, pos where, char letter, 
+void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, char letter, 
                     Color text_col, Color bg_col, text_flags flags) {
                         
     write(matrix, where, letter);
-    matrix.style().emplace(where, std::pair<pos, std::string>(pos(where.x + 1, where.y), 
+    matrix.style().emplace(where, std::pair<vec2d, std::string>(vec2d(where.x + 1, where.y), 
                                             color::get_style(text_col, bg_col, flags)));
 }
                     
-void tui::render::write_styled(TerminalMatrix& matrix, pos start, std::string text, 
+void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::string text, 
                     Color text_col, Color bg_col, text_flags flags) {
 
     write(matrix, start, text);                   
-    matrix.style().emplace(start, std::pair<pos, std::string>(pos(start.x + text.size(), start.y), 
+    matrix.style().emplace(start, std::pair<vec2d, std::string>(vec2d(start.x + text.size(), start.y), 
                                                       color::get_style(text_col, bg_col, flags)));
 }

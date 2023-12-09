@@ -27,8 +27,6 @@ int main() {
 
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
             exit = true;
-
-     
      
         static int some_value;
         widgets::listbox(some_value, {"pivo", "grechka"});

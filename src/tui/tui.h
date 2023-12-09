@@ -14,7 +14,7 @@ namespace tui {
         context(event_handler* handler, render::TerminalMatrix* matrix) :
                 g_event{std::move(handler)}, g_matrix{std::move(matrix)} {};
 
-        pos last_item_pos;
+        vec2d last_item_pos;
         
 
         event_handler* g_event;
@@ -30,12 +30,14 @@ namespace tui {
     event_handler& current_event();
     style& current_style();
 
+    vec2d& cursor_pos();
+
     keys get_pressed_key();
     bool is_key_pressed(const keys key);
     bool is_any_pressed();
 
-    void render_text(pos start, std::string text);
-    void render_text_styled(pos start, std::string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+    void render_text(vec2d start, std::string text);
+    void render_text_styled(vec2d start, std::string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
     
     namespace widgets {
         void text(std::string text);
@@ -43,5 +45,9 @@ namespace tui {
     }
 
     void reset();
+
+    void begin_child();     
+
+    void end_child();
 }
 

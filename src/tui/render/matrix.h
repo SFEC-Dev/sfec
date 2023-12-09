@@ -4,42 +4,42 @@
 #include <string>
 
 namespace tui {
-    struct pos {
-        pos() = default;
-        pos(int x_, int y_) : x{x_}, y{y_}{};
+    struct vec2d {
+        vec2d() = default;
+        vec2d(int x_, int y_) : x{x_}, y{y_}{};
         int x;
         int y;
     };
 
-    pos operator+(const pos& lhs, const pos& rhs);
-    bool operator<(const pos& lhs, const pos& rhs);
-    bool operator==(const pos& lhs, const pos& rhs);
+    vec2d operator+(const vec2d& lhs, const vec2d& rhs);
+    bool operator<(const vec2d& lhs, const vec2d& rhs);
+    bool operator==(const vec2d& lhs, const vec2d& rhs);
 
-    pos calculate_pos(pos what, int width, int height);
+    vec2d calculate_pos(vec2d what, int width, int height);
 
     struct rect {
-        rect(pos start_, pos end_) : start{start_}, end{end_}{};
-        pos start;
-        pos end;
+        rect(vec2d start_, vec2d end_) : start{start_}, end{end_}{};
+        vec2d start;
+        vec2d end;
     };
 namespace render {
     void clear();
 
     class TerminalMatrix {
-        std::map<pos, char> matrix_;
-        std::map<pos, std::pair<pos, std::string>> style_;
+        std::map<vec2d, char> matrix_;
+        std::map<vec2d, std::pair<vec2d, std::string>> style_;
 
         int width_;
         int height_;
 
         char filler_;
 
-        pos last_style_pos_;
+        vec2d last_style_pos_;
     public:
         TerminalMatrix(int width, int height, char filler = ' ');
         ~TerminalMatrix();
 
-        char& operator[](pos where) {
+        char& operator[](vec2d where) {
             return matrix_[calculate_pos(where, width_, height_)];
         }
 
@@ -59,16 +59,16 @@ namespace render {
             return width_ * height_;
         }
 
-        std::map<pos, std::pair<pos, std::string>>& style() {
+        std::map<vec2d, std::pair<vec2d, std::string>>& style() {
             return style_;
         }
 
-        pos& last_style_pos() {
+        vec2d& last_style_pos() {
             return last_style_pos_;
         }
         
-        using iterator = std::map<pos, char>::iterator;
-        using const_iterator = std::map<pos, char>::const_iterator;
+        using iterator = std::map<vec2d, char>::iterator;
+        using const_iterator = std::map<vec2d, char>::const_iterator;
 
         iterator begin() { return matrix_.begin(); }
         iterator end() { return matrix_.end(); }
@@ -77,13 +77,13 @@ namespace render {
         const_iterator cend() const { return matrix_.cend(); }
 
     };
-    bool busy(TerminalMatrix& matrix, pos where);
-    bool busy(TerminalMatrix& matrix, pos start, pos end);
+    bool busy(TerminalMatrix& matrix, vec2d where);
+    bool busy(TerminalMatrix& matrix, vec2d start, vec2d end);
 
-    void write(TerminalMatrix& matrix, pos where, char letter);
-    void write(TerminalMatrix& matrix, pos start, std::string text);
+    void write(TerminalMatrix& matrix, vec2d where, char letter);
+    void write(TerminalMatrix& matrix, vec2d start, std::string text);
 
-    void wipe(TerminalMatrix& matrix, pos start, pos end);
+    void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
 
     std::string interpret(TerminalMatrix& matrix);
 

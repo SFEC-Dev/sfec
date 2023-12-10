@@ -21,7 +21,7 @@ void selectable(std::string label, bool condition, tui::pos size) {
     label.resize(size.x, ' ');
 
     if (condition)
-        tui::render_text_styled(tui::g_tui->last_item_pos, label, tui::Color(200, 200, 75), tui::Color(255,255,255));
+        tui::render_text_styled(tui::g_tui->last_item_pos, label, tui::Color(), tui::Color(), tui::FLAG_REVERSE | tui::FLAG_BOLD);
     else
         tui::render_text(tui::g_tui->last_item_pos, label);
 
@@ -40,6 +40,6 @@ void tui::widgets::listbox(int& value, std::vector<std::string> items) {
             value--;
 
     for (size_t i = 0; i < items.size(); i++) {
-        selectable(items[i], value == i, pos(12, 1));
+        selectable(items[i], value == i, pos(22, 1));
     }
 }

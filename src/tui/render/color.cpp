@@ -3,7 +3,10 @@
 const std::string start_seq{"\033["};
 
 std::string tui::render::color::get_style(Color text_col, Color bg_col, text_flags flags) {
-    std::string result = start_seq;
+    std::string result;
+    
+    if (flags != FLAG_NONE)
+        result = start_seq;
     
     if (flags & FLAG_BOLD) {
         result.append("1;");

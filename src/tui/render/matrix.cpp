@@ -20,25 +20,25 @@ tui::vec2d tui::calculate_pos(vec2d what, int width, int height) {
 }
 
 tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler} {
-    // For hidden cursor
-    std::cout << "\033[?25l";
-
     for (std::size_t row = 0; row < height; row++) {
         for (std::size_t col = 0; col < width; col++) {
-            matrix_.emplace(vec2d(col, row), filler);
+            matrix_[vec2d(col, row)].first = filler;
         }
     }
 }
 
-tui::render::TerminalMatrix::~TerminalMatrix() {
-    // For show cursor
-    std::cout << "\033[?25h";
 
-    clear();
+tui::render::TerminalMatrix::TerminalMatrix(int width, int height, TerminalMatrix& from) : width_(width), height_(height), filler_{from.filler()} {
+    for (std::size_t row = 0; row < height; row++) {
+        for (std::size_t col = 0; col < width; col++) {
+            matrix_[vec2d(col, row)] = from[vec2d(col, row)];
+        }
+    }
 }
 
+
 bool tui::render::busy(TerminalMatrix& matrix, vec2d where) {
-    return (matrix[where] == matrix.filler());
+    return (matrix[where].first == matrix.filler());
 }
 
 bool tui::render::busy(TerminalMatrix& matrix, vec2d start, vec2d end) {
@@ -52,7 +52,11 @@ bool tui::render::busy(TerminalMatrix& matrix, vec2d start, vec2d end) {
 }
 
 void tui::render::write(TerminalMatrix& matrix, vec2d where, char letter) {
-    matrix[where] = letter;
+    matrix[where].first = letter;
+}
+
+void tui::render::write(TerminalMatrix& matrix, vec2d where, std::pair<char, std::string> content) {
+    matrix[where] = content;
 }
 
 void tui::render::write(TerminalMatrix& matrix, vec2d start, std::string text) {
@@ -61,10 +65,20 @@ void tui::render::write(TerminalMatrix& matrix, vec2d start, std::string text) {
     }
 }
 
+void tui::render::write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from) {
+    for (std::size_t row = 0; row < from.height(); row++) {
+        for (std::size_t col = 0; col < from.width(); col++) {
+             write(matrix, vec2d(col + start.x, row + start.y), from[vec2d(col, row)]);
+        }
+    }
+}
+
 void tui::render::wipe(TerminalMatrix& matrix, vec2d start, vec2d end) {
     for (std::size_t row = start.y; row < end.y; row++) {
         for (std::size_t col = start.x; col < end.x; col++) {
-            matrix[vec2d(col, row)] = matrix.filler();
+            matrix[vec2d(col, row)].first = matrix.filler();
+            if (!matrix[vec2d(col, row)].second.empty())
+                matrix[vec2d(col, row)].second.clear();
         }
     }
 }
@@ -75,17 +89,14 @@ std::string tui::render::interpret(TerminalMatrix& matrix) {
     std::string result{};
     result.reserve(matrix.size());
     for (std::size_t row = 0; row < matrix.height(); row++) {
-        for (std::size_t col = 0; col < matrix.width(); col++) {
-            auto is_style = matrix.style().find(vec2d(col, row));
-            if (is_style != matrix.style().cend()) {
-                result.append(is_style->second.second);
-                matrix.last_style_pos() = calculate_pos(is_style->second.first, matrix.width(), matrix.height());
-            }
-
-            if (vec2d(col, row) == matrix.last_style_pos())
-                 result.append(end_seq);
-
-            result.push_back(matrix[vec2d(col, row)]);
+        for (std::size_t col = 0; col < matrix.width(); col++) { 
+            if (!matrix[vec2d(col, row)].second.empty()) {
+                result.append(matrix[vec2d(col, row)].second);
+                result.push_back(matrix[vec2d(col, row)].first);
+                result.append(end_seq);
+            } 
+            else
+                result.push_back(matrix[vec2d(col, row)].first);
             
         }
         result.push_back('\n');
@@ -101,5 +112,5 @@ void tui::render::draw() {
     std::cout << "\033[H";
     std::cout.flush();
     std::cout << render::interpret(current_matrix());
-    current_matrix().style().clear();
+    wipe(current_matrix(), vec2d(0,0), vec2d(current_matrix().width(), current_matrix().height()));
 }

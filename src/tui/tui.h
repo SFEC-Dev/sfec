@@ -4,7 +4,10 @@
 #include "event/key_handler.h"
 #include "render/matrix.h"
 #include "render/color.h"
+
 #include <chrono>
+#include <iostream>
+#include <memory>
 
 namespace tui {
     struct style {
@@ -12,18 +15,31 @@ namespace tui {
     };
 
     struct context {
-        context(event_handler* handler, render::TerminalMatrix* matrix) :
-                g_event{std::move(handler)}, g_matrix{std::move(matrix)} {};
+        context(event_handler* handler, std::unique_ptr<render::TerminalMatrix> matrix) :
+                g_event{std::move(handler)}, g_matrix{std::move(matrix)} {
+        
+            // For hidden cursor
+            std::cout << "\033[?25l";
+        };
+
+        ~context() {
+            // For show cursor
+            std::cout << "\033[?25h";
+            render::clear();
+        }
 
         vec2d last_item_pos;
+        vec2d last_child_pos;
 
         std::vector<tui::keys>key_buffer;
 
         std::chrono::steady_clock::time_point buffer_time;
 
         event_handler* g_event;
-        render::TerminalMatrix* g_matrix;
+        std::unique_ptr<render::TerminalMatrix> g_matrix;
         style g_style;
+
+        std::unique_ptr<render::TerminalMatrix> matrix_buffer;
     };
 
     extern context* g_tui;
@@ -34,7 +50,10 @@ namespace tui {
     event_handler& current_event();
     style& current_style();
 
-    vec2d& cursor_pos();
+    void set_cursor_pos(vec2d where);
+    const vec2d& get_cursor_pos();
+
+    const vec2d get_window_size();
 
     keys get_pressed_key();
     bool is_key_pressed(const keys key);
@@ -50,7 +69,7 @@ namespace tui {
 
     void reset();
 
-    void begin_child();     
+    void begin_child(vec2d size);     
 
     void end_child();
 }

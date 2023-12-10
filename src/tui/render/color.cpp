@@ -50,14 +50,17 @@ void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, char letter,
                     Color text_col, Color bg_col, text_flags flags) {
                         
     write(matrix, where, letter);
-    matrix.style().emplace(where, std::pair<vec2d, std::string>(vec2d(where.x + 1, where.y), 
-                                            color::get_style(text_col, bg_col, flags)));
+
+    matrix[where].second = color::get_style(text_col, bg_col, flags);
 }
                     
 void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::string text, 
                     Color text_col, Color bg_col, text_flags flags) {
 
     write(matrix, start, text);                   
-    matrix.style().emplace(start, std::pair<vec2d, std::string>(vec2d(start.x + text.size(), start.y), 
-                                                      color::get_style(text_col, bg_col, flags)));
+
+
+    for (std::size_t col = 0; col < text.size(); col++) { 
+        matrix[vec2d(start.x + col, start.y)].second = color::get_style(text_col, bg_col, flags);
+    }
 }

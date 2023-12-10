@@ -8,8 +8,8 @@ namespace tui {
 class event_handler {
     key_handler handler_;
 
-    // Cuz we need skip first frame
-    int next_frames = 1;
+    // Cuz we need skip first frames
+    int next_frames = 2;
 public:
     void process();
     void add_frame();

@@ -15,13 +15,12 @@ int main() {
     bool exit = false;
 
     event_handler event{};
-    render::TerminalMatrix matrix(size.ws_col, size.ws_row-1, ' ');
-    context new_context(&event, &matrix);
+    auto matrix = std::make_unique<render::TerminalMatrix>(size.ws_col, size.ws_row-1, ' ');
+    context new_context(&event, std::move(matrix));
 
     set_context(&new_context);
 
     system("clear");
-
     while (!exit) {
         event.process();
 
@@ -30,14 +29,19 @@ int main() {
      
         static int some_value;
         widgets::listbox(some_value, {"pivo", "grechka", "plov", "pelmeni", "borsh", "polba"});
-        render_text({0, 35}, std::to_string(some_value));
-        render_text({0, 30}, std::to_string(g_tui->key_buffer.size()));
-     
-     
-        render_text_styled({0, current_matrix().height()-1}, "press q to quit", Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
 
+        widgets::text("text after child");
+        begin_child({16, 8});
+        for (size_t i = 1; i <= 12; i++) {
+            widgets::text("child text №" + std::to_string(i));
+        }
+        end_child();
+        widgets::text("text before child");
+
+        render_text_styled({0, current_matrix().height()-1}, "press q to quit", Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
         
         render::draw();
+
         reset();
     }
 

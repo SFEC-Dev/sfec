@@ -26,21 +26,18 @@ namespace render {
     void clear();
 
     class TerminalMatrix {
-        std::map<vec2d, char> matrix_;
-        std::map<vec2d, std::pair<vec2d, std::string>> style_;
+        std::map<vec2d, std::pair<char, std::string>> matrix_;
 
         int width_;
         int height_;
 
         char filler_;
-
-        vec2d last_style_pos_;
     public:
         TerminalMatrix(int width, int height, char filler = ' ');
-        ~TerminalMatrix();
+        TerminalMatrix(int width, int height, TerminalMatrix& from);
 
-        char& operator[](vec2d where) {
-            return matrix_[calculate_pos(where, width_, height_)];
+        std::pair<char, std::string>& operator[](vec2d where) {
+            return matrix_[where];
         }
 
         int width() const {
@@ -51,24 +48,16 @@ namespace render {
             return height_;
         }
 
-        int filler() const {
+        char filler() const {
             return filler_;
         }
 
         int size() const {
             return width_ * height_;
         }
-
-        std::map<vec2d, std::pair<vec2d, std::string>>& style() {
-            return style_;
-        }
-
-        vec2d& last_style_pos() {
-            return last_style_pos_;
-        }
         
-        using iterator = std::map<vec2d, char>::iterator;
-        using const_iterator = std::map<vec2d, char>::const_iterator;
+        using iterator = std::map<vec2d, std::pair<char, std::string>>::iterator;
+        using const_iterator = std::map<vec2d, std::pair<char, std::string>>::const_iterator;
 
         iterator begin() { return matrix_.begin(); }
         iterator end() { return matrix_.end(); }
@@ -80,8 +69,10 @@ namespace render {
     bool busy(TerminalMatrix& matrix, vec2d where);
     bool busy(TerminalMatrix& matrix, vec2d start, vec2d end);
 
+    void write(TerminalMatrix& matrix, vec2d where, std::pair<char, std::string> content);
     void write(TerminalMatrix& matrix, vec2d where, char letter);
     void write(TerminalMatrix& matrix, vec2d start, std::string text);
+    void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
 
     void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
 

@@ -9,24 +9,24 @@ void tui::render_text_styled(vec2d start, std::string text, Color text_col, Colo
 }
 
 void tui::widgets::text(std::string text) {
-    tui::render::write(current_matrix(), cursor_pos(), text);
+    tui::render::write(current_matrix(), get_cursor_pos(), text);
 
-    cursor_pos() = vec2d(cursor_pos().x, cursor_pos().y + 1);
+    set_cursor_pos(get_cursor_pos() + vec2d(0, 1));
 }
 
 void selectable(std::string label, bool condition, tui::vec2d size) {
     label.resize(size.x, ' ');
 
     if (condition)
-        tui::render_text_styled(tui::cursor_pos(), label, tui::Color(200, 200, 75), tui::Color(255,255,255));
+        tui::render_text_styled(tui::get_cursor_pos(), label, tui::Color(200, 200, 75), tui::Color(255,255,255));
     else
-        tui::render_text(tui::cursor_pos(), label);
+        tui::render_text(tui::get_cursor_pos(), label);
 
-    tui::cursor_pos() = tui::vec2d(tui::cursor_pos().x, tui::cursor_pos().y + size.y);
+    tui::set_cursor_pos(tui::get_cursor_pos() + tui::vec2d(0, size.y));
 }
 
 void tui::widgets::listbox(int& value, std::vector<std::string> items) {
-    tui::cursor_pos() = vec2d(0,0);
+    set_cursor_pos(vec2d(0,0));
 
     if (binds::get_event(binds::DOWN))
         if (value+1 < items.size())

@@ -6,7 +6,7 @@
 ### 
 
 ![Linux](https://img.shields.io/badge/-Linux-grey?logo=linux)
-![c++17](https://img.shields.io/badge/cpp-c%2B%2B20-green)
+![c++17](https://img.shields.io/badge/cpp-c%2B%2B17-green)
 ![latest_release](https://img.shields.io/github/v/tag/SFEC-Dev/sfec?label=release)
 <br>
 </div>

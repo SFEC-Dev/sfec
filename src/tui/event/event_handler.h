@@ -14,6 +14,7 @@ public:
     void process();
     void add_frame();
     void add_frames(int count);
+    int get_frames();
 
     key_handler& get_key_handler() {
         return handler_;

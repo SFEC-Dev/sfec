@@ -14,6 +14,10 @@ void tui::event_handler::add_frames(int count) {
         next_frames = count;
 }
 
+int tui::event_handler::get_frames() {
+    return next_frames;
+}
+
 void tui::event_handler::process() {
     while (true){    
         handler_.handle();
@@ -29,3 +33,4 @@ void tui::event_handler::process() {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     };
 }
+

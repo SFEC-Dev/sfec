@@ -11,7 +11,8 @@
 
 namespace tui {
     struct style {
-        int item_spacing = 4;
+        int item_spacing = 0;
+        int child_pudding = 1;
     };
 
     struct context {
@@ -28,18 +29,22 @@ namespace tui {
             render::clear();
         }
 
-        vec2d last_item_pos;
-        vec2d last_child_pos;
+        vec2d last_item_pos{0, 0};
+        std::vector<vec2d> last_child_pos{};
+        int active_child{0};
+        bool enable_input{false};
 
-        std::vector<tui::keys>key_buffer;
+        std::vector<tui::keys> key_buffer{};
+        std::chrono::steady_clock::time_point buffer_time{};
+        std::unique_ptr<render::TerminalMatrix> matrix_buffer{};
+        std::map<std::string, int> listbox_buffer{};
+        std::vector<std::pair<std::string, int>> child_buffer{};
+        std::vector<std::string> true_childs{};
+        size_t iterations{};
 
-        std::chrono::steady_clock::time_point buffer_time;
-
-        event_handler* g_event;
-        std::unique_ptr<render::TerminalMatrix> g_matrix;
-        style g_style;
-
-        std::unique_ptr<render::TerminalMatrix> matrix_buffer;
+        event_handler* g_event{nullptr};
+        std::unique_ptr<render::TerminalMatrix> g_matrix{nullptr};
+        style g_style{};
     };
 
     extern context* g_tui;
@@ -64,13 +69,12 @@ namespace tui {
     
     namespace widgets {
         void text(std::string text);
-        void listbox(int& value, std::vector<std::string> items);
+        void listbox(std::string id, int& value, std::vector<std::string> items, int height);
     }
 
     void reset();
 
-    void begin_child(vec2d size);     
-
+    void begin_child(std::string id, vec2d size);     
     void end_child();
 }
 

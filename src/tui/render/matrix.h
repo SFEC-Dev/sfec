@@ -55,6 +55,10 @@ namespace render {
         int size() const {
             return width_ * height_;
         }
+
+        int real_size() const {
+            return matrix_.size();
+        }
         
         using iterator = std::map<vec2d, std::pair<char, std::string>>::iterator;
         using const_iterator = std::map<vec2d, std::pair<char, std::string>>::const_iterator;

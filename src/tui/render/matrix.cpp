@@ -27,16 +27,6 @@ tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) 
     }
 }
 
-
-tui::render::TerminalMatrix::TerminalMatrix(int width, int height, TerminalMatrix& from) : width_(width), height_(height), filler_{from.filler()} {
-    for (std::size_t row = 0; row < height; row++) {
-        for (std::size_t col = 0; col < width; col++) {
-            matrix_[vec2d(col, row)] = from[vec2d(col, row)];
-        }
-    }
-}
-
-
 bool tui::render::busy(TerminalMatrix& matrix, vec2d where) {
     return (matrix[where].first == matrix.filler());
 }
@@ -105,10 +95,12 @@ std::string tui::render::interpret(TerminalMatrix& matrix) {
 }
 
 void tui::render::clear() {
+    g_tui->iterations++;
     system("clear");
 }
 
 void tui::render::draw() {
+    g_tui->iterations++;
     std::cout << "\033[H";
     std::cout.flush();
     std::cout << render::interpret(current_matrix());

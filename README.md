@@ -1,13 +1,22 @@
 
 <div align="center">
-  
-### *`file explorer` written by `crosses` for true gigachads* 💪 
 
-### 
+###
 
-![Linux](https://img.shields.io/badge/-Linux-grey?logo=linux)
-![c++17](https://img.shields.io/badge/cpp-c%2B%2B17-purple)
-![latest_release](https://img.shields.io/github/v/tag/SFEC-Dev/sfec?label=release)
+![logo](./images/sfec_logotype5.png)
+
+###
+
+<h3>
+  file explorer written on <code>C++</code> for true gigachads 💪 
+</h3>
+<br>
+
+
+![License](https://shields.io/github/license/SFEC-Dev/sfec?style=for-the-badge)
+![c++17](https://img.shields.io/badge/cpp-c%2B%2B17-purple?style=for-the-badge)
+![Tag](https://shields.io/github/tag/SFEC-Dev/sfec?style=for-the-badge)
+
 <br>
 </div>
 
@@ -39,4 +48,5 @@ with `wget`
 ```fish                   
 wget -qO- https://raw.githubusercontent.com/SFEC-Dev/sfec/develop/uninstall.sh | sh
 ```
+
 

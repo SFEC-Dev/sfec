@@ -20,7 +20,7 @@ void selectable(std::string label, bool condition, tui::vec2d size) {
     label.resize(size.x, ' ');
 
     if (condition)
-        tui::render_text_styled(tui::get_cursor_pos(), label, tui::Color(200, 200, 75), tui::Color(255,255,255));
+        tui::render_text_styled(tui::get_cursor_pos(), label, tui::Color(), tui::Color(), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
     else
         tui::render_text(tui::get_cursor_pos(), label);
 
@@ -38,15 +38,16 @@ void tui::widgets::listbox(std::string id, int& value, std::vector<std::string> 
 
     const int min = std::min(static_cast<int>(items.size()), height);
     const int max = std::max(static_cast<int>(items.size()), height);
-    int& buffered_value = (g_tui->listbox_buffer.try_emplace(id, min).first->second);
 
-    if (value > buffered_value - min/4.1  && buffered_value < max) 
-        buffered_value++;
+    int& saved_position = (g_tui->listbox_buffer.try_emplace(id, min).first->second);
 
-    if (value < buffered_value - min + min/4.8 && buffered_value > min) 
-        buffered_value--;
+    if (value > saved_position - min/4.1  && saved_position < max) 
+        saved_position++;
 
-    for (size_t i = buffered_value - min; i < buffered_value; i++) {
+    if (value < saved_position - min + min/4.8 && saved_position > min) 
+        saved_position--;
+
+    for (size_t i = saved_position - min; i < saved_position; i++) {
         selectable(items[i], value == i, vec2d(get_window_size().x, 1));
     }
 }

@@ -15,30 +15,7 @@ bool tui::operator==(const vec2d& lhs, const vec2d& rhs) {
     return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
 }
 
-tui::vec2d tui::calculate_pos(vec2d what, int width, int height) {
-    return vec2d(what.x % width, (what.y + static_cast<int>(what.x / width)) % height);
-}
-
-tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler} {
-    for (std::size_t row = 0; row < height; row++) {
-        for (std::size_t col = 0; col < width; col++) {
-            matrix_[vec2d(col, row)].first = filler;
-        }
-    }
-}
-
-bool tui::render::busy(TerminalMatrix& matrix, vec2d where) {
-    return (matrix[where].first == matrix.filler());
-}
-
-bool tui::render::busy(TerminalMatrix& matrix, vec2d start, vec2d end) {
-    for (std::size_t row = start.y; row < end.y; row++) {
-        for (std::size_t col = start.x; col < end.x; col++) {
-            if (busy(matrix, vec2d(col, row)))
-                return true;
-        }
-    }
-    return false;
+tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler}, matrix_(height, std::vector(width, std::pair<char, std::string>(filler, ""))) {
 }
 
 void tui::render::write(TerminalMatrix& matrix, vec2d where, char letter) {
@@ -67,7 +44,7 @@ void tui::render::wipe(TerminalMatrix& matrix, vec2d start, vec2d end) {
     for (std::size_t row = start.y; row < end.y; row++) {
         for (std::size_t col = start.x; col < end.x; col++) {
             matrix[vec2d(col, row)].first = matrix.filler();
-            if (!matrix[vec2d(col, row)].second.empty())
+            if (matrix[vec2d(col, row)].second != "")
                 matrix[vec2d(col, row)].second.clear();
         }
     }
@@ -75,34 +52,33 @@ void tui::render::wipe(TerminalMatrix& matrix, vec2d start, vec2d end) {
 
 const std::string end_seq{"\033[0m"};
 
-std::string tui::render::interpret(TerminalMatrix& matrix) {
-    std::string result{};
-    result.reserve(matrix.size());
+void tui::render::interpret(TerminalMatrix& matrix) {
     for (std::size_t row = 0; row < matrix.height(); row++) {
         for (std::size_t col = 0; col < matrix.width(); col++) { 
-            if (!matrix[vec2d(col, row)].second.empty()) {
-                result.append(matrix[vec2d(col, row)].second);
-                result.push_back(matrix[vec2d(col, row)].first);
-                result.append(end_seq);
+            if (matrix[vec2d(col, row)] == g_tui->old_matrix[vec2d(col, row)]) {
+                continue;
+            }
+            
+            std::cout << "\033[" + std::to_string(row+1) + ";" + std::to_string(col+1) + "H";
+
+            if (matrix[vec2d(col, row)].second != "") {
+                std::cout << matrix[vec2d(col, row)].second << matrix[vec2d(col, row)].first << end_seq;
             } 
             else
-                result.push_back(matrix[vec2d(col, row)].first);
+                std::cout << matrix[vec2d(col, row)].first;
             
         }
-        result.push_back('\n');
+        std::cout << '\n';
     }
-    return result;
 }
 
 void tui::render::clear() {
-    g_tui->iterations++;
     system("clear");
 }
 
 void tui::render::draw() {
-    g_tui->iterations++;
     std::cout << "\033[H";
     std::cout.flush();
-    std::cout << render::interpret(current_matrix());
-    wipe(current_matrix(), vec2d(0,0), vec2d(current_matrix().width(), current_matrix().height()));
+    render::interpret(current_matrix());
+    g_tui->old_matrix = *g_tui->g_matrix;
 }

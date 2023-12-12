@@ -66,6 +66,7 @@ void tui::begin_child(std::string id, vec2d size) {
 
     auto& last_pos = g_tui->last_child_pos;
     vec2d this_pos = get_cursor_pos() + vec2d(pudding, pudding);
+    
     if (std::find(last_pos.cbegin(), last_pos.cend(), this_pos) == last_pos.cend())
         last_pos.emplace_back(this_pos);
                       

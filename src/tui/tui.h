@@ -12,12 +12,12 @@
 namespace tui {
     struct style {
         int item_spacing = 0;
-        int child_pudding = 1;
+        int child_pudding = 4;
     };
 
     struct context {
         context(event_handler* handler, std::unique_ptr<render::TerminalMatrix> matrix) :
-                g_event{std::move(handler)}, g_matrix{std::move(matrix)} {
+                g_event{std::move(handler)}, g_matrix{std::move(matrix)}, old_matrix{*g_matrix} {
         
             // For hidden cursor
             std::cout << "\033[?25l";
@@ -29,22 +29,22 @@ namespace tui {
             render::clear();
         }
 
+        event_handler* g_event{nullptr};
+        std::unique_ptr<render::TerminalMatrix> g_matrix{nullptr};
+        style g_style{};
+
         vec2d last_item_pos{0, 0};
         std::vector<vec2d> last_child_pos{};
+        render::TerminalMatrix old_matrix;
         int active_child{0};
         bool enable_input{false};
-
+        
         std::vector<tui::keys> key_buffer{};
         std::chrono::steady_clock::time_point buffer_time{};
         std::unique_ptr<render::TerminalMatrix> matrix_buffer{};
         std::map<std::string, int> listbox_buffer{};
         std::vector<std::pair<std::string, int>> child_buffer{};
         std::vector<std::string> true_childs{};
-        size_t iterations{};
-
-        event_handler* g_event{nullptr};
-        std::unique_ptr<render::TerminalMatrix> g_matrix{nullptr};
-        style g_style{};
     };
 
     extern context* g_tui;

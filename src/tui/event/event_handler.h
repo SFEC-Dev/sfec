@@ -9,7 +9,7 @@ class event_handler {
     key_handler handler_;
 
     // Cuz we need skip first frames
-    int next_frames = 2;
+    int next_frames = 1;
 public:
     void process();
     void add_frame();

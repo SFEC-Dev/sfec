@@ -64,12 +64,12 @@ namespace tui {
     bool is_key_pressed(const keys key);
     bool is_any_pressed();
 
-    void render_text(vec2d start, std::string text);
-    void render_text_styled(vec2d start, std::string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+    void render_text(vec2d start, std::wstring text);
+    void render_text_styled(vec2d start, std::wstring text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
     
     namespace widgets {
-        void text(std::string text);
-        void listbox(std::string id, int& value, std::vector<std::string> items, int height);
+        void text(std::wstring text);
+        void listbox(std::string id, int& value, std::vector<std::wstring> items, int height);
     }
 
     void reset();

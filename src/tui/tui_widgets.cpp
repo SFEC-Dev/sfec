@@ -2,21 +2,21 @@
 
 #include <algorithm>
 
-void tui::render_text(vec2d start, std::string text) {
+void tui::render_text(vec2d start, std::wstring text) {
     tui::render::write(current_matrix(), start, text);
 }
 
-void tui::render_text_styled(vec2d start, std::string text, Color text_col, Color bg_col, text_flags flags) {
+void tui::render_text_styled(vec2d start, std::wstring text, Color text_col, Color bg_col, text_flags flags) {
     tui::render::write_styled(current_matrix(), start, text, text_col, bg_col, flags);
 }
 
-void tui::widgets::text(std::string text) {
+void tui::widgets::text(std::wstring text) {
     tui::render::write(current_matrix(), get_cursor_pos(), text);
 
     set_cursor_pos(get_cursor_pos() + vec2d(0, 1 + current_style().item_spacing));
 }
 
-void selectable(std::string label, bool condition, tui::vec2d size) {
+void selectable(std::wstring label, bool condition, tui::vec2d size) {
     label.resize(size.x, ' ');
 
     if (condition)
@@ -27,7 +27,7 @@ void selectable(std::string label, bool condition, tui::vec2d size) {
     tui::set_cursor_pos(tui::get_cursor_pos() + tui::vec2d(0, size.y + tui::current_style().item_spacing));
 }
 
-void tui::widgets::listbox(std::string id, int& value, std::vector<std::string> items, int height) {
+void tui::widgets::listbox(std::string id, int& value, std::vector<std::wstring> items, int height) {
     if (binds::get_event(binds::DOWN) && g_tui->enable_input)
         if (value+1 < items.size())
             value++;

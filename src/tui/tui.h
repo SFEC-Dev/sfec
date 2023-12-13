@@ -12,7 +12,7 @@
 namespace tui {
     struct style {
         int item_spacing = 0;
-        int child_pudding = 4;
+        int child_pudding = 1;
     };
 
     struct context {

@@ -13,6 +13,7 @@ namespace tui {
 
     vec2d operator+(const vec2d& lhs, const vec2d& rhs);
     bool operator<(const vec2d& lhs, const vec2d& rhs);
+    bool operator>(const vec2d& lhs, const vec2d& rhs);
     bool operator==(const vec2d& lhs, const vec2d& rhs);
 
     struct rect {
@@ -21,28 +22,60 @@ namespace tui {
         vec2d end;
     };
 
-    struct ustring {
-        ustring(const char* text) : value{text} {};
-        ustring(std::string text) : value{text} {};
+    struct uchar {
+        explicit uchar(const char* letter) : value{letter} {};
+        explicit uchar(std::string letter) : value{letter} {};
+        
+        std::string& operator()() {
+            return value;
+        };
+
+        const std::string& operator()() const {
+            return value;
+        };
+
+    private:
         std::string value;
     };
 
-    struct uchar {
-        uchar(const char* letter) : value{letter} {};
-        uchar(std::string letter) : value{letter} {};
+    struct ustring {
+        ustring(size_t n, const uchar& letter) {
+            value.reserve(n);
+            for (size_t i = 0; i < n; i++) {
+                value.append(letter());
+            }
+        }
+
+        explicit ustring(const char* text) : value{text} {};
+        explicit ustring(std::string text) : value{text} {};
+
+        std::string& operator()() {
+            return value;
+        };
+
+        const std::string& operator()() const {
+            return value;
+        };
+
+    private:
         std::string value;
     };
+
+    ustring operator+(const ustring& lhs, const ustring& rhs);
+
+    uchar operator ""_uchr(const char*, size_t);
+    ustring operator ""_ustr(const char*, size_t);
 
 namespace render {
     void clear();
 
     class TerminalMatrix {
-        std::vector<std::vector<std::pair<std::string, std::string>>> matrix_;
-
         int width_;
         int height_;
 
         char filler_;
+
+        std::vector<std::vector<std::pair<std::string, std::string>>> matrix_;
 
     public:
         TerminalMatrix(int width, int height, char filler = ' ');
@@ -50,6 +83,17 @@ namespace render {
 
         std::pair<std::string, std::string>& operator[](vec2d where) {
             return matrix_[where.y][where.x];
+        }
+
+        void resize(vec2d new_size) {
+            height_ = new_size.y;
+            width_ = new_size.x;
+
+            matrix_.resize(new_size.y, std::vector<std::pair<std::string, std::string>>(new_size.x, std::pair<std::string, std::string>(std::string(1, filler_), "")));
+
+            for (auto& line : matrix_) {
+                line.resize(new_size.x, std::pair<std::string, std::string>(std::string(1, filler_), ""));
+            }
         }
 
         int width() const {

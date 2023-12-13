@@ -27,12 +27,16 @@ void tui::widgets::text(std::string text) {
 }
 
 void selectable(std::string label, bool condition, tui::vec2d size) {
-    label.resize(size.x, ' ');
+    using namespace tui;
+    
+
+    ustring on_label{label}; on_label().insert(0, "\U0001f34c "); on_label().resize(size.x+2, ' ');
+    std::string off_label = label; off_label.resize(size.x, ' ');
 
     if (condition)
-        tui::render_text_styled(tui::get_cursor_pos(), label, tui::Color(), tui::Color(), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
+        tui::render_text_styled(tui::get_cursor_pos(), on_label, Color(250, 180, 0), Color(120, 50, 0), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
     else
-        tui::render_text(tui::get_cursor_pos(), label);
+        tui::render_text(tui::get_cursor_pos(), off_label);
 
     tui::set_cursor_pos(tui::get_cursor_pos() + tui::vec2d(0, size.y + tui::current_style().item_spacing));
 }
@@ -51,10 +55,10 @@ void tui::widgets::listbox(std::string id, int& value, std::vector<std::string> 
 
     int& saved_position = (g_tui->listbox_buffer.try_emplace(id, min).first->second);
 
-    if (value > saved_position - min/4.1  && saved_position < max) 
+    while (value > saved_position - min/4.1  && saved_position < max) 
         saved_position++;
 
-    if (value < saved_position - min + min/4.8 && saved_position > min) 
+    while (value < saved_position - min + min/4.8 && saved_position > min) 
         saved_position--;
 
     for (size_t i = saved_position - min; i < saved_position; i++) {

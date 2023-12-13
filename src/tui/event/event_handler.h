@@ -9,9 +9,9 @@ class event_handler {
     key_handler handler_;
 
     // Cuz we need skip first frames
-    int next_frames = 1;
+    int next_frames = 2;
 public:
-    void process();
+    void process(bool& iff);
     void add_frame();
     void add_frames(int count);
     int get_frames();

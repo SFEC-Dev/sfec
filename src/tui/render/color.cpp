@@ -1,5 +1,8 @@
 #include "color.h"
 
+#include <locale>
+#include <codecvt>
+
 const std::string start_seq{"\033["};
 
 std::string tui::render::color::get_style(Color text_col, Color bg_col, text_flags flags) {
@@ -79,9 +82,24 @@ void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, uchar letter
 void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, ustring text, 
                     Color text_col, Color bg_col, text_flags flags) {
 
-    write(matrix, start, text);                   
+    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+    std::wstring wstr = converter.from_bytes(text());
 
-    for (std::size_t col = 0; col < text.value.size(); col++) { 
-        matrix[vec2d(start.x + col, start.y)].second = color::get_style(text_col, bg_col, flags);
+    int shift = 0;
+    for (auto it = wstr.begin(); it != wstr.end(); ++it) {
+        std::wstring singleChar(1, *it);
+        std::string utf8Char = converter.to_bytes(singleChar);
+        if (utf8Char.size() >= 4) {
+            write(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), uchar{utf8Char});
+            matrix[vec2d(start.x + std::distance(wstr.begin(), it) + shift + 1, start.y)].first = "";
+            matrix[vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y)].second = color::get_style(text_col, bg_col, flags);
+            matrix[vec2d(start.x + std::distance(wstr.begin(), it) + shift + 1, start.y)].second = color::get_style(text_col, bg_col, flags);
+            //std::cout << matrix[{100, start.y}].first << std::endl;
+            //std::cout << start.x + std::distance(wstr.begin(), it) + shift << " " << start.y <<  " " << (matrix.begin() + start.y)->size() << std::endl;
+            shift++;
+        } else {
+            write(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), uchar{utf8Char});
+            matrix[vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y)].second = color::get_style(text_col, bg_col, flags);
+        }
     }
 }

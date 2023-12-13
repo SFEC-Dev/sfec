@@ -18,7 +18,7 @@ int tui::event_handler::get_frames() {
     return next_frames;
 }
 
-void tui::event_handler::process() {
+void tui::event_handler::process(bool& iff) {
     while (true){    
         handler_.handle();
 
@@ -26,6 +26,9 @@ void tui::event_handler::process() {
             next_frames--;
             break;
         }
+
+        if (iff)
+            break;
 
         if (is_any_pressed())
             break;

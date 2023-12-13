@@ -4,11 +4,11 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include "tui/utils/icon.h"
+#include <locale>
+#include <codecvt>
 
 int main() {
     using namespace tui;
-
-    setlocale(LC_ALL, "");
 
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
@@ -24,10 +24,10 @@ int main() {
 
     system("clear");
 
-    std::vector<std::wstring> items;
+    std::vector<std::string> items;
 
     for (size_t i = 0; i < 64; i++) {
-        items.push_back(L"item " + std::to_wstring(items.size() + 1));
+        items.push_back("item " + std::to_string(items.size() + 1));
     }
     while (!exit) {
         event.process();
@@ -54,7 +54,7 @@ int main() {
         widgets::listbox("somelistbox2", some_value2, items, get_window_size().y);
         end_child();
 
-        std::wstring quit_message = L"press q to quit"; quit_message.resize(get_window_size().x, L' ');
+        std::string quit_message = "press q to quit"; quit_message.resize(get_window_size().x, ' ');
         render_text_styled({0, current_matrix().height()-1}, quit_message, Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
         render::draw();
 

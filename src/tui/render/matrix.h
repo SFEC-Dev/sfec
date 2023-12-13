@@ -25,18 +25,18 @@ namespace render {
     void clear();
 
     class TerminalMatrix {
-        std::vector<std::vector<std::pair<wchar_t, std::wstring>>> matrix_;
+        std::vector<std::vector<std::pair<std::string, std::string>>> matrix_;
 
         int width_;
         int height_;
 
-        wchar_t filler_;
+        char filler_;
 
     public:
-        TerminalMatrix(int width, int height, wchar_t filler = ' ');
+        TerminalMatrix(int width, int height, char filler = ' ');
         TerminalMatrix(int width, int height, TerminalMatrix& from);
 
-        std::pair<wchar_t, std::wstring>& operator[](vec2d where) {
+        std::pair<std::string, std::string>& operator[](vec2d where) {
             return matrix_[where.y][where.x];
         }
 
@@ -60,8 +60,8 @@ namespace render {
             return matrix_.size();
         }
         
-        using iterator = std::vector<std::vector<std::pair<wchar_t, std::wstring>>>::iterator;
-        using const_iterator = std::vector<std::vector<std::pair<wchar_t, std::wstring>>>::const_iterator;
+        using iterator = std::vector<std::vector<std::pair<std::string, std::string>>>::iterator;
+        using const_iterator = std::vector<std::vector<std::pair<std::string, std::string>>>::const_iterator;
 
         iterator begin() { return matrix_.begin(); }
         iterator end() { return matrix_.end(); }
@@ -71,9 +71,9 @@ namespace render {
 
     };
 
-    void write(TerminalMatrix& matrix, vec2d where, std::pair<wchar_t, std::wstring> content);
-    void write(TerminalMatrix& matrix, vec2d where, wchar_t letter);
-    void write(TerminalMatrix& matrix, vec2d start, std::wstring text);
+    void write(TerminalMatrix& matrix, vec2d where, std::pair<std::string, std::string> content);
+    void write(TerminalMatrix& matrix, vec2d where, char letter);
+    void write(TerminalMatrix& matrix, vec2d start, std::string text);
     void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
 
     void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);

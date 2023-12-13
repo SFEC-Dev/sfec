@@ -34,11 +34,11 @@ namespace tui {
         void write_styled(TerminalMatrix& matrix, vec2d where, char letter, 
                           Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
                           
-        void write_styled(TerminalMatrix& matrix, vec2d start, std::wstring text, 
+        void write_styled(TerminalMatrix& matrix, vec2d start, std::string text, 
                           Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
         namespace color {
-            std::wstring get_style(Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+            std::string get_style(Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
         }
     }
 }

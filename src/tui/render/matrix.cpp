@@ -40,15 +40,19 @@ void tui::render::write_unicode(TerminalMatrix& matrix, vec2d where, std::string
     matrix[where].first = unicode_char;
 }
 
-std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 void tui::render::write_unicode_str(TerminalMatrix& matrix, vec2d start, std::string text) {
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
     std::wstring wstr = converter.from_bytes(text);
 
+    int shift = 0;
     for (auto it = wstr.begin(); it != wstr.end(); ++it) {
         std::wstring singleChar(1, *it);
         std::string utf8Char = converter.to_bytes(singleChar);
-        write_unicode(matrix, vec2d(start.x + std::distance(wstr.begin(), it), start.y), utf8Char);
+        if (utf8Char.size() >= 4) {
+            write_unicode(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), utf8Char);
+            shift++;
+        } else
+            write_unicode(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), utf8Char);
     }
 }
 

@@ -1,31 +1,34 @@
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace tui {
-    struct vec2d {
-        vec2d() = default;
-        vec2d(int x_, int y_) : x{x_}, y{y_}{};
-        int x;
-        int y;
-    };
+struct vec2d
+{
+    vec2d() = default;
+    vec2d(int x_, int y_) : x{x_}, y{y_} {};
+    int x;
+    int y;
+};
 
     vec2d operator+(const vec2d& lhs, const vec2d& rhs);
     bool operator<(const vec2d& lhs, const vec2d& rhs);
     bool operator>(const vec2d& lhs, const vec2d& rhs);
     bool operator==(const vec2d& lhs, const vec2d& rhs);
 
-    struct rect {
-        rect(vec2d start_, vec2d end_) : start{start_}, end{end_}{};
-        vec2d start;
-        vec2d end;
-    };
+struct rect
+{
+    rect(vec2d start_, vec2d end_) : start{start_}, end{end_} {};
+    vec2d start;
+    vec2d end;
+};
 
     struct uchar {
         explicit uchar(const char* letter) : value{letter} {};
         explicit uchar(std::string letter) : value{letter} {};
-        
+        uchar() = default;
+
         std::string& operator()() {
             return value;
         };
@@ -45,7 +48,6 @@ namespace tui {
                 value.append(letter());
             }
         }
-
         explicit ustring(const char* text) : value{text} {};
         explicit ustring(std::string text) : value{text} {};
 
@@ -67,7 +69,7 @@ namespace tui {
     ustring operator ""_ustr(const char*, size_t);
 
 namespace render {
-    void clear();
+void clear();
 
     class TerminalMatrix {
         int width_;
@@ -96,49 +98,59 @@ namespace render {
             }
         }
 
-        int width() const {
-            return width_;
-        }
+    int width() const {
+        return width_;
+    }
 
-        int height() const {
-            return height_;
-        }
+    int height() const {
+        return height_;
+    }
 
-        char filler() const {
-            return filler_;
-        }
+    char filler() const {
+        return filler_;
+    }
 
-        int size() const {
-            return width_ * height_;
-        }
+    int size() const {
+        return width_ * height_;
+    }
 
-        int real_size() const {
-            return matrix_.size();
-        }
-        
-        using iterator = std::vector<std::vector<std::pair<std::string, std::string>>>::iterator;
-        using const_iterator = std::vector<std::vector<std::pair<std::string, std::string>>>::const_iterator;
+    int real_size() const {
+        return matrix_.size();
+    }
 
-        iterator begin() { return matrix_.begin(); }
-        iterator end() { return matrix_.end(); }
-        
-        const_iterator cbegin() const { return matrix_.cbegin(); }
-        const_iterator cend() const { return matrix_.cend(); }
+    using iterator =
+        std::vector<std::vector<std::pair<std::string, std::string>>>::iterator;
+    using const_iterator = std::vector<
+        std::vector<std::pair<std::string, std::string>>>::const_iterator;
 
-    };
+    iterator begin() {
+        return matrix_.begin();
+    }
+    iterator end() {
+        return matrix_.end();
+    }
 
-    void write(TerminalMatrix& matrix, vec2d where, std::pair<std::string, std::string> content);
-    void write(TerminalMatrix& matrix, vec2d where, char letter);
-    void write(TerminalMatrix& matrix, vec2d start, std::string text);
-    void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
+    const_iterator cbegin() const {
+        return matrix_.cbegin();
+    }
+    const_iterator cend() const {
+        return matrix_.cend();
+    }
+};
 
-    void write(TerminalMatrix& matrix, vec2d where, uchar letter);
-    void write(TerminalMatrix& matrix, vec2d start, ustring text);
+void write(TerminalMatrix& matrix, vec2d where,
+           std::pair<std::string, std::string> content);
+void write(TerminalMatrix& matrix, vec2d where, char letter);
+void write(TerminalMatrix& matrix, vec2d start, std::string text);
+void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
 
-    void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
+void write(TerminalMatrix& matrix, vec2d where, uchar letter);
+void write(TerminalMatrix& matrix, vec2d start, ustring text);
 
-    void interpret(TerminalMatrix& matrix);
+void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
 
-    void draw();
-}
-}
+void interpret(TerminalMatrix& matrix);
+
+void draw();
+} // namespace render
+} // namespace tui

@@ -9,6 +9,22 @@ tui::vec2d tui::operator+(const vec2d& lhs, const vec2d& rhs) {
     return vec2d(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
+tui::ustring tui::operator+(const uchar& lhs, const uchar& rhs){
+    return tui::ustring(lhs() + rhs());
+}
+
+tui::ustring tui::operator+(const ustring& lhs, const uchar& rhs){
+    return tui::ustring(lhs() + rhs());
+}
+
+tui::ustring tui::operator+(const uchar& lhs, const ustring& rhs){
+    return ustring(lhs() + rhs());
+}
+
+tui::ustring tui::operator+(const ustring& lhs, const ustring& rhs){
+    return tui::ustring(lhs() + rhs());
+}
+
 bool tui::operator<(const vec2d& lhs, const vec2d& rhs) {
     return std::tie(lhs.x, lhs.y) < std::tie(rhs.x, rhs.y);
 }
@@ -19,10 +35,6 @@ bool tui::operator>(const vec2d& lhs, const vec2d& rhs) {
 
 bool tui::operator==(const vec2d& lhs, const vec2d& rhs) {
     return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
-}
-
-tui::ustring tui::operator+(const ustring& lhs, const ustring& rhs) {
-    return ustring(lhs() + rhs());
 }
 
 tui::uchar tui::operator ""_uchr(const char* text, size_t n){

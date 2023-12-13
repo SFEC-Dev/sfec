@@ -10,10 +10,20 @@
 #include <memory>
 
 namespace tui {
+
+enum class BORDER_STYLE {
+        DOUBLE,
+        SOLID,
+        ROUND,
+    };
+
     struct style {
+        BORDER_STYLE style = BORDER_STYLE::ROUND;
         int item_spacing = 0;
         int child_pudding = 1;
     };
+
+    
 
     struct context {
         context(event_handler* handler, std::unique_ptr<render::TerminalMatrix> matrix) :
@@ -73,12 +83,12 @@ namespace tui {
     namespace widgets {
         void text(std::string text);
         void listbox(std::string id, int& value, std::vector<std::string> items, int height);
-        void render_frame(tui::rect frame);
+        void render_border(tui::rect frame,  const tui::BORDER_STYLE style = BORDER_STYLE::ROUND);
     }
 
     void reset();
 
-    void begin_child(std::string id, vec2d size);     
+    void begin_child(std::string id, vec2d size, bool frame = false);     
     void end_child();
 }
 

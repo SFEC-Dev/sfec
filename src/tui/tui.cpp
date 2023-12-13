@@ -48,9 +48,9 @@ void tui::reset() {
     set_cursor_pos(vec2d(0, 0));
 }
 
-void tui::begin_child(std::string id, vec2d size) {
+void tui::begin_child(std::string id, vec2d size, bool border) {
     const auto true_childs = g_tui->true_childs;
-
+   
     if (auto it = std::find(true_childs.cbegin(), true_childs.cend(), id); it != true_childs.cend() ) {
         int index = std::distance(true_childs.cbegin(), it);
         if (index == g_tui->active_child)
@@ -63,6 +63,10 @@ void tui::begin_child(std::string id, vec2d size) {
 
     vec2d matrix_size{std::clamp(size.x - pudding*2, 0, get_window_size().x - get_cursor_pos().x), 
                       std::clamp(size.y - pudding*2, 0, get_window_size().y - get_cursor_pos().y - 1)};
+
+    if (border == true) {
+        widgets::render_border({get_cursor_pos(), get_cursor_pos() + matrix_size + vec2d(pudding*2,pudding*2)});
+    }
 
     auto& last_pos = g_tui->last_child_pos;
     vec2d this_pos = get_cursor_pos() + vec2d(pudding, pudding);

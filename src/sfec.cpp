@@ -10,6 +10,8 @@
 int main() {
     using namespace tui;
 
+    //return 0;
+
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
 
@@ -43,7 +45,8 @@ int main() {
      
         static int some_value, some_value2;
 
-        render::write_unicode(current_matrix(), {0, 0}, "\U0001f34c");
+        render::write_unicode_str(current_matrix(), {0, 0}, "\u2550");
+        render::write_unicode_str(current_matrix(), {0, 1}, "\u2550bananchiki");
 
         begin_child("somechild", {get_window_size().x/5, get_window_size().y});
         widgets::listbox("somelistbox", some_value, items, get_window_size().y);

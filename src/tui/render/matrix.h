@@ -77,6 +77,7 @@ namespace render {
     void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
 
     void write_unicode(TerminalMatrix& matrix, vec2d where, std::string unicode_char);
+    void write_unicode_str(TerminalMatrix& matrix, vec2d start, std::string text);
 
     void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
 

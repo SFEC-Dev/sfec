@@ -2,6 +2,8 @@
 #include "../tui.h"
 
 #include <iostream>
+#include <locale>
+#include <codecvt>
 
 tui::vec2d tui::operator+(const vec2d& lhs, const vec2d& rhs) {
     return vec2d(lhs.x + rhs.x, lhs.y + rhs.y);
@@ -36,6 +38,18 @@ void tui::render::write(TerminalMatrix& matrix, vec2d start, std::string text) {
 
 void tui::render::write_unicode(TerminalMatrix& matrix, vec2d where, std::string unicode_char) {
     matrix[where].first = unicode_char;
+}
+
+std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+void tui::render::write_unicode_str(TerminalMatrix& matrix, vec2d start, std::string text) {
+    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+    std::wstring wstr = converter.from_bytes(text);
+
+    for (auto it = wstr.begin(); it != wstr.end(); ++it) {
+        std::wstring singleChar(1, *it);
+        std::string utf8Char = converter.to_bytes(singleChar);
+        write_unicode(matrix, vec2d(start.x + std::distance(wstr.begin(), it), start.y), utf8Char);
+    }
 }
 
 void tui::render::write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from) {

@@ -43,6 +43,10 @@ int main() {
 
         if (is_key_pressed(tui::KEY_LOWERCASE_H) && g_tui->active_child > 0)
             g_tui->active_child--;
+
+        if (is_key_pressed(tui::KEY_LOWERCASE_L) && g_tui->active_child < g_tui->true_childs.size() - 1)
+            g_tui->active_child++;
+     
      
         if (terminalResized) {
             struct winsize size;

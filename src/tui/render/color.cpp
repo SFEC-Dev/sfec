@@ -67,3 +67,21 @@ void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::string 
         matrix[vec2d(start.x + col, start.y)].second = color::get_style(text_col, bg_col, flags);
     }
 }
+
+void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, uchar letter, 
+                    Color text_col, Color bg_col, text_flags flags) {
+                        
+    write(matrix, where, letter);
+
+    matrix[where].second = color::get_style(text_col, bg_col, flags);
+}
+                    
+void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, ustring text, 
+                    Color text_col, Color bg_col, text_flags flags) {
+
+    write(matrix, start, text);                   
+
+    for (std::size_t col = 0; col < text.value.size(); col++) { 
+        matrix[vec2d(start.x + col, start.y)].second = color::get_style(text_col, bg_col, flags);
+    }
+}

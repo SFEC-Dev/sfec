@@ -36,23 +36,23 @@ void tui::render::write(TerminalMatrix& matrix, vec2d start, std::string text) {
     }
 }
 
-void tui::render::write_unicode(TerminalMatrix& matrix, vec2d where, std::string unicode_char) {
-    matrix[where].first = unicode_char;
+void tui::render::write(TerminalMatrix& matrix, vec2d where, uchar unicode_char) {
+    matrix[where].first = unicode_char.value;
 }
 
-void tui::render::write_unicode_str(TerminalMatrix& matrix, vec2d start, std::string text) {
+void tui::render::write(TerminalMatrix& matrix, vec2d start, ustring text) {
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-    std::wstring wstr = converter.from_bytes(text);
+    std::wstring wstr = converter.from_bytes(text.value);
 
     int shift = 0;
     for (auto it = wstr.begin(); it != wstr.end(); ++it) {
         std::wstring singleChar(1, *it);
         std::string utf8Char = converter.to_bytes(singleChar);
         if (utf8Char.size() >= 4) {
-            write_unicode(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), utf8Char);
+            write(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), uchar{utf8Char});
             shift++;
         } else
-            write_unicode(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), utf8Char);
+            write(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), uchar{utf8Char});
     }
 }
 

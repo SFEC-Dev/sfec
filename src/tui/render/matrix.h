@@ -21,6 +21,18 @@ namespace tui {
         vec2d end;
     };
 
+    struct ustring {
+        ustring(const char* text) : value{text} {};
+        ustring(std::string text) : value{text} {};
+        std::string value;
+    };
+
+    struct uchar {
+        uchar(const char* letter) : value{letter} {};
+        uchar(std::string letter) : value{letter} {};
+        std::string value;
+    };
+
 namespace render {
     void clear();
 
@@ -76,8 +88,8 @@ namespace render {
     void write(TerminalMatrix& matrix, vec2d start, std::string text);
     void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
 
-    void write_unicode(TerminalMatrix& matrix, vec2d where, std::string unicode_char);
-    void write_unicode_str(TerminalMatrix& matrix, vec2d start, std::string text);
+    void write(TerminalMatrix& matrix, vec2d where, uchar letter);
+    void write(TerminalMatrix& matrix, vec2d start, ustring text);
 
     void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
 

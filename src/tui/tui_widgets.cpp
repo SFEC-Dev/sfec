@@ -10,6 +10,16 @@ void tui::render_text_styled(vec2d start, std::string text, Color text_col, Colo
     tui::render::write_styled(current_matrix(), start, text, text_col, bg_col, flags);
 }
 
+
+void tui::render_text(vec2d start, ustring text) {
+    tui::render::write(current_matrix(), start, text);
+}
+
+void tui::render_text_styled(vec2d start, ustring text, Color text_col, Color bg_col, text_flags flags) {
+    tui::render::write_styled(current_matrix(), start, text, text_col, bg_col, flags);
+}
+
+
 void tui::widgets::text(std::string text) {
     tui::render::write(current_matrix(), get_cursor_pos(), text);
 

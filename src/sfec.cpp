@@ -10,16 +10,6 @@
 int main() {
     using namespace tui;
 
-    //     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
-    // std::wstring str = converter.from_bytes("\u2550П\U0001f34c");
-
-    // for (auto it = str.begin(); it != str.end(); ++it) {
-    //     int width = wcwidth(*it);
-    //     std::cout << *it << " - ширина: " << width << std::endl;
-    // }
-
-    // return 0;
-
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
 
@@ -53,29 +43,17 @@ int main() {
      
         static int some_value, some_value2;
 
-        // render::write_unicode(current_matrix(), {0, 0}, "\U0001f34c");
-        // render::write(current_matrix(), {2, 0}, "bananchiki");
-        
-        // render::write_unicode(current_matrix(), {0, 1}, "\u2550");
-        // render::write(current_matrix(), {1, 1}, "bananchiki");
+        begin_child("somechild", {get_window_size().x/5, get_window_size().y});
+        widgets::listbox("somelistbox", some_value, items, get_window_size().y);
+        end_child();
 
-        // render::write_unicode(current_matrix(), {0, 2}, "\u2550");
-        // render::write(current_matrix(), {2, 2}, "bananchiki");
+        set_cursor_pos({get_window_size().x/5 + 1, 0});
+        begin_child("somechild2", {get_window_size().x/3, get_window_size().y});
+        widgets::listbox("somelistbox2", some_value2, items, get_window_size().y);
+        end_child();
 
-        render::write_unicode_str(current_matrix(), {0, 0}, "\U0001f34cbananchiki");
-        render::write_unicode_str(current_matrix(), {0, 1}, "\u2550bananchiki");
-
-        // begin_child("somechild", {get_window_size().x/5, get_window_size().y});
-        // widgets::listbox("somelistbox", some_value, items, get_window_size().y);
-        // end_child();
-
-        // set_cursor_pos({get_window_size().x/5 + 1, 0});
-        // begin_child("somechild2", {get_window_size().x/3, get_window_size().y});
-        // widgets::listbox("somelistbox2", some_value2, items, get_window_size().y);
-        // end_child();
-
-        // std::string quit_message = "press q to quit"; quit_message.resize(get_window_size().x, ' ');
-        // render_text_styled({0, current_matrix().height()-1}, quit_message, Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
+        ustring quit_message = "\U0001f34c press q to quit"; quit_message.value.resize(get_window_size().x, ' ');
+        render_text_styled({0, current_matrix().height()-1}, quit_message, Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);
         render::draw();
 
         reset();

@@ -66,6 +66,9 @@ namespace tui {
 
     void render_text(vec2d start, std::string text);
     void render_text_styled(vec2d start, std::string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+
+    void render_text(vec2d start, ustring text);
+    void render_text_styled(vec2d start, ustring text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
     
     namespace widgets {
         void text(std::string text);

@@ -81,12 +81,12 @@ int main() {
         }
 
         set_cursor_pos({0, get_window_size().y/5});
-        begin_child("somechild", {get_window_size().x/5, get_window_size().y - get_window_size().y/5 - 1}, true);
+        begin_child("somechild", {get_window_size().x/5, get_window_size().y - get_window_size().y/5 - 5}, true);
         widgets::listbox("somelistbox", some_value, items, get_window_size().y);
         end_child();
 
         set_cursor_pos({get_window_size().x/5 + 1, get_window_size().y/5});
-        begin_child("somechild2", {get_window_size().x/3, get_window_size().y - get_window_size().y/5 - 1});
+        begin_child("somechild2", {get_window_size().x/3, get_window_size().y - get_window_size().y/5 - 5}, true);
         widgets::listbox("somelistbox2", some_value2, items, get_window_size().y);
         end_child();
 

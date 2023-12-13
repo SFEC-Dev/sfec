@@ -97,13 +97,13 @@ constexpr const char* ltc_double = "\u2554",
     std::array<tui::uchar,6> result;
     switch (style) {
         case tui::BORDER_STYLE::ROUND:
-            result = { ltc_round,rtc_round,lbc_round,rbc_round,v_line,line };
+            result = { tui::uchar(ltc_round),tui::uchar(rtc_round),tui::uchar(lbc_round),tui::uchar(rbc_round),tui::uchar(v_line),tui::uchar(line) };
             break;
         case tui::BORDER_STYLE::SOLID:
-            result = { ltc_solid,rtc_solid,lbc_solid,rbc_solid,v_line,line };
+            result = { tui::uchar(ltc_solid),tui::uchar(rtc_solid),tui::uchar(lbc_solid),tui::uchar(rbc_solid),tui::uchar(v_line),tui::uchar(line) };
             break;
         case tui::BORDER_STYLE::DOUBLE:
-            result = { ltc_double, rtc_double, lbc_double, rbc_double,v_line_double, line_double };
+            result = { tui::uchar(ltc_double), tui::uchar(rtc_double), tui::uchar(lbc_double), tui::uchar(rbc_double),tui::uchar(v_line_double), tui::uchar(line_double) };
             break;
     }
     return result; 

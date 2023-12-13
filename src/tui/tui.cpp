@@ -64,8 +64,11 @@ void tui::begin_child(std::string id, vec2d size, bool border) {
     vec2d matrix_size{std::clamp(size.x - pudding*2, 0, get_window_size().x - get_cursor_pos().x), 
                       std::clamp(size.y - pudding*2, 0, get_window_size().y - get_cursor_pos().y - 1)};
 
-    if (border == true) {
-        widgets::render_border({get_cursor_pos(), get_cursor_pos() + matrix_size + vec2d(pudding*2,pudding*2)});
+    if (border) {
+        vec2d border_pos {std::clamp(get_cursor_pos().x + size.x, 0, get_window_size().x), 
+                      std::clamp(get_cursor_pos().y + size.y - 1, 0, get_window_size().y-1)};
+
+        widgets::render_border({get_cursor_pos(), border_pos});
     }
 
     auto& last_pos = g_tui->last_child_pos;

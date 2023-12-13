@@ -34,6 +34,10 @@ void tui::render::write(TerminalMatrix& matrix, vec2d start, std::string text) {
     }
 }
 
+void tui::render::write_unicode(TerminalMatrix& matrix, vec2d where, std::string unicode_char) {
+    matrix[where].first = unicode_char;
+}
+
 void tui::render::write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from) {
     for (std::size_t row = 0; row < from.height(); row++) {
         for (std::size_t col = 0; col < from.width(); col++) {

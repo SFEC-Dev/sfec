@@ -43,7 +43,7 @@ int main() {
      
         static int some_value, some_value2;
 
-        widgets::render_frame({{1,1}, {get_window_size().x/5 - 1, get_window_size().y - 3}});
+        render::write_unicode(current_matrix(), {0, 0}, "\U0001f34c");
 
         begin_child("somechild", {get_window_size().x/5, get_window_size().y});
         widgets::listbox("somelistbox", some_value, items, get_window_size().y);

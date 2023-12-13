@@ -63,8 +63,10 @@ struct rect
         std::string value;
     };
 
+    ustring operator+(const uchar& lhs, const uchar& rhs);
+    ustring operator+(const uchar& lhs, const ustring& rhs);
     ustring operator+(const ustring& lhs, const ustring& rhs);
-
+    ustring operator+(const ustring& lhs, const uchar& rhs);
     uchar operator ""_uchr(const char*, size_t);
     ustring operator ""_ustr(const char*, size_t);
 

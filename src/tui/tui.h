@@ -20,12 +20,12 @@ namespace tui {
                 g_event{std::move(handler)}, g_matrix{std::move(matrix)}, old_matrix{*g_matrix} {
         
             // For hidden cursor
-            std::cout << "\033[?25l";
+            std::wcout << L"\033[?25l";
         };
 
         ~context() {
             // For show cursor
-            std::cout << "\033[?25h";
+            std::wcout << L"\033[?25h";
             render::clear();
         }
 
@@ -70,6 +70,7 @@ namespace tui {
     namespace widgets {
         void text(std::wstring text);
         void listbox(std::string id, int& value, std::vector<std::wstring> items, int height);
+        void render_frame(tui::rect frame);
     }
 
     void reset();

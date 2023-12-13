@@ -51,3 +51,23 @@ void tui::widgets::listbox(std::string id, int& value, std::vector<std::wstring>
         selectable(items[i], value == i, vec2d(get_window_size().x, 1));
     }
 }
+
+void tui::widgets::render_frame(tui::rect frame) {
+    int width = frame.end.x - frame.start.x;
+    int hight = frame.end.y - frame.start.y;
+    std::wstring line(width - 2, L'\u2550');
+
+    tui::render::write(tui::current_matrix(), frame.start,
+                       L'\u256D' + line + L'\u256E');
+
+    tui::render::write(tui::current_matrix(),
+                       tui::vec2d(frame.start.x, frame.end.y),
+                       L'\u2570' + line + L'\u256F');
+
+    for (int y = 1; y <= hight-1; y++) {
+        tui::render::write(tui::current_matrix(), tui::vec2d(frame.start.x, y),
+                           L'\u2502');
+        tui::render::write(tui::current_matrix(), tui::vec2d(frame.end.x, y),
+                           L'\u2502');
+    }
+};

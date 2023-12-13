@@ -8,6 +8,8 @@
 int main() {
     using namespace tui;
 
+    setlocale(LC_ALL, "");
+
     struct winsize size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
 
@@ -40,6 +42,8 @@ int main() {
             g_tui->active_child++;
      
         static int some_value, some_value2;
+
+        widgets::render_frame({{1,1}, {get_window_size().x/5 - 1, get_window_size().y - 3}});
 
         begin_child("somechild", {get_window_size().x/5, get_window_size().y});
         widgets::listbox("somelistbox", some_value, items, get_window_size().y);

@@ -72,8 +72,7 @@ void tui::widgets::listbox(std::string id, int& value,
     }
 }
 
-constexpr const char* v_line        = "\u2502",
-                    * v_line_double = "\u2551",
+constexpr const char* v_line        = "\u2502", * v_line_double = "\u2551",
                     * line          = "\u2500",
                     * line_double   = "\u2550";
 
@@ -92,24 +91,24 @@ constexpr const char* ltc_double = "\u2554",
                     * lbc_double = "\u255A",
                     * rbc_double = "\u255D";
 
- auto get_style_frame(tui::FRAME_STYLE style){
+ auto get_style_border(tui::BORDER_STYLE style){
     std::array<tui::uchar,6> result;
     switch (style) {
-        case tui::FRAME_STYLE::ROUND:
+        case tui::BORDER_STYLE::ROUND:
             result = { ltc_round,rtc_round,lbc_round,rbc_round,v_line,line };
             break;
-        case tui::FRAME_STYLE::SOLID:
+        case tui::BORDER_STYLE::SOLID:
             result = { ltc_solid,rtc_solid,lbc_solid,rbc_solid,v_line,line };
             break;
-        case tui::FRAME_STYLE::DOUBLE:
+        case tui::BORDER_STYLE::DOUBLE:
             result = { ltc_double, rtc_double, lbc_double, rbc_double,v_line_double, line_double };
             break;
     }
     return result; 
 }
 
-void tui::widgets::render_frame(tui::rect frame, const tui::FRAME_STYLE style) {
-    auto style_frame = get_style_frame(style);
+void tui::widgets::render_border(tui::rect frame, const tui::BORDER_STYLE style) {
+    auto style_frame = get_style_border(style);
     int width = frame.end.x - frame.start.x;
     ustring line(width - 1, style_frame[5]);
 

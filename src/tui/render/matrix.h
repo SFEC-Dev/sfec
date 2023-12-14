@@ -13,6 +13,7 @@ struct vec2d
 };
 
 vec2d operator+(const vec2d& lhs, const vec2d& rhs);
+vec2d operator-(const vec2d& lhs, const vec2d& rhs);
 bool operator<(const vec2d& lhs, const vec2d& rhs);
 bool operator==(const vec2d& lhs, const vec2d& rhs);
 

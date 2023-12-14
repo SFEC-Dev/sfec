@@ -9,6 +9,10 @@ tui::vec2d tui::operator+(const vec2d& lhs, const vec2d& rhs) {
     return vec2d(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
+tui::vec2d tui::operator-(const vec2d& lhs, const vec2d& rhs){
+    return vec2d(lhs.x - rhs.x, lhs.y - rhs.y);
+}
+
 tui::ustring tui::operator+(const uchar& lhs, const uchar& rhs){
     return tui::ustring(lhs.value + rhs.value);
 }

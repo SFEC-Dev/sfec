@@ -43,14 +43,16 @@ int main() {
      
         static int some_value, some_value2;
 
-        begin_child("somechild", {get_window_size().x/5, get_window_size().y});
-        widgets::listbox("somelistbox", some_value, items, get_window_size().y);
-        end_child();
+        tui::widgets::render_frame({{2,2}, {180, 40}}, tui::FRAME_STYLE::DOUBLE);
 
-        set_cursor_pos({get_window_size().x/5 + 1, 0});
-        begin_child("somechild2", {get_window_size().x/3, get_window_size().y});
-        widgets::listbox("somelistbox2", some_value2, items, get_window_size().y);
-        end_child();
+        /* begin_child("somechild", {get_window_size().x/5, get_window_size().y}); */
+        /* widgets::listbox("somelistbox", some_value, items, get_window_size().y); */
+        /* end_child(); */
+        /**/
+        /* set_cursor_pos({get_window_size().x/5 + 1, 0}); */
+        /* begin_child("somechild2", {get_window_size().x/3, get_window_size().y}); */
+        /* widgets::listbox("somelistbox2", some_value2, items, get_window_size().y); */
+        /* end_child(); */
 
         ustring quit_message = "\U0001f34c press q to quit"; quit_message.value.resize(get_window_size().x, ' ');
         render_text_styled({0, current_matrix().height()-1}, quit_message, Color(255, 0, 0), Color(55, 55, 55), FLAG_BOLD | FLAG_ITALIC);

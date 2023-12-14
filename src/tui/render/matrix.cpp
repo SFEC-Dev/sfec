@@ -9,6 +9,22 @@ tui::vec2d tui::operator+(const vec2d& lhs, const vec2d& rhs) {
     return vec2d(lhs.x + rhs.x, lhs.y + rhs.y);
 }
 
+tui::ustring tui::operator+(const uchar& lhs, const uchar& rhs){
+    return tui::ustring(lhs.value + rhs.value);
+}
+
+tui::ustring tui::operator+(const ustring& lhs, const uchar& rhs){
+    return tui::ustring(lhs.value + rhs.value);
+}
+
+tui::ustring tui::operator+(const uchar& lhs, const ustring& rhs){
+    return ustring(lhs.value + rhs.value);
+}
+
+tui::ustring tui::operator+(const ustring& lhs, const ustring& rhs){
+    return tui::ustring(lhs.value + rhs.value);
+}
+
 bool tui::operator<(const vec2d& lhs, const vec2d& rhs) {
     return std::tie(lhs.x, lhs.y) < std::tie(rhs.x, rhs.y);
 }
@@ -16,6 +32,14 @@ bool tui::operator<(const vec2d& lhs, const vec2d& rhs) {
 bool tui::operator==(const vec2d& lhs, const vec2d& rhs) {
     return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
 }
+
+tui::uchar tui::operator ""_uchr(const char* text, size_t n){
+    return uchar(text);
+};
+
+tui::ustring tui::operator ""_ustr(const char* text, size_t n){
+    return ustring(text);
+};
 
 tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler}, 
                                             matrix_(height, std::vector(width, std::pair<std::string, std::string>(std::string(filler, 1), ""))) 

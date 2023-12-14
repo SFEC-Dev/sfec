@@ -15,6 +15,12 @@ namespace tui {
         int child_pudding = 4;
     };
 
+    enum class FRAME_STYLE {
+        DOUBLE,
+        SOLID,
+        ROUND,
+    };
+
     struct context {
         context(event_handler* handler, std::unique_ptr<render::TerminalMatrix> matrix) :
                 g_event{std::move(handler)}, g_matrix{std::move(matrix)}, old_matrix{*g_matrix} {
@@ -73,7 +79,7 @@ namespace tui {
     namespace widgets {
         void text(std::string text);
         void listbox(std::string id, int& value, std::vector<std::string> items, int height);
-        void render_frame(tui::rect frame);
+        void render_frame(tui::rect frame,  const tui::FRAME_STYLE style = FRAME_STYLE::ROUND);
     }
 
     void reset();

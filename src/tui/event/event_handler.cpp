@@ -29,26 +29,22 @@ int tui::event_handler::get_frames() {
 }
 
 void handle_resize() {
-    if (is_resized) {
-        struct winsize size;
-        ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
+    struct winsize size;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
 
+    tui::render::clear();
+    tui::render::wipe(tui::current_matrix(), {0, 0}, tui::vec2d(tui::current_matrix().width(), tui::current_matrix().height()));
+    tui::current_matrix().resize({size.ws_col, size.ws_row-1});
+    //g_tui->g_style.child_pudding = 
 
-        tui::render::clear();
-        tui::render::wipe(tui::current_matrix(), {0, 0}, tui::vec2d(tui::current_matrix().width(), tui::current_matrix().height()));
-        tui::current_matrix().resize({size.ws_col, size.ws_row-1});
+    int bytesAvailable;
+    ioctl(STDIN_FILENO, FIONREAD, &bytesAvailable);
 
-        //g_tui->g_style.child_pudding = 
-
-        int bytesAvailable;
-        ioctl(STDIN_FILENO, FIONREAD, &bytesAvailable);
-
-        if (bytesAvailable > 0) {
-            std::cin.ignore();
-            is_resized = true;
-        } else {
-            is_resized = false;
-        }
+    if (bytesAvailable > 0) {
+        std::cin.ignore();
+        is_resized = true;
+    } else {
+        is_resized = false;
     }
 }
 
@@ -56,13 +52,13 @@ void tui::event_handler::process() {
     while (true){    
         handler_.handle();
 
-        if (next_frames > 0) {
-            next_frames--;
+        if (is_resized) {
+            handle_resize();
             break;
         }
 
-        if (is_resized) {
-            handle_resize();
+        if (next_frames > 0) {
+            next_frames--;
             break;
         }
 

@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 namespace tui {
 struct vec2d
@@ -24,51 +25,51 @@ struct rect
     vec2d end;
 };
 
-    struct uchar {
-        explicit uchar(const char* letter) : value{letter} {};
-        explicit uchar(std::string letter) : value{letter} {};
-        uchar() = default;
+    // struct uchar {
+    //     explicit uchar(const char* letter) : value{letter} {};
+    //     explicit uchar(std::string letter) : value{letter} {};
+    //     uchar() = default;
 
-        std::string& operator()() {
-            return value;
-        };
+    //     std::string& operator()() {
+    //         return value;
+    //     };
 
-        const std::string& operator()() const {
-            return value;
-        };
+    //     const std::string& operator()() const {
+    //         return value;
+    //     };
 
-    private:
-        std::string value;
-    };
+    // private:
+    //     std::string value;
+    // };
 
-    struct ustring {
-        ustring(size_t n, const uchar& letter) {
-            value.reserve(n);
-            for (size_t i = 0; i < n; i++) {
-                value.append(letter());
-            }
-        }
-        explicit ustring(const char* text) : value{text} {};
-        explicit ustring(std::string text) : value{text} {};
+    // struct ustring {
+    //     ustring(size_t n, const uchar& letter) {
+    //         value.reserve(n);
+    //         for (size_t i = 0; i < n; i++) {
+    //             value.append(letter());
+    //         }
+    //     }
+    //     explicit ustring(const char* text) : value{text} {};
+    //     explicit ustring(std::string text) : value{text} {};
 
-        std::string& operator()() {
-            return value;
-        };
+    //     std::string& operator()() {
+    //         return value;
+    //     };
 
-        const std::string& operator()() const {
-            return value;
-        };
+    //     const std::string& operator()() const {
+    //         return value;
+    //     };
 
-    private:
-        std::string value;
-    };
+    // private:
+    //     std::string value;
+    // };
 
-    ustring operator+(const uchar& lhs, const uchar& rhs);
-    ustring operator+(const uchar& lhs, const ustring& rhs);
-    ustring operator+(const ustring& lhs, const ustring& rhs);
-    ustring operator+(const ustring& lhs, const uchar& rhs);
-    uchar operator ""_uchr(const char*, size_t);
-    ustring operator ""_ustr(const char*, size_t);
+    // ustring operator+(const uchar& lhs, const uchar& rhs);
+    // ustring operator+(const uchar& lhs, const ustring& rhs);
+    // ustring operator+(const ustring& lhs, const ustring& rhs);
+    // ustring operator+(const ustring& lhs, const uchar& rhs);
+    // uchar operator ""_uchr(const char*, size_t);
+    // ustring operator ""_ustr(const char*, size_t);
 
 namespace render {
 void clear();
@@ -77,26 +78,28 @@ void clear();
         int width_;
         int height_;
 
-        char filler_;
+        char32_t filler_;
 
-        std::vector<std::vector<std::pair<std::string, std::string>>> matrix_;
+        std::vector<std::vector<std::pair<char32_t, std::string>>> matrix_;
 
     public:
-        TerminalMatrix(int width, int height, char filler = ' ');
+        TerminalMatrix(int width, int height, char32_t filler = U' ');
         TerminalMatrix(int width, int height, TerminalMatrix& from);
 
-        std::pair<std::string, std::string>& operator[](vec2d where) {
-            return matrix_[where.y][where.x];
+        std::pair<char32_t, std::string>& operator[](vec2d where) 
+        {
+            const auto clamped_pos = vec2d(std::clamp(where.x, 0, width_-1), std::clamp(where.y, 0, height_-1));
+            return matrix_[clamped_pos.y][clamped_pos.x];
         }
 
         void resize(vec2d new_size) {
             height_ = new_size.y;
             width_ = new_size.x;
 
-            matrix_.resize(new_size.y, std::vector<std::pair<std::string, std::string>>(new_size.x, std::pair<std::string, std::string>(std::string(1, filler_), "")));
+            matrix_.resize(new_size.y, std::vector<std::pair<char32_t, std::string>>(new_size.x, std::pair<char32_t, std::string>(filler_, "")));
 
             for (auto& line : matrix_) {
-                line.resize(new_size.x, std::pair<std::string, std::string>(std::string(1, filler_), ""));
+                line.resize(new_size.x, std::pair<char32_t, std::string>(filler_, ""));
             }
         }
 
@@ -121,9 +124,9 @@ void clear();
     }
 
     using iterator =
-        std::vector<std::vector<std::pair<std::string, std::string>>>::iterator;
+        std::vector<std::vector<std::pair<char32_t, std::string>>>::iterator;
     using const_iterator = std::vector<
-        std::vector<std::pair<std::string, std::string>>>::const_iterator;
+        std::vector<std::pair<char32_t, std::string>>>::const_iterator;
 
     iterator begin() {
         return matrix_.begin();
@@ -141,13 +144,10 @@ void clear();
 };
 
 void write(TerminalMatrix& matrix, vec2d where,
-           std::pair<std::string, std::string> content);
-void write(TerminalMatrix& matrix, vec2d where, char letter);
-void write(TerminalMatrix& matrix, vec2d start, std::string text);
+           std::pair<char32_t, std::string> content);
+void write(TerminalMatrix& matrix, vec2d where, char32_t letter);
+void write(TerminalMatrix& matrix, vec2d start, std::u32string text);
 void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
-
-void write(TerminalMatrix& matrix, vec2d where, uchar letter);
-void write(TerminalMatrix& matrix, vec2d start, ustring text);
 
 void wipe(TerminalMatrix& matrix, vec2d start, vec2d end);
 

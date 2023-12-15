@@ -31,16 +31,10 @@ namespace tui {
     typedef int text_flags;
 
     namespace render {
-        void write_styled(TerminalMatrix& matrix, vec2d where, char letter, 
+        void write_styled(TerminalMatrix& matrix, vec2d where, char32_t letter, 
                           Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
                           
-        void write_styled(TerminalMatrix& matrix, vec2d start, std::string text, 
-                          Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
-
-        void write_styled(TerminalMatrix& matrix, vec2d where, uchar letter, 
-                          Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
-                          
-        void write_styled(TerminalMatrix& matrix, vec2d start, ustring text, 
+        void write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
                           Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
         namespace color {

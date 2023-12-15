@@ -19,6 +19,10 @@ tui::style& tui::current_style() {
     return g_tui->g_style;
 }
 
+void tui::set_min_window_size(vec2d size) {
+    g_tui->minimal_window_size = size;
+}
+
 void tui::set_cursor_pos(vec2d where) {
     g_tui->last_item_pos = where;
 }   
@@ -48,7 +52,7 @@ void tui::reset() {
     set_cursor_pos(vec2d(0, 0));
 }
 
-void tui::begin_child(std::string id, vec2d size, bool border) {
+void tui::begin_child(const std::string& id, vec2d size, bool border) {
     const auto true_childs = g_tui->true_childs;
    
     if (auto it = std::find(true_childs.cbegin(), true_childs.cend(), id); it != true_childs.cend() ) {
@@ -77,7 +81,7 @@ void tui::begin_child(std::string id, vec2d size, bool border) {
     if (std::find(last_pos.cbegin(), last_pos.cend(), this_pos) == last_pos.cend())
         last_pos.emplace_back(this_pos);
                       
-    auto child_matrix = std::make_unique<render::TerminalMatrix>(matrix_size.x, matrix_size.y, ' ');
+    auto child_matrix = std::make_unique<render::TerminalMatrix>(matrix_size.x, matrix_size.y, U' ');
 
     set_cursor_pos(vec2d(0, 0));
 

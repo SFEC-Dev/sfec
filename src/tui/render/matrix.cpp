@@ -2,27 +2,9 @@
 #include "../tui.h"
 
 #include <iostream>
-#include <locale>
-#include <codecvt>
 
 tui::vec2d tui::operator+(const vec2d& lhs, const vec2d& rhs) {
     return vec2d(lhs.x + rhs.x, lhs.y + rhs.y);
-}
-
-tui::ustring tui::operator+(const uchar& lhs, const uchar& rhs){
-    return tui::ustring(lhs() + rhs());
-}
-
-tui::ustring tui::operator+(const ustring& lhs, const uchar& rhs){
-    return tui::ustring(lhs() + rhs());
-}
-
-tui::ustring tui::operator+(const uchar& lhs, const ustring& rhs){
-    return ustring(lhs() + rhs());
-}
-
-tui::ustring tui::operator+(const ustring& lhs, const ustring& rhs){
-    return tui::ustring(lhs() + rhs());
 }
 
 bool tui::operator<(const vec2d& lhs, const vec2d& rhs) {
@@ -37,53 +19,29 @@ bool tui::operator==(const vec2d& lhs, const vec2d& rhs) {
     return std::tie(lhs.x, lhs.y) == std::tie(rhs.x, rhs.y);
 }
 
-tui::uchar tui::operator ""_uchr(const char* text, size_t n){
-    return uchar(text);
-}
-
-tui::ustring tui::operator ""_ustr(const char* text, size_t n){
-    return ustring(text);
-}
-
-tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char filler) : width_(width), height_(height), filler_{filler}, 
-                                            matrix_(height, std::vector<std::pair<std::string, std::string>>(width, std::pair<std::string, std::string>(std::string(1, filler_), ""))) 
+tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char32_t filler) : width_(width), height_(height), filler_{filler}, 
+                                            matrix_(height, std::vector<std::pair<char32_t, std::string>>(width, std::pair<char32_t, std::string>(filler_, ""))) 
 {
 }
 
-void tui::render::write(TerminalMatrix& matrix, vec2d where, char letter) {
+void tui::render::write(TerminalMatrix& matrix, vec2d where, char32_t letter) {
+    //std::cout << std::quoted(converter.to_bytes(letter)) << std::endl;
     matrix[where].first = letter;
 }
 
-void tui::render::write(TerminalMatrix& matrix, vec2d where, std::pair<std::string, std::string> content) {
+void tui::render::write(TerminalMatrix& matrix, vec2d where, std::pair<char32_t, std::string> content) {
     matrix[where] = content;
 }
 
-void tui::render::write(TerminalMatrix& matrix, vec2d start, std::string text) {
-    for (size_t i = 0; i < text.size(); i++) {
-        write(matrix, vec2d(start.x + i, start.y), text[i]);
-    }
-}
-
-void tui::render::write(TerminalMatrix& matrix, vec2d where, uchar unicode_char) {
-    matrix[where].first = unicode_char();
-}
-
-void tui::render::write(TerminalMatrix& matrix, vec2d start, ustring text) {
-    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-    std::wstring wstr = converter.from_bytes(text());
-
+void tui::render::write(TerminalMatrix& matrix, vec2d start, std::u32string text) {
     int shift = 0;
-    for (auto it = wstr.begin(); it != wstr.end(); ++it) {
-        std::wstring singleChar(1, *it);
-        std::string utf8Char = converter.to_bytes(singleChar);
-        if (utf8Char.size() >= 4) {
-            write(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), uchar{utf8Char});
-            matrix[vec2d(start.x + std::distance(wstr.begin(), it) + shift + 1, start.y)].first = "";
-            //std::cout << matrix[{100, start.y}].first << std::endl;
-            //std::cout << start.x + std::distance(wstr.begin(), it) + shift << " " << start.y <<  " " << (matrix.begin() + start.y)->size() << std::endl;
+    for (size_t i = 0; i < text.size(); i++) {
+        write(matrix, vec2d(start.x + i + shift, start.y), text[i]);
+
+        if (text[i] > 0xFFFF) {
+            matrix[vec2d(start.x + i + shift + 1, start.y)].first = U'\0';
             shift++;
-        } else
-            write(matrix, vec2d(start.x + std::distance(wstr.begin(), it) + shift, start.y), uchar{utf8Char});
+        }
     }
 }
 
@@ -105,12 +63,11 @@ void tui::render::wipe(TerminalMatrix& matrix, vec2d start, vec2d end) {
     }
 }
 
-const std::string end_seq{"\033[0m"};
+constexpr const char* end_seq{"\033[0m"};
 
 void tui::render::interpret(TerminalMatrix& matrix) {
     for (std::size_t row = 0; row < matrix.height(); row++) {
         for (std::size_t col = 0; col < matrix.width(); col++) { 
-            
             if (vec2d(matrix.width(), matrix.height()) == vec2d(g_tui->old_matrix.width(), g_tui->old_matrix.height()) && matrix[vec2d(col, row)] == g_tui->old_matrix[vec2d(col, row)]) {
                 continue;
             }
@@ -118,10 +75,10 @@ void tui::render::interpret(TerminalMatrix& matrix) {
             std::cout << "\033[" + std::to_string(row+1) + ";" + std::to_string(col+1) + "H";
 
             if (matrix[vec2d(col, row)].second != "") {
-                std::cout << matrix[vec2d(col, row)].second << matrix[vec2d(col, row)].first << end_seq;
+                std::cout << matrix[vec2d(col, row)].second << converter.to_bytes(matrix[vec2d(col, row)].first) << end_seq;
             } 
             else
-                std::cout << matrix[vec2d(col, row)].first;
+                std::cout << converter.to_bytes(matrix[vec2d(col, row)].first);
             
         }
         std::cout << '\n';

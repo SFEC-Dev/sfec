@@ -1,8 +1,5 @@
 #include "color.h"
 
-#include <locale>
-#include <codecvt>
-
 const std::string start_seq{"\033["};
 
 std::string tui::render::color::get_style(Color text_col, Color bg_col, text_flags flags) {
@@ -50,27 +47,4 @@ std::string tui::render::color::get_style(Color text_col, Color bg_col, text_fla
     }
 
     return result;
-}
-
-void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, char32_t letter, 
-                    Color text_col, Color bg_col, text_flags flags) {
-                        
-    write(matrix, where, letter);
-
-    matrix[where].second = color::get_style(text_col, bg_col, flags);
-}
-                    
-void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
-                    Color text_col, Color bg_col, text_flags flags) {
-
-    write(matrix, start, text);
-
-    int shift = 0;
-    for (std::size_t col = 0; col < text.size(); col++) { 
-        matrix[vec2d(start.x + col + shift, start.y)].second = color::get_style(text_col, bg_col, flags);
-        if (text[col] > 0xFFFF) {
-             matrix[vec2d(start.x + col + shift + 1, start.y)].second = color::get_style(text_col, bg_col, flags);
-             shift++;
-        }
-    }
 }

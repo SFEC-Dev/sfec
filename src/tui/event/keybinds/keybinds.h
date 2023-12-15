@@ -74,4 +74,4 @@ struct key_proxy
 extern std::map<event, key_proxy> current_bindings;
 bool get_event(event action);
 
-} // namespace tui::binds
+}

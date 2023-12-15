@@ -1,7 +1,6 @@
 #pragma once
-#include "matrix.h"
-
 #include <algorithm>
+#include <string>
 
 namespace tui {
     struct Color {
@@ -30,15 +29,7 @@ namespace tui {
 
     typedef int text_flags;
 
-    namespace render {
-        void write_styled(TerminalMatrix& matrix, vec2d where, char32_t letter, 
-                          Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
-                          
-        void write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
-                          Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
-
-        namespace color {
-            std::string get_style(Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
-        }
+    namespace render::color {
+        std::string get_style(Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
     }
 }

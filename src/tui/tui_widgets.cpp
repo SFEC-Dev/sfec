@@ -3,25 +3,15 @@
 #include <algorithm>
 #include <array>
 
-void tui::render_text(vec2d start, std::u32string text) {
-    tui::render::write(current_matrix(), start, text);
-}
-
-void tui::render_text_styled(vec2d start, std::u32string text, Color text_col,
-                             Color bg_col, text_flags flags) {
-    tui::render::write_styled(current_matrix(), start, text, text_col, bg_col,
-                              flags);
-}
-
 void tui::widgets::text(std::u32string text) {
-    render_text(get_cursor_pos(), text);
+    render::draw_text(get_cursor_pos(), text);
 
     set_cursor_pos(get_cursor_pos() +
                    vec2d(0, 1 + current_style().item_spacing));
 }
 
 void tui::widgets::text_styled(std::u32string text, Color text_col, Color bg_col, text_flags flags) {
-    render_text_styled(get_cursor_pos(), text, text_col, bg_col, flags);
+    render::draw_text_styled(get_cursor_pos(), text, text_col, bg_col, flags);
 
     set_cursor_pos(get_cursor_pos() +
                    vec2d(0, 1 + current_style().item_spacing));
@@ -35,14 +25,12 @@ void selectable(std::u32string label, bool condition, tui::vec2d size) {
     std::u32string on_label{U"\U0001f34c " + label}; on_label.resize(size.x, U' ');
     std::u32string off_label = label; off_label.resize(size.x, U' ');
 
-    if (condition)
-        tui::render_text_styled(tui::get_cursor_pos(), on_label, Color(250, 180, 0), Color(120, 50, 0), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
+    if (condition && g_tui->enable_input)
+        tui::render::draw_text_styled(tui::get_cursor_pos(), on_label, Color(250, 180, 0), Color(120, 50, 0), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
     else
-        tui::render_text(tui::get_cursor_pos(), off_label);
+        tui::render::draw_text(tui::get_cursor_pos(), off_label);
 
-    tui::set_cursor_pos(
-        tui::get_cursor_pos() +
-        tui::vec2d(0, size.y + tui::current_style().item_spacing));
+    tui::set_cursor_pos(tui::get_cursor_pos() + vec2d(0, size.y + tui::current_style().item_spacing));
 }
 
 void tui::widgets::listbox(const std::string& id, int& value, std::vector<std::u32string> items, int height) {
@@ -145,7 +133,7 @@ constexpr const char* ltc_double = "\u2554",
     return result; 
 }
 
-void tui::widgets::render_border(tui::rect frame, const tui::BORDER_STYLE style) {
+void tui::widgets::render_border(rect frame, const tui::BORDER_STYLE style) {
     auto style_frame = get_style_border(style);
     int width = frame.end.x - frame.start.x;
     std::u32string line(width - 1, style_frame[5]);
@@ -153,11 +141,11 @@ void tui::widgets::render_border(tui::rect frame, const tui::BORDER_STYLE style)
     tui::render::write(tui::current_matrix(), frame.start,
                        style_frame[0] + line + style_frame[1]);
     tui::render::write(tui::current_matrix(),
-                       tui::vec2d(frame.start.x, frame.end.y),
+                       vec2d(frame.start.x, frame.end.y),
                        style_frame[2] + line + style_frame[3]);
 
     for (int y = frame.start.y + 1 ; y <= frame.end.y - 1; y++) {
-        tui::render::write(tui::current_matrix(), tui::vec2d(frame.start.x, y) ,style_frame[4]);
-        tui::render::write(tui::current_matrix(), tui::vec2d(frame.end.x, y), style_frame[4]);
+        tui::render::write(tui::current_matrix(), vec2d(frame.start.x, y) ,style_frame[4]);
+        tui::render::write(tui::current_matrix(), vec2d(frame.end.x, y), style_frame[4]);
     }
 };

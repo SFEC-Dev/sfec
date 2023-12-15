@@ -4,24 +4,12 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <filesystem>
-#include <locale>
-#include <codecvt>
-#include <set>
 
 int main(int argc, char* argv[]) {
     using namespace tui;
 
     bool exit = false;
     std::filesystem::path current_path = std::filesystem::current_path();
-
-    // std::vector<std::u32string> current_items;
-    // for (auto const& dir_entry : std::filesystem::directory_iterator{current_path}) 
-    //     current_items.emplace_back(dir_entry.path().filename().u32string());
-
-    // for (size_t i = 0; i < current_items.size(); i++) {
-    //     std::cout << converter.to_bytes(current_items[i]) + " " + std::to_string(i) << std::endl;
-    // }
-    // return 2;
 
     struct winsize start_size;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &start_size);
@@ -34,13 +22,11 @@ int main(int argc, char* argv[]) {
     set_min_window_size({64, 24});
     int some_value = 0, some_value2 = 0;
 
-    try {
     while (!exit) {
         event.process();
 
         if (is_key_pressed(KEY_ESC) || is_key_pressed(KEY_LOWERCASE_Q))
-            throw std::runtime_error("Nigger died...");
-            //exit = true;
+            exit = true;
 
         if (is_key_pressed(tui::KEY_LOWERCASE_H) && g_tui->active_child > 0)
             g_tui->active_child--;
@@ -95,17 +81,10 @@ int main(int argc, char* argv[]) {
 
         std::u32string quit_message{U"press \U0001f34c to quit"};
         quit_message.resize(get_window_size().x, U' ');
-        render_text_styled({0, current_matrix().height()-1}, quit_message, Color(250, 180, 0), Color(120, 50, 0), FLAG_REVERSE | FLAG_ITALIC);
+        render::draw_text_styled({0, current_matrix().height()-1}, quit_message, Color(250, 180, 0), Color(120, 50, 0), FLAG_REVERSE | FLAG_ITALIC);
        
         render::draw();
         reset();
-    }
-    }
-    catch (const std::exception& e) {
-        std::cout << std::to_string(some_value2) << std::endl;
-        std::cout << std::to_string(g_tui->listbox_buffer["somelistbox2"].first) << std::endl;
-        std::cout << std::to_string(g_tui->listbox_buffer["somelistbox2"].second) << std::endl;
-        std::cout << e.what() << std::endl;
     }
 
     return 0;

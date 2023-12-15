@@ -36,4 +36,4 @@ namespace icon {
    static const std::string rust = "\ue7a8";
 
  std::string get_icon(std::string name);
-} // namespace icon
+}

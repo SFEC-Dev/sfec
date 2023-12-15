@@ -1,7 +1,9 @@
 #pragma once
+#include "utils/position.h"
 #include "event/keybinds/keybinds.h"
 #include "event/event_handler.h"
 #include "event/key_handler.h"
+#include "render/render.h"
 #include "render/matrix.h"
 #include "render/color.h"
 
@@ -39,7 +41,7 @@ enum class BORDER_STYLE {
         ~context() {
             // For show cursor
             std::cout << "\033[?25h";
-            //render::clear();
+            render::clear();
         }
 
         event_handler* g_event{nullptr};
@@ -81,15 +83,12 @@ enum class BORDER_STYLE {
     bool is_key_pressed(const keys key);
     bool is_any_pressed();
 
-    void render_text(vec2d start, std::u32string text);
-    void render_text_styled(vec2d start, std::u32string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
-
     namespace widgets {
         void text(std::u32string text);
         void text_styled(std::u32string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
         void listbox(const std::string& id, int& value, std::vector<std::u32string> items, int height);
-        void render_border(tui::rect frame,  const tui::BORDER_STYLE style = BORDER_STYLE::ROUND);
+        void render_border(rect frame,  const tui::BORDER_STYLE style = BORDER_STYLE::ROUND);
     }
 
     void reset();

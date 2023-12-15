@@ -10,12 +10,16 @@ add_executable(
   tui/event/key_handler.cpp
   tui/event/keybinds/keybinds.h
   tui/event/keybinds/keybinds.cpp
+  tui/render/render.cpp
+  tui/render/render.h
   tui/render/color.h
   tui/render/color.cpp
   tui/render/matrix.h
   tui/render/matrix.cpp
   tui/utils/icon.h
   tui/utils/icon.cpp
+  tui/utils/position.h
+  tui/utils/position.cpp
   config/options.h
   config/options.cpp
   config/interpreter.h

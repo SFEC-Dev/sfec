@@ -18,7 +18,7 @@ enum class BORDER_STYLE {
     };
 
     struct style {
-        BORDER_STYLE style = BORDER_STYLE::ROUND;
+        BORDER_STYLE child_border_style = BORDER_STYLE::ROUND;
         int item_spacing = 0;
         int child_pudding = 1;
     };
@@ -31,6 +31,7 @@ enum class BORDER_STYLE {
         
             // For hidden cursor
             std::cout << "\033[?25l";
+            render::clear();
         };
 
         ~context() {
@@ -48,11 +49,12 @@ enum class BORDER_STYLE {
         render::TerminalMatrix old_matrix;
         int active_child{0};
         bool enable_input{false};
+        bool is_resizing{false};
         
         std::vector<tui::keys> key_buffer{};
         std::chrono::steady_clock::time_point buffer_time{};
         std::unique_ptr<render::TerminalMatrix> matrix_buffer{};
-        std::map<std::string, int> listbox_buffer{};
+        std::map<std::string, std::pair<int, int>> listbox_buffer{};
         std::vector<std::pair<std::string, int>> child_buffer{};
         std::vector<std::string> true_childs{};
     };
@@ -82,6 +84,10 @@ enum class BORDER_STYLE {
     
     namespace widgets {
         void text(std::string text);
+        void text(ustring text);
+        void text_styled(std::string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+        void text_styled(ustring text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+
         void listbox(std::string id, int& value, std::vector<std::string> items, int height);
         void render_border(tui::rect frame,  const tui::BORDER_STYLE style = BORDER_STYLE::ROUND);
     }

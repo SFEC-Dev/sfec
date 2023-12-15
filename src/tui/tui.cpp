@@ -68,7 +68,7 @@ void tui::begin_child(std::string id, vec2d size, bool border) {
         vec2d border_pos {std::clamp(get_cursor_pos().x + size.x, 0, get_window_size().x), 
                       std::clamp(get_cursor_pos().y + size.y - 1, 0, get_window_size().y-1)};
 
-        widgets::render_border({get_cursor_pos(), border_pos});
+        widgets::render_border({get_cursor_pos(), border_pos}, current_style().child_border_style);
     }
 
     auto& last_pos = g_tui->last_child_pos;

@@ -24,11 +24,34 @@ void tui::render_text_styled(vec2d start, ustring text, Color text_col,
 }
 
 void tui::widgets::text(std::string text) {
-    tui::render::write(current_matrix(), get_cursor_pos(), text);
+    render_text(get_cursor_pos(), text);
 
     set_cursor_pos(get_cursor_pos() +
                    vec2d(0, 1 + current_style().item_spacing));
 }
+
+void tui::widgets::text(ustring text) {
+    render_text(get_cursor_pos(), text);
+
+    set_cursor_pos(get_cursor_pos() +
+                   vec2d(0, 1 + current_style().item_spacing));
+}
+
+void tui::widgets::text_styled(std::string text, Color text_col, Color bg_col, text_flags flags) {
+    render_text_styled(get_cursor_pos(), text, text_col, bg_col, flags);
+
+    set_cursor_pos(get_cursor_pos() +
+                   vec2d(0, 1 + current_style().item_spacing));
+}
+
+void tui::widgets::text_styled(ustring text, Color text_col, Color bg_col, text_flags flags) {
+    render_text_styled(get_cursor_pos(), text, text_col, bg_col, flags);
+
+    set_cursor_pos(get_cursor_pos() +
+                   vec2d(0, 1 + current_style().item_spacing));
+}
+
+
 
 void selectable(std::string label, bool condition, tui::vec2d size) {
     using namespace tui;
@@ -60,16 +83,36 @@ void tui::widgets::listbox(std::string id, int& value,
     const int min = std::min(static_cast<int>(items.size()), height);
     const int max = std::max(static_cast<int>(items.size()), height);
 
-    int& saved_position =
-        (g_tui->listbox_buffer.try_emplace(id, min).first->second);
+    auto& saved_position =
+        (g_tui->listbox_buffer.try_emplace(id, std::pair<int, int>(0, min)).first->second);
 
-    while (value > saved_position - min/4.1  && saved_position < max) 
-        saved_position++;
+    const int scroll_activator = min * 0.25;
 
-    while (value < saved_position - min + min/4.8 && saved_position > min) 
-        saved_position--;
+    while (saved_position.second - saved_position.first < min) {
+        if (saved_position.first > 0)
+            saved_position.first--;
+        if (saved_position.second - saved_position.first < min && saved_position.second < max)
+        saved_position.second++;
+    }
 
-    for (size_t i = saved_position - min; i < saved_position; i++) {
+    while (saved_position.second - saved_position.first > min) {
+        if (saved_position.first > 0)
+            saved_position.first++;
+        if (saved_position.second - saved_position.first > min)
+        saved_position.second--;
+    }
+
+    while (value < saved_position.first + scroll_activator && saved_position.first > 0) {
+        saved_position.first--;
+        saved_position.second--;
+    }
+
+    while (value >= saved_position.second - scroll_activator && saved_position.second < max) {
+        saved_position.first++;
+        saved_position.second++;
+    }
+
+    for (size_t i = saved_position.first; i < saved_position.second; i++) {
         selectable(items[i], value == i, vec2d(get_window_size().x, 1));
     }
 }

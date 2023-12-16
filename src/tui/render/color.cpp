@@ -1,6 +1,6 @@
 #include "color.h"
 
-const std::string start_seq{"\033["};
+constexpr const char* start_seq{"\033["};
 
 std::string tui::render::color::get_style(Color text_col, Color bg_col, text_flags flags) {
     std::string result;

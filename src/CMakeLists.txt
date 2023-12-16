@@ -24,6 +24,8 @@ add_executable(
   config/options.cpp
   config/interpreter.h
   config/interpreter.cpp
+  file/file.h
+  file/file.cpp
   )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY

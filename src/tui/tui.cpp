@@ -63,10 +63,10 @@ void tui::begin_child(const std::string& id, vec2d size, bool border) {
 
     g_tui->child_buffer.push_back({id, g_tui->child_buffer.size()+1});
 
-    const int pudding = current_style().child_pudding;
+    const vec2d padding = current_style().child_padding;
 
-    vec2d matrix_size{std::clamp(size.x - pudding*2, 0, get_window_size().x - get_cursor_pos().x), 
-                      std::clamp(size.y - pudding*2, 0, get_window_size().y - get_cursor_pos().y - 1)};
+    vec2d matrix_size{std::clamp(size.x - padding.x*2, 0, get_window_size().x - get_cursor_pos().x), 
+                      std::clamp(size.y - padding.y*2, 0, get_window_size().y - get_cursor_pos().y - 1)};
 
     if (border) {
         vec2d border_pos {std::clamp(get_cursor_pos().x + size.x, 0, get_window_size().x), 
@@ -76,7 +76,7 @@ void tui::begin_child(const std::string& id, vec2d size, bool border) {
     }
 
     auto& last_pos = g_tui->last_child_pos;
-    vec2d this_pos = get_cursor_pos() + vec2d(pudding, pudding);
+    vec2d this_pos = get_cursor_pos() + padding;
     
     if (std::find(last_pos.cbegin(), last_pos.cend(), this_pos) == last_pos.cend())
         last_pos.emplace_back(this_pos);
@@ -101,13 +101,13 @@ void tui::end_child() {
 
     g_tui->child_buffer.pop_back();
 
-    const int pudding = current_style().child_pudding;
+    const vec2d padding = current_style().child_padding;
     auto& last_pos = g_tui->last_child_pos;
 
     render::write((*g_tui->matrix_buffer), last_pos.back(), (*g_tui->g_matrix));
     last_pos.pop_back();
 
-    set_cursor_pos(vec2d(0, pudding + (*g_tui->g_matrix).height() + tui::current_style().item_spacing));
+    set_cursor_pos(vec2d(0, padding.y*2 + (*g_tui->g_matrix).height() + tui::current_style().item_spacing));
 
     g_tui->g_matrix = std::move(g_tui->matrix_buffer);
 

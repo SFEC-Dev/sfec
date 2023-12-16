@@ -35,7 +35,7 @@ void handle_resize() {
     tui::render::clear();
     tui::render::wipe(tui::current_matrix(), {0, 0}, tui::vec2d(tui::current_matrix().width(), tui::current_matrix().height()));
     tui::current_matrix().resize({size.ws_col, size.ws_row-1});
-    //g_tui->g_style.child_pudding = 
+    //g_tui->g_style.child_padding = 
 
     int bytesAvailable;
     ioctl(STDIN_FILENO, FIONREAD, &bytesAvailable);

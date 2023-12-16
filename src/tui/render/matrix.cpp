@@ -13,7 +13,7 @@ void tui::render::write(TerminalMatrix& matrix, vec2d where, std::pair<char32_t,
     matrix[where] = content;
 }
 
-void tui::render::write(TerminalMatrix& matrix, vec2d start, std::u32string text) {
+void tui::render::write(TerminalMatrix& matrix, vec2d start, std::u32string_view text) {
     int shift = 0;
     for (size_t i = 0; i < text.size(); i++) {
         write(matrix, vec2d(start.x + i + shift, start.y), text[i]);
@@ -41,7 +41,7 @@ void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, char32_t let
     matrix[where].second = color::get_style(text_col, bg_col, flags);
 }
                     
-void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
+void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::u32string_view text, 
                     Color text_col, Color bg_col, text_flags flags) {
 
     write(matrix, start, text);

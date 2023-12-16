@@ -6,6 +6,7 @@
 #include "render/render.h"
 #include "render/matrix.h"
 #include "render/color.h"
+#include "utils/icon.h"
 
 #include <chrono>
 #include <iostream>
@@ -15,19 +16,24 @@
 
 namespace tui {
 
-enum class BORDER_STYLE {
+    enum class BORDER_STYLE {
         DOUBLE,
         SOLID,
         ROUND,
     };
 
-    struct style {
-        BORDER_STYLE child_border_style = BORDER_STYLE::ROUND;
-        int item_spacing = 0;
-        int child_pudding = 1;
+    enum LISTBOX_FLAGS {
+        LISTBOX_FLAG           = 0,
+        LISTBOX_FLAG_DISABLED  = 1 << 0     
     };
 
-    
+    typedef int listbox_flags;
+
+    struct style {
+        BORDER_STYLE child_border_style{BORDER_STYLE::ROUND};
+        int item_spacing{0};
+        vec2d child_padding{2, 1};
+    };
 
     struct context {
         context(event_handler* handler, std::unique_ptr<render::TerminalMatrix> matrix) :
@@ -73,8 +79,8 @@ enum class BORDER_STYLE {
     event_handler& current_event();
     style& current_style();
 
-    void set_min_window_size(vec2d size);
-    void set_cursor_pos(vec2d where);
+    void set_min_window_size(const vec2d size);
+    void set_cursor_pos(const vec2d where);
     const vec2d& get_cursor_pos();
 
     const vec2d get_window_size();
@@ -84,10 +90,10 @@ enum class BORDER_STYLE {
     bool is_any_pressed();
 
     namespace widgets {
-        void text(std::u32string text);
-        void text_styled(std::u32string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+        void text(std::u32string_view text);
+        void text_styled(std::u32string_view text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
-        void listbox(const std::string& id, int& value, std::vector<std::u32string> items, int height);
+        bool listbox(const std::string& id, int& value, const std::vector<std::pair<icons::icon_t, std::u32string>>& items, int height, listbox_flags flags = 0);
         void render_border(rect frame,  const tui::BORDER_STYLE style = BORDER_STYLE::ROUND);
     }
 

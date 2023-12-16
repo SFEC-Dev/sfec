@@ -80,12 +80,12 @@ namespace tui {
     void write(TerminalMatrix& matrix, vec2d where,
             std::pair<char32_t, std::string> content);
     void write(TerminalMatrix& matrix, vec2d where, char32_t letter);
-    void write(TerminalMatrix& matrix, vec2d start, std::u32string text);
+    void write(TerminalMatrix& matrix, vec2d start, std::u32string_view text);
     void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
     void write_styled(TerminalMatrix& matrix, vec2d where, char32_t letter, 
                     Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
                     
-    void write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
+    void write_styled(TerminalMatrix& matrix, vec2d start, std::u32string_view text, 
                         Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
 

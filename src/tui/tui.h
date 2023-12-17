@@ -90,8 +90,11 @@ namespace tui {
     bool is_any_pressed();
 
     namespace widgets {
-        void text(std::u32string_view text);
-        void text_styled(std::u32string_view text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+        void text(std::u32string text);
+        void text_styled(std::u32string text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
+
+        void text_vertical(std::vector<std::u32string> text);
+        void text_vertical_styled(std::vector<std::u32string> text, Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
         bool listbox(const std::string& id, int& value, const std::vector<std::pair<icons::icon_t, std::u32string>>& items, int height, listbox_flags flags = 0);
         void render_border(rect frame,  const tui::BORDER_STYLE style = BORDER_STYLE::ROUND);

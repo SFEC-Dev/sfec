@@ -67,19 +67,3 @@ jobs:
           asset_path: build/sfec-0.0.${{ github.run_number }}-Linux.tar.gz
           asset_name: sfec-Linux.tar.gz
           asset_content_type: application/vnd.debian.binary-package
-
-  docs:
-    permissions: write-all
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.3.1
-      - name: Doxygen Action
-        uses: mattnotmitt/doxygen-action@v1.1.0
-        with:
-          working-directory: 'docs/'
-      - name: Deploy Docs
-        uses: peaceiris/actions-gh-pages@v3.6.4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./docs/html

@@ -1,9 +1,13 @@
 #include "file.h"
+#include "../tui/tui.h"
 
 #include <algorithm>
+#include <fstream>
 
 const std::vector<std::u32string> files::ignored_files {
-    U"lost+found"
+    U"lost+found",
+    U"proc",
+    U"mnt"
 };
 
 bool default_comparator(const files::fs::path& first, const files::fs::path& second) {
@@ -30,6 +34,26 @@ std::vector<files::fs::path> files::get_files(const fs::path& dir_patch) {
     }
 
     std::sort(result.begin(), result.end(), default_comparator);
+    return result;
+}
+
+std::vector<std::u32string> files::read_file(files::fs::path path)
+{
+    std::vector<std::u32string> result;
+
+    try {
+    std::ifstream f(path, std::ios::in | std::ios::binary);
+
+    std::string line;
+    while (getline(f, line)) {
+        result.emplace_back(tui::converter.from_bytes(line));
+    }
+    }
+    catch (const std::exception& ex) {
+        result.clear();
+        result.emplace_back(U"The file cannot be read");
+    }
+
     return result;
 }
 

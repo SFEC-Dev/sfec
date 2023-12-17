@@ -3,7 +3,7 @@
 .clang-format
 .clang-tidy
 
-#Utiliti
+# Build
 build*/
 .cache/
 *.json

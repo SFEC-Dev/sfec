@@ -3,26 +3,31 @@
 #include <algorithm>
 #include <array>
 
-void tui::widgets::text(std::u32string_view text) {
+void tui::widgets::text(std::u32string text) {
     render::draw_text(get_cursor_pos(), text);
 
-    set_cursor_pos(get_cursor_pos() +
-                   vec2d(0, 1 + current_style().item_spacing));
+    set_cursor_pos(get_cursor_pos() + vec2d(0, 1 + current_style().item_spacing));
 }
 
-void tui::widgets::text_styled(std::u32string_view text, Color text_col, Color bg_col, text_flags flags) {
+void tui::widgets::text_styled(std::u32string text, Color text_col, Color bg_col, text_flags flags) {
     render::draw_text_styled(get_cursor_pos(), text, text_col, bg_col, flags);
 
-    set_cursor_pos(get_cursor_pos() +
-                   vec2d(0, 1 + current_style().item_spacing));
+    set_cursor_pos(get_cursor_pos() + vec2d(0, 1 + current_style().item_spacing));
 }
 
-void selectable_impl(tui::icons::icon_t icon, std::u32string_view label, bool condition, tui::vec2d size) {
+void tui::widgets::text_vertical(std::vector<std::u32string> text) {
+    for (size_t i = 0; i < text.size(); i++) {
+        render::draw_text(get_cursor_pos() + vec2d(0, i), text[i]);
+    }
+    set_cursor_pos(get_cursor_pos() + vec2d(0, text.size() + current_style().item_spacing));
+}
+
+void selectable_impl(tui::icons::icon_t icon, std::u32string label, bool condition, tui::vec2d size) {
     using namespace tui;
     
     if (condition) {  //  && g_tui->enable_input
-        std::u32string active_text = icon.first + (U' ' + std::u32string(label));
-        active_text.resize(size.x, U' ');
+        std::u32string active_text = icon.first + (char32_t(' ') + label);
+        active_text.resize(size.x, char32_t(' '));
         tui::render::draw_text_styled(tui::get_cursor_pos(), active_text, Color(250, 180, 0), Color(120, 50, 0), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
     }
     else {
@@ -33,12 +38,12 @@ void selectable_impl(tui::icons::icon_t icon, std::u32string_view label, bool co
     tui::set_cursor_pos(tui::get_cursor_pos() + vec2d(0, size.y + tui::current_style().item_spacing));
 }
 
-void selectable(tui::icons::icon_t icon, std::u32string_view label, bool condition, tui::vec2d size) {
+void selectable(tui::icons::icon_t icon, std::u32string label, bool condition, tui::vec2d size) {
     selectable_impl(icon, label, condition, size);
 }
 
 void selectable(std::u32string label, bool condition, tui::vec2d size) {
-    selectable_impl(tui::icons::icon_t(U' ', tui::Color()), label, condition, size);
+    selectable_impl(tui::icons::icon_t(char32_t(' '), tui::Color()), label, condition, size);
 }
 
 bool tui::widgets::listbox(const std::string& id, int& value, const std::vector<std::pair<icons::icon_t, std::u32string>>& items, int height, listbox_flags flags) {
@@ -46,18 +51,29 @@ bool tui::widgets::listbox(const std::string& id, int& value, const std::vector<
         return false;
 
     if (binds::get_event(binds::DOWN) && g_tui->enable_input)
-        if (value + 1 < items.size())
+        if (value + 1 < items.size()) {
             value++;
+            g_tui->g_event->add_frame();
+        }
 
     if (binds::get_event(binds::UP) && g_tui->enable_input)
-        if (value >= 1)
+        if (value >= 1) {
             value--;
+            g_tui->g_event->add_frame();
+        }
 
     const int min = std::min(static_cast<int>(items.size()), height);
     const int max = std::max(static_cast<int>(items.size()), height);
 
-    auto& saved_position =
-        (g_tui->listbox_buffer.try_emplace(id, std::pair<int, int>(0, min)).first->second);
+    auto& saved_position = (g_tui->listbox_buffer.try_emplace(id, std::pair<int, int>(0, min)).first->second);
+
+    if (height > items.size()) {
+        saved_position.first = 0;
+        saved_position.second = items.size();
+    } else {
+        saved_position.first = std::clamp(saved_position.first, 0, max - min);
+        saved_position.second = std::clamp(saved_position.second, min, max);
+    }
 
     const int scroll_activator = min * 0.25;
 
@@ -86,6 +102,9 @@ bool tui::widgets::listbox(const std::string& id, int& value, const std::vector<
         saved_position.second++;
     }
     }
+    //32, 1, 30
+    // 32, 33, 0
+
 
     for (size_t i = saved_position.first; i < saved_position.second; i++) {
         selectable(items[i].first, items[i].second, flags & LISTBOX_FLAG_DISABLED ? false : value == i, vec2d(get_window_size().x, 1));

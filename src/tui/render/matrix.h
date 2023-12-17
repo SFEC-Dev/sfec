@@ -17,7 +17,7 @@ namespace tui {
         std::vector<std::vector<std::pair<char32_t, std::string>>> matrix_;
 
     public:
-        TerminalMatrix(int width, int height, char32_t filler = U' ');
+        TerminalMatrix(int width, int height, char32_t filler = char32_t(' '));
         TerminalMatrix(int width, int height, TerminalMatrix& from);
 
         std::pair<char32_t, std::string>& operator[](vec2d where) 
@@ -30,10 +30,10 @@ namespace tui {
             height_ = new_size.y;
             width_ = new_size.x;
 
-            matrix_.resize(new_size.y, std::vector<std::pair<char32_t, std::string>>(new_size.x, std::pair<char32_t, std::string>(filler_, "")));
+            matrix_.resize(new_size.y, std::vector<std::pair<char32_t, std::string>>(new_size.x, std::pair<char32_t, std::string>(filler_, std::string())));
 
             for (auto& line : matrix_) {
-                line.resize(new_size.x, std::pair<char32_t, std::string>(filler_, ""));
+                line.resize(new_size.x, std::pair<char32_t, std::string>(filler_, std::string()));
             }
         }
 
@@ -80,12 +80,12 @@ namespace tui {
     void write(TerminalMatrix& matrix, vec2d where,
             std::pair<char32_t, std::string> content);
     void write(TerminalMatrix& matrix, vec2d where, char32_t letter);
-    void write(TerminalMatrix& matrix, vec2d start, std::u32string_view text);
+    void write(TerminalMatrix& matrix, vec2d start, std::u32string text);
     void write(TerminalMatrix& matrix, vec2d start, TerminalMatrix& from);
     void write_styled(TerminalMatrix& matrix, vec2d where, char32_t letter, 
                     Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
                     
-    void write_styled(TerminalMatrix& matrix, vec2d start, std::u32string_view text, 
+    void write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
                         Color text_col = Color(), Color bg_col = Color(), text_flags flags = 0);
 
 

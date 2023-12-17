@@ -4,7 +4,7 @@
 #include <iostream>
 
 tui::render::TerminalMatrix::TerminalMatrix(int width, int height, char32_t filler) : width_(width), height_(height), filler_{filler}, 
-                                            matrix_(height, std::vector<std::pair<char32_t, std::string>>(width, std::pair<char32_t, std::string>(filler_, ""))) {}
+                                            matrix_(height, std::vector<std::pair<char32_t, std::string>>(width, std::pair<char32_t, std::string>(filler_, std::string()))) {}
 void tui::render::write(TerminalMatrix& matrix, vec2d where, char32_t letter) {
     matrix[where].first = letter;
 }
@@ -13,13 +13,13 @@ void tui::render::write(TerminalMatrix& matrix, vec2d where, std::pair<char32_t,
     matrix[where] = content;
 }
 
-void tui::render::write(TerminalMatrix& matrix, vec2d start, std::u32string_view text) {
+void tui::render::write(TerminalMatrix& matrix, vec2d start, std::u32string text) {
     int shift = 0;
     for (size_t i = 0; i < text.size(); i++) {
         write(matrix, vec2d(start.x + i + shift, start.y), text[i]);
 
         if (text[i] > 0xFFFF) {
-            matrix[vec2d(start.x + i + shift + 1, start.y)].first = U'\0';
+            matrix[vec2d(start.x + i + shift + 1, start.y)].first = char32_t('\0');
             shift++;
         }
     }
@@ -41,7 +41,7 @@ void tui::render::write_styled(TerminalMatrix& matrix, vec2d where, char32_t let
     matrix[where].second = color::get_style(text_col, bg_col, flags);
 }
                     
-void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::u32string_view text, 
+void tui::render::write_styled(TerminalMatrix& matrix, vec2d start, std::u32string text, 
                     Color text_col, Color bg_col, text_flags flags) {
 
     write(matrix, start, text);
@@ -60,7 +60,7 @@ void tui::render::wipe(TerminalMatrix& matrix, vec2d start, vec2d end) {
     for (std::size_t row = start.y; row < end.y; row++) {
         for (std::size_t col = start.x; col < end.x; col++) {
             matrix[vec2d(col, row)].first = matrix.filler();
-            if (matrix[vec2d(col, row)].second != "")
+            if (!matrix[vec2d(col, row)].second.empty())
                 matrix[vec2d(col, row)].second.clear();
         }
     }
@@ -77,7 +77,7 @@ void tui::render::interpret(TerminalMatrix& matrix) {
             
             std::cout << "\033[" + std::to_string(row+1) + ";" + std::to_string(col+1) + "H";
 
-            if (matrix[vec2d(col, row)].second != "") {
+            if (!matrix[vec2d(col, row)].second.empty()) {
                 std::cout << matrix[vec2d(col, row)].second << converter.to_bytes(matrix[vec2d(col, row)].first) << end_seq;
             } 
             else

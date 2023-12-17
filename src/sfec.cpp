@@ -93,6 +93,7 @@ int main(int argc, char* argv[]) {
 
                 saved_idxs.push(current_idx);
                 current_idx = 0;
+
                 event.add_frame();
                 is_downed = true;
             }
@@ -101,10 +102,14 @@ int main(int argc, char* argv[]) {
 
         if (!is_downed && is_key_pressed(tui::KEY_LOWERCASE_H) && current_path.has_relative_path()) {
             current_path = parent_path;
-            parent_path = parent_path.parent_path();
+
+            if (parent_path.has_parent_path())
+                parent_path = parent_path.parent_path();
+
             current_idx = saved_idxs.top();
             if (saved_idxs.size() > 1)
                 saved_idxs.pop();
+
             event.add_frame();
             is_upped = true;
         } 
@@ -135,6 +140,8 @@ int main(int argc, char* argv[]) {
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
+        } else if (!current_items.empty()) {
+            widgets::text_vertical(files::read_file(current_items[current_idx]));
         }
 
         end_child();

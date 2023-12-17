@@ -32,7 +32,7 @@ namespace tui {
     struct style {
         BORDER_STYLE child_border_style{BORDER_STYLE::ROUND};
         int item_spacing{0};
-        vec2d child_padding{2, 1};
+        vec2d child_padding{1, 1};
     };
 
     struct context {

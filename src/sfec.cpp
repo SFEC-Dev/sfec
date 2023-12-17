@@ -66,22 +66,24 @@ int main(int argc, char* argv[]) {
 
         const int parent_width = get_window_size().x/5;
         const int current_width = get_window_size().x/3;
-        const int preview_width = get_window_size().x/3;
-        const int childs_y_pos = get_window_size().y/5;
-        const vec2d childs_indendation{2, 2};
-        const int childs_height = get_window_size().y - childs_y_pos - childs_indendation.y;
+        const int preview_width = get_window_size().x/2.5;
+        const vec2d childs_indendation{1, 2};
+        const int childs_width = parent_width + current_width + preview_width + childs_indendation.x * 2;
+
+        const vec2d childs_pos{(get_window_size().x - childs_width)/2, get_window_size().y/5};
+        const int childs_height{ get_window_size().y - childs_pos.y - childs_indendation.y };
 
         static int current_idx, preview_idx;
         static std::stack<int> saved_idxs({0});
         bool is_upped{ false };
         bool is_downed{ false };
 
-        set_cursor_pos({2, childs_y_pos});
+        set_cursor_pos({childs_pos.x, childs_pos.y});
         begin_child("parent", {parent_width, childs_height}, true);
         widgets::listbox("parent_files", saved_idxs.top(), parent_names, get_window_size().y);
         end_child();
 
-        set_cursor_pos({2 + parent_width + childs_indendation.x, childs_y_pos});
+        set_cursor_pos({childs_pos.x + parent_width + childs_indendation.x, childs_pos.y});
         begin_child("current", {current_width, childs_height}, true);
         if (widgets::listbox("current_files", current_idx, current_names, get_window_size().y)) {
             if (is_directory(current_items[current_idx])) {
@@ -114,7 +116,7 @@ int main(int argc, char* argv[]) {
             is_upped = true;
         } 
         
-        set_cursor_pos({2 + parent_width + current_width + childs_indendation.x * 2, childs_y_pos});
+        set_cursor_pos({childs_pos.x + parent_width + current_width + childs_indendation.x * 2, childs_pos.y});
         begin_child("preview", {preview_width, childs_height}, true);
 
         std::vector<files::fs::path> preview_items;
@@ -142,7 +144,7 @@ int main(int argc, char* argv[]) {
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
         } 
         else if (!current_items.empty()) {
-            widgets::text_vertical(files::read_file(current_items[current_idx]));
+            widgets::text_vertical_styled(files::read_file(current_items[current_idx]));
         }
 
         end_child();

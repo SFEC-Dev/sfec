@@ -61,7 +61,7 @@ void tui::begin_child(const std::string& id, vec2d size, bool border) {
             g_tui->enable_input = true;
     }
 
-    g_tui->child_buffer.push_back({id, g_tui->child_buffer.size()+1});
+    g_tui->child_buffer.push_back({id, g_tui->child_buffer.size() + 1});
 
     const vec2d padding = current_style().child_padding;
 
@@ -69,7 +69,7 @@ void tui::begin_child(const std::string& id, vec2d size, bool border) {
                       std::clamp(size.y - padding.y*2, 0, get_window_size().y - get_cursor_pos().y - 1)};
 
     if (border) {
-        vec2d border_pos {std::clamp(get_cursor_pos().x + size.x, 0, get_window_size().x), 
+        vec2d border_pos {std::clamp(get_cursor_pos().x + size.x - 1, 0, get_window_size().x), 
                       std::clamp(get_cursor_pos().y + size.y - 1, 0, get_window_size().y-1)};
 
         widgets::render_border({get_cursor_pos(), border_pos}, current_style().child_border_style);

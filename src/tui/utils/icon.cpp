@@ -35,37 +35,37 @@ constexpr const char32_t kotlin = U'\ue634';
 constexpr const char32_t vim = U'\ue62b';
 constexpr const char32_t rust = U'\ue7a8';
 
-std::map<std::string, char32_t> ext_icons {
+const std::map<std::string, char32_t> ext_icons {
     {"c", c},           {"cpp", cpp},   {"py", python},
     {"html", html},     {"css", css},   {"js", javascript},
     {"ts", typescript}, {"go", golang}, {"cs", c_sharp},
     {"fs", f_sharp},    {"exe", bin},   {"out", bin},
 };
 
-std::map<char32_t, tui::Color> ext_colors {
+const std::map<char32_t, tui::Color> ext_colors {
     {c,   tui::Color(225, 225, 55)},
     {cpp, tui::Color(225, 55, 55)},
     {bin, tui::Color(200, 55, 200)}
 };
 
-std::map<std::string, char32_t> filename_icons{
+const std::map<std::string, char32_t> filename_icons{
     {"CMakeLists.txt", cmake}, {".gitignore", git}, {".git", git}
 };
 
-tui::icons::icon_t tui::icons::get_icon(std::filesystem::directory_entry name) {
+tui::icons::icon_t tui::icons::get_icon(std::filesystem::path name) {
     icon_t result;
-    const auto temporary_filename = name.path().filename().string();
+    const auto temporary_filename = name.filename().string();
 
-    if (filename_icons.find(temporary_filename) != filename_icons.cend()) {
-        result.first = filename_icons[temporary_filename];
+    if (auto icon = filename_icons.find(temporary_filename); icon != filename_icons.cend()) {
+        result.first = icon->second;
     }
     else {
         auto dot_pos = temporary_filename.find(".");
         if (dot_pos == std::string::npos)
             result.first = default_file;
 
-        else if (ext_icons.find(temporary_filename.substr(dot_pos + 1)) != ext_icons.cend())
-            result.first = ext_icons[temporary_filename.substr(dot_pos + 1)];
+        else if (auto icon = ext_icons.find(temporary_filename.substr(dot_pos + 1)); icon != ext_icons.cend())
+            result.first = icon->second;
     }
 
     if (result.first == 0) {

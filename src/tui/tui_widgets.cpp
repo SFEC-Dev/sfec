@@ -42,7 +42,9 @@ void selectable(std::u32string label, bool condition, tui::vec2d size) {
 }
 
 bool tui::widgets::listbox(const std::string& id, int& value, const std::vector<std::pair<icons::icon_t, std::u32string>>& items, int height, listbox_flags flags) {
-    using namespace tui;
+    if (items.empty())
+        return false;
+
     if (binds::get_event(binds::DOWN) && g_tui->enable_input)
         if (value + 1 < items.size())
             value++;

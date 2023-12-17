@@ -140,7 +140,8 @@ int main(int argc, char* argv[]) {
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
-        } else if (!current_items.empty()) {
+        } 
+        else if (!current_items.empty()) {
             widgets::text_vertical(files::read_file(current_items[current_idx]));
         }
 

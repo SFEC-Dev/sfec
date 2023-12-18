@@ -11,13 +11,8 @@ enum event
 {
     UP,
     DOWN,
-    LEFT,
-    RIGHT,
-    RENAME,
-    YANK,
-    PASTE,
-    DELETE,
-    ADD
+    PREV,
+    NEXT,
 };
 
 struct key_combine

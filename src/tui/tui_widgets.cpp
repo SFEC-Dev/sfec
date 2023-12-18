@@ -33,13 +33,13 @@ void selectable_impl(tui::icons::icon_t icon, std::u32string label, bool conditi
     using namespace tui;
     
     if (condition) {  //  && g_tui->enable_input
-        std::u32string active_text = char32_t(' ') + (icon.first + (char32_t(' ') + label));
+        std::u32string active_text = char32_t(' ') + (icon.first + (U"  " + label));
         active_text.resize(size.x, char32_t(' '));
         tui::render::draw_text_styled(tui::get_cursor_pos(), active_text, Color(250, 180, 0), Color(120, 50, 0), tui::FLAG_REVERSE | tui::FLAG_BOLD | tui::FLAG_ITALIC);
     }
     else {
         tui::render::draw_char_styled(tui::get_cursor_pos() + vec2d(1, 0), icon.first, icon.second);
-        tui::render::draw_text(tui::get_cursor_pos() + vec2d(3, 0), label);
+        tui::render::draw_text(tui::get_cursor_pos() + vec2d(4, 0), label);
     }
 
     tui::set_cursor_pos(tui::get_cursor_pos() + vec2d(0, size.y + tui::current_style().item_spacing));
@@ -117,7 +117,7 @@ bool tui::widgets::listbox(const std::string& id, int& value, const std::vector<
         selectable(items[i].first, items[i].second, flags & LISTBOX_FLAG_DISABLED ? false : value == i, vec2d(get_window_size().x, 1));
     }
 
-    if (binds::get_event(binds::ADD) && g_tui->enable_input)
+    if (binds::get_event(binds::NEXT) && g_tui->enable_input)
         return true;
 
     return false;

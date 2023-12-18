@@ -88,9 +88,9 @@ const std::map<char32_t, tui::Color> ext_colors{
 
 };
 
-tui::icons::icon_t tui::icons::get_icon(const std::filesystem::directory_entry& name) {
+tui::icons::icon_t tui::icons::get_icon(const std::filesystem::path& name) {
     icon_t result;
-    const auto temporary_filename = name.path().filename().string();
+    const auto temporary_filename = name.filename().string();
 
     if (auto icon = filename_icons.find(temporary_filename); icon != filename_icons.cend()) {
         result.first = icon->second;
@@ -103,7 +103,7 @@ tui::icons::icon_t tui::icons::get_icon(const std::filesystem::directory_entry& 
             result.first = icon->second;
     }
 
-    if (name.is_directory()) {
+    if (is_directory(name)) {
         if (auto icon = filedir_icons.find(temporary_filename); icon != filedir_icons.cend()) {
             result.first = icon->second;
         } else {

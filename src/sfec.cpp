@@ -139,7 +139,7 @@ int main(int argc, char* argv[]) {
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
 
-            quit_message = preview_items[preview_idx].path().u32string();
+            quit_message = parent_items[current_idx].path().u32string();
         }
         else if (!current_items.empty() && current_items[current_idx].is_directory()) {
             preview_items = std::move(files::get_files(current_items[current_idx]));
@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
 
-            quit_message = preview_items[preview_idx].path().u32string();
+            quit_message = current_items[current_idx].path().u32string();
         } 
         else if (!current_items.empty()) {
             widgets::text_vertical_styled(files::read_file(current_items[current_idx]));

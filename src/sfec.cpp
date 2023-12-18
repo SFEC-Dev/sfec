@@ -58,8 +58,8 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        std::vector<files::fs::path> parent_items = std::move(files::get_files(parent_path));
-        std::vector<files::fs::path> current_items = std::move(files::get_files(current_path));
+        std::vector<files::fs::directory_entry> parent_items = std::move(files::get_files(parent_path));
+        std::vector<files::fs::directory_entry> current_items = std::move(files::get_files(current_path));
 
         std::vector<std::pair<icons::icon_t, std::u32string>> parent_names = (current_path.has_relative_path() ? std::move(files::get_names(parent_items)) : std::vector<std::pair<icons::icon_t, std::u32string>>());
         std::vector<std::pair<icons::icon_t, std::u32string>> current_names = std::move(files::get_names(current_items));
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
         }
         end_child();
 
-        if (!is_downed && is_key_pressed(tui::KEY_LOWERCASE_H) && current_path.has_relative_path()) {
+        if (!is_downed && binds::get_event(tui::binds::PREV) && current_path.has_relative_path()) {
             current_path = parent_path;
 
             if (parent_path.has_parent_path())
@@ -119,9 +119,9 @@ int main(int argc, char* argv[]) {
         set_cursor_pos({childs_pos.x + parent_width + current_width + childs_indendation.x * 2, childs_pos.y});
         begin_child("preview", {preview_width, childs_height}, true);
 
-        std::vector<files::fs::path> preview_items;
+        std::vector<files::fs::directory_entry> preview_items;
         
-        if (is_downed && !current_items.empty() && is_directory(current_items[current_idx])) {;
+        if (is_downed && !current_items.empty() && current_items[current_idx].is_directory()) {;
             preview_items = std::move(files::get_files(current_items[current_idx]));
 
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
@@ -129,14 +129,14 @@ int main(int argc, char* argv[]) {
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
         }
 
-        else if (is_upped && !parent_items.empty() && is_directory(parent_items[current_idx])) {;
+        else if (is_upped && !parent_items.empty() && parent_items[current_idx].is_directory()) {;
             preview_items = std::move(files::get_files(parent_items[current_idx]));
 
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
         }
-        else if (!current_items.empty() && is_directory(current_items[current_idx])) {
+        else if (!current_items.empty() && current_items[current_idx].is_directory()) {
             preview_items = std::move(files::get_files(current_items[current_idx]));
 
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
@@ -151,7 +151,7 @@ int main(int argc, char* argv[]) {
 
         std::u32string quit_message{current_path.u32string()};
         quit_message.resize(get_window_size().x, U' ');
-        render::draw_text_styled({0, current_matrix().height()-1}, quit_message, Color(250, 180, 0), Color(120, 50, 0), FLAG_REVERSE | FLAG_ITALIC);
+        render::draw_text_styled({0, current_matrix().height()-1}, quit_message, Color(250, 180, 0), Color(120, 50, 0), FLAG_REVERSE | FLAG_ITALIC | FLAG_BOLD);
        
         render::draw();
         reset();

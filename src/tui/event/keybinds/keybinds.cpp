@@ -3,12 +3,10 @@
 #include <vector>
 
 std::map<tui::binds::event, tui::binds::key_proxy> tui::binds::current_bindings{
-    {DELETE, key_proxy({key_combine({KEY_LOWERCASE_D, KEY_UPPERCASE_D})})},
     {UP, key_proxy({KEY_LOWERCASE_K})},
     {DOWN, key_proxy({KEY_LOWERCASE_J})},
-    {LEFT, key_proxy({KEY_LOWERCASE_H})},
-    {RIGHT, key_proxy({KEY_LOWERCASE_L})},
-    {ADD, key_proxy({KEY_LOWERCASE_A})}};
+    {PREV, key_proxy({KEY_LOWERCASE_H})},
+    {NEXT, key_proxy({KEY_LOWERCASE_L})}};
 
 bool check_binds(tui::binds::key_combine combine) {
     auto& buffer = tui::g_tui->key_buffer;

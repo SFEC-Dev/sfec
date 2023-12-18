@@ -24,8 +24,8 @@ bool default_comparator(const files::fs::path& first, const files::fs::path& sec
     return (first.filename() < second.filename());
 }
 
-std::vector<files::fs::path> files::get_files(const fs::path& dir_patch) {
-    std::vector<files::fs::path> result;
+ std::vector<files::fs::directory_entry> files::get_files(const fs::path& dir_patch) {
+    std::vector<files::fs::directory_entry> result;
     for (const auto& dir_entry : files::fs::directory_iterator{dir_patch, files::fs::directory_options::skip_permission_denied}) {
         if (std::find(files::ignored_files.cbegin(), files::ignored_files.cend(), dir_entry.path().filename().u32string()) != files::ignored_files.cend())
             continue;
@@ -57,12 +57,12 @@ std::vector<std::u32string> files::read_file(files::fs::path path)
     return result;
 }
 
-std::vector<std::pair<tui::icons::icon_t, std::u32string>> files::get_names(const std::vector<files::fs::path>& from) {
+ std::vector<std::pair<tui::icons::icon_t, std::u32string>> files::get_names(const std::vector<files::fs::directory_entry>& from) {
     std::vector<std::pair<tui::icons::icon_t, std::u32string>> result;
     result.resize(from.size());
 
-    std::transform(from.cbegin(), from.cend(), result.begin(), [](const files::fs::path& entry){ 
-        return std::pair<tui::icons::icon_t, std::u32string>(tui::icons::get_icon(entry), entry.filename().u32string());
+    std::transform(from.cbegin(), from.cend(), result.begin(), [](const files::fs::directory_entry& entry){ 
+        return std::pair<tui::icons::icon_t, std::u32string>(tui::icons::get_icon(entry),entry.path().filename().u32string());
     });
 
     return result;

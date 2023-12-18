@@ -120,6 +120,7 @@ int main(int argc, char* argv[]) {
         begin_child("preview", {preview_width, childs_height}, true);
 
         std::vector<files::fs::directory_entry> preview_items;
+        std::u32string quit_message{};        
         
         if (is_downed && !current_items.empty() && current_items[current_idx].is_directory()) {;
             preview_items = std::move(files::get_files(current_items[current_idx]));
@@ -127,6 +128,8 @@ int main(int argc, char* argv[]) {
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
+
+            quit_message = current_items[current_idx].path().u32string();
         }
 
         else if (is_upped && !parent_items.empty() && parent_items[current_idx].is_directory()) {;
@@ -135,6 +138,8 @@ int main(int argc, char* argv[]) {
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
+
+            quit_message = preview_items[preview_idx].path().u32string();
         }
         else if (!current_items.empty() && current_items[current_idx].is_directory()) {
             preview_items = std::move(files::get_files(current_items[current_idx]));
@@ -142,17 +147,20 @@ int main(int argc, char* argv[]) {
             const std::vector<std::pair<icons::icon_t, std::u32string>> preview_names = std::move(files::get_names(preview_items));
 
             widgets::listbox("directory_preview", preview_idx, preview_names, get_window_size().y, LISTBOX_FLAG_DISABLED);
+
+            quit_message = preview_items[preview_idx].path().u32string();
         } 
         else if (!current_items.empty()) {
             widgets::text_vertical_styled(files::read_file(current_items[current_idx]));
+
+            quit_message = current_items[current_idx].path().u32string();
         }
 
         end_child();
 
-        std::u32string quit_message{current_path.u32string()};
-        quit_message.resize(get_window_size().x, U' ');
-        render::draw_text_styled({0, current_matrix().height()-1}, quit_message, Color(250, 180, 0), Color(120, 50, 0), FLAG_REVERSE | FLAG_ITALIC | FLAG_BOLD);
-       
+            quit_message.resize(get_window_size().x, U' ');
+            render::draw_text_styled({0, current_matrix().height()-1}, quit_message, Color(250, 180, 0), Color(120, 50, 0), FLAG_REVERSE | FLAG_ITALIC | FLAG_BOLD);
+
         render::draw();
         reset();
     }
